@@ -16,8 +16,8 @@ echo `date -d "+${locHouradj} hour" +'%Y-%m-%d %H:%M:%S'`  # >> ${curDir}/tmp/te
 git add .   
 git commit -m "`date -d "+${locHouradj} hour" '+%Y%m%d %H:%M:%S'`"  
 
-# git pull --rebase origin main  # master > main 
-# git push -u origin main    >> ${curDir}/tmp/test.log 2>&1 
+git pull --rebase origin main  # master > main 
+git push -u origin main    >> ${curDir}/tmp/test.log 2>&1 
 
 datestr=`date -d "+${locHouradj} hour" '+%Y%m%d'`
 timestr=`date -d "+${locHouradj} hour" '+%H%M%S'`

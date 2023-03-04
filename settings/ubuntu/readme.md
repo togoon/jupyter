@@ -111,21 +111,29 @@ HostName github.com
 User ation123
 IdentityFile ~/.ssh/id_rsa_123
 
+Host 244564485.github.com
+HostName github.com
+User 244564485
+IdentityFile ~/.ssh/id_rsa_244
 
 
 ssh -T git@ation120.github.com
+ssh -T git@244564485.github.com
 
 # Host github.com           # git clone git@github.com:ation119/jupyter.git
 # Host ation120.github.com  # git clone git@ation120.github.com:ation120/jupyter.git
 
+cd ~/test
 git clone git@github.com:ation119/jupyter.git
 git clone git@ation120.github.com:ation120/jupyter.git
+git clone git@244564485.github.com:244564485/jupyter.git
 
 cd jupyter/
 git config --local user.email "ation123@126.com"
 git config --local user.name "ation3"
 
-
+git config --local user.email "244564485@qq.com"
+git config --local user.name "244564485"
 
 ```
 
