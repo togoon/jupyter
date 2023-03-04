@@ -90,6 +90,11 @@ git push -u origin main
 cd ~/.ssh/
 ssh-keygen -t rsa -f ~/.ssh/id_rsa_120 -C "ation120@126.com"  # ↵ ↵ ↵ 
 
+# 244564485
+cd ~/.ssh/
+ssh-keygen -t rsa -f ~/.ssh/id_rsa_244 -C "244564485@qq.com"  # ↵ ↵ ↵ 
+
+
 vim ~/.ssh/config  # git配置多个ssh_key
 Host github.com
 HostName github.com
