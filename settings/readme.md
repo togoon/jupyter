@@ -121,7 +121,7 @@ cp -rf ~/.bashrc /home/at/test/jupyter/settings/ubuntu/.bashrc
 # 123 atob('Z2hwX09ZVmxZRm5OYzJjQ3EwWWFrVWQxcHg3YUJHS214SjE1dVVqZA==') # btoa('token...ghp_')
 # 124 atob('Z2hwX0p5NGZhMWNkdjZVcWk1dGJVRXM4ZnIzbDVTcElZVTFHcU1oOA==') 
 # 125 atob('Z2hwX2tJNzZ3Umo4SkpobWs0VzI2NldGSTd0MDJIYlhsbjNuRGh6WA==')
-# 125 atob('Z2hwX2tJNzZ3Umo4SkpobWs0VzI2NldGSTd0MDJIYlhsbjNuRGh6WA==')
+# 244 atob('Z2hwX08yaVNnaWpoNDJMZ25OWkdmOWRqUUFvSlRDN0VSdTRTSDJvUg==') # jupyter244564485
 
 
 
