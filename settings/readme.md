@@ -157,7 +157,7 @@ git config --local user.name "ation123@126.com" # 119 120 121 122 123 124 125 12
 
 # 5. settings  
 
-+ vscode Extension (.vscode/extensions.json)
++ vscode Extension (.vscode/extensions.json) @recommended 
 - restart
 * settings/SQlServerClient_config.json
 + settings/git_config
