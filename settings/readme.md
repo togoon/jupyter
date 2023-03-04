@@ -129,7 +129,7 @@ cp -rf ~/.bashrc /home/at/test/jupyter/settings/ubuntu/.bashrc
 git remote set-url origin https://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@github.com/ation124/jupyter.git 
 
 #git config --global credential.helper store 
-git config --local user.email "ation123@126.com" # global local 
+git config --local user.email "ation123@126.com" # global local 244564485@qq.com
 git config --local user.name "ation123@126.com" # 119 120 121 122 123 124 125 126 
 # git config --global credential.helper 'cache --timeout=3600000'
 
