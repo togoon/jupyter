@@ -14,11 +14,11 @@ ping 8.219.68.31
 nohup ./realFIL run -c ./config.json -r ./risk.json >> /root/binance/crypto/logs/screenlog_Fil_bash_0.log 2>&1 &
 
 # 2. 创建主账户 其中1,0,1 表示 keyid, gatewaytype中的binance, tradetype中的usdt合约类型
-#1,0,1 "similarity", 1_pre1_1000 , 1000, "pre1", "subpre1", "127.0.0.1",32001
+#1,0,1 "similarity", 1_pre1_200 , 200, "pre1", "subpre1", "127.0.0.1",32001
 
 #2,0,1 "similarity_big", 2_main1_190000, 190000 "main1","main1","127.0.0.1",31002
 
-curl -X POST -d '{"method":"insertAppkey","params":[1,0,1,"T6qUmdYPmqwfHOo3ttCJilZMYyxkdaDGROhJ8fZhgmGgTEagXsnXLsXeCUW7LdXG","oDJzCvyN9BDfyIgUc2dibgYeadxQxH9afu4peYuIyfa4sOFOwLQ57Rqui9N95gzJ","1_pre1_1000"]}' http://127.0.0.1:18889/strategy
+curl -X POST -d '{"method":"insertAppkey","params":[1,0,1,"T6qUmdYPmqwfHOo3ttCJilZMYyxkdaDGROhJ8fZhgmGgTEagXsnXLsXeCUW7LdXG","oDJzCvyN9BDfyIgUc2dibgYeadxQxH9afu4peYuIyfa4sOFOwLQ57Rqui9N95gzJ","1_pre1_200"]}' http://127.0.0.1:18889/strategy
 {"method":"insertAppkey","success":true,"message":""}
 
 # risk1 1,0,1 testnet31_risk1 15000  创建/绑定母账户 createMainAccount 名称 交易所类型 Keyid 
@@ -34,12 +34,12 @@ curl -X POST -d '{"method":"queryBinanceUsdtRisk","params":["pre1","BTCUSDT"]}' 
 {"method":"queryBinanceUsdtRisk","result":[{"risks":[{"symbol":"BTCUSDT","positionAmt":"0","entryPrice":"0","markPrice":"22377.4","unRealizedProfit":"0","liquidationPrice":"0","leverage":"2","maxNotionalValue":"300000000","marginType":"cross","isolatedMargin":"0","isAutoAddMargin":"false","positionSide":"BOTH","notional":"0","isolatedWallet":"0","updateTime":1677841788619}]}]}
 
 # 3. 创建子账户 createSubAccount 
-# similarity,0,1  1_pre1_1000, 1050.74805009,  subpre1 1000
-curl -X POST -d '{"method":"createSubAccount","params":["subpre1",1,"1000.0"]}' http://127.0.0.1:18889/strategy 
+# similarity,0,1  1_pre1_200, 1050.74805009,  subpre1 200
+curl -X POST -d '{"method":"createSubAccount","params":["subpre1",1,"200.0"]}' http://127.0.0.1:18889/strategy 
 {"method":"createSubAccount","success":true,"message":""}
 
 # 4. 创建策略 hello  关闭 close
-# pre1 subpre1 similarity 32001 1000 "mainID":1,"subID":2,"strategyID":1,
+# pre1 subpre1 similarity 32001 200 "mainID":1,"subID":2,"strategyID":1,
 curl -X POST -d '{"method":"hello","params":["similarity","pre1","subpre1","127.0.0.1",32001]}' http://127.0.0.1:18889/strategy 
 {"method":"hello","success":true,"message":"{\"name\":\"similarity\" , \"time\":1677855332443, \"id\":1}"}
 
@@ -51,7 +51,7 @@ curl -X POST -d '{"method":"queryStrategyInfo","params":["similarity"]}' http://
 
 . /root/binance/crypto/v5/similarity/startSimilarity.sh  # killSimilarity.sh
 
-nohup python3 -u main.py -n similarity -s 18889 -c 32001 -X BTCUSDT -p 10m -w 42 -d 84 -t 1000 -r 0.5 >> log.txt 2>&1  &
+nohup python3 -u main.py -n similarity -s 18889 -c 32001 -X BTCUSDT -p 10m -w 42 -d 84 -t 200 -r 0.5 >> log.txt 2>&1  &
 
 ps aux | grep 18889 | grep similarity | grep 32001 | grep -v grep | awk '{print $2}'| xargs kill -9
 
@@ -63,20 +63,20 @@ ps aux | grep 18889 | grep similarity | grep 32001 | grep -v grep | awk '{print 
 #交易所U本位合约资产到子账户u本位/8为该划转类型的值 , 子账户u本位到策略16
 #策略到子账户17 , 子账户到母账户9
 
-# pre1 subpre1 similarity 32001 1000 "mainID":1,"subID":2,"strategyID":1,
-curl -X POST -d '{"method":"accountTransfer","params":["pre1","subpre1","similarity","USDT","1000",8]}' http://127.0.0.1:18889/strategy
-curl -X POST -d '{"method":"accountTransfer","params":["pre1","subpre1","similarity","USDT","1000",16]}' http://127.0.0.1:18889/strategy
+# pre1 subpre1 similarity 32001 200 "mainID":1,"subID":2,"strategyID":1,
+curl -X POST -d '{"method":"accountTransfer","params":["pre1","subpre1","similarity","USDT","200",8]}' http://127.0.0.1:18889/strategy
+curl -X POST -d '{"method":"accountTransfer","params":["pre1","subpre1","similarity","USDT","200",16]}' http://127.0.0.1:18889/strategy
 {"method":"accountTransfer","success":true,"message":""}
 
 # 查询市价单合约资产 queryTradeContractAssets 
-# pre1 subpre1 similarity 32001 1000 "mainID":1,"subID":2,"strategyID":1,
+# pre1 subpre1 similarity 32001 200 "mainID":1,"subID":2,"strategyID":1,
 curl -X POST -d '{"method":"queryTradeContractAssets","params":["similarity","USDT","BTCUSDT"]}' http://127.0.0.1:18889/strategy
-{"method":"queryTradeContractAssets","result":[{"asset":"USDT","free":"2000","total":"1000","margin":"0","unreal":"0","lock":"0","syslock":"0","longfree":"2000","shortfree":"2000","type":1}]}
+{"method":"queryTradeContractAssets","result":[{"asset":"USDT","free":"2000","total":"200","margin":"0","unreal":"0","lock":"0","syslock":"0","longfree":"2000","shortfree":"2000","type":1}]}
 
 # 查询限价单合约资产 queryLimitTradeContractAssets
-# pre1 subpre1 similarity 32001 1000 "mainID":1,"subID":2,"strategyID":1,
+# pre1 subpre1 similarity 32001 200 "mainID":1,"subID":2,"strategyID":1,
 curl -X POST -d '{"method":"queryLimitTradeContractAssets","params":["similarity","USDT","BTCUSDT","20000"]}' http://127.0.0.1:18889/strategy
-{"method":"queryLimitTradeContractAssets","result":[{"asset":"USDT","free":"2000","total":"1000","margin":"0","unreal":"0","lock":"0","syslock":"0","longfree":"2000","shortfree":"1651.567403526076904385052209","type":1}]}
+{"method":"queryLimitTradeContractAssets","result":[{"asset":"USDT","free":"2000","total":"200","margin":"0","unreal":"0","lock":"0","syslock":"0","longfree":"2000","shortfree":"1651.567403526076904385052209","type":1}]}
 
 # 查询仓位v3 queryPositions  仓位方向 long1 short-1 
 #long值(0, v2)改为(1, v3) , short值(1, v2)改为(-1, v3)
@@ -88,7 +88,7 @@ curl -X POST -d '{"method":"queryPositions","params":["similarity", "BTCUSDT", 1
 
 # 6. 资金和仓位的人工调整 fixUTrade   
 # commission为正是减资金, 为负是加资金; 新开仓和反向开仓price需要填真实值,其他填0
-# pre1 subpre1 similarity 32001 1000 "mainID":1,"subID":2,"strategyID":1,
+# pre1 subpre1 similarity 32001 200 "mainID":1,"subID":2,"strategyID":1,
 
 curl -X POST -d '{"method":"queryBinanceUsdtRisk","params":["pre1","BTCUSDT"]}' http://127.0.0.1:18889/strategy
 curl -X POST -d '{"method":"queryPositions","params":["similarity", "BTCUSDT", -1]}' http://127.0.0.1:18889/strategy
