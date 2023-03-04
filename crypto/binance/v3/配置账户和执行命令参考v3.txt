@@ -1,0 +1,84 @@
+配置交易所密钥  在key.json配置
+
+创建主账户
+  curl -X POST -d '{"method":"createMainAccount","params":["mainaccount",3,0]}' http://127.0.0.1:8889/strategy
+创建子账户
+  curl -X POST -d '{"method":"createSubAccount","params":["subaccount",1,"1000000.0"]}' http://127.0.0.1:8889/strategy
+创建策略
+  curl -X POST -d '{"method":"hello","params":["test-strategy","mainaccount","subaccount","127.0.0.1",9090]}' http://127.0.0.1:8889/strategy
+
+划转交易所U本位合约资产到子账户u本位    8为该划转类型的值
+  curl -X POST -d '{"method":"accountTransfer","params":["mainaccount","subaccount","test-strategy","USDT","1000.0",8]}' http://127.0.0.1:8889/strategy
+
+划转子账户u本位合约资产到策略u本位      16为该划转类型的值
+  curl -X POST -d '{"method":"accountTransfer","params":["mainaccount","subaccount","test-strategy","USDT","1000.0",16]}' http://127.0.0.1:8889/strategy
+
+下单接口不变
+
+
+查询主账户
+curl -X POST -d '{"method":"queryMainAccount","params":["mainaccount"]}' http://127.0.0.1:8889/strategy
+查询策略信息
+curl -X POST -d '{"method":"queryStrategyInfo","params":["similarity"]}' http://127.0.0.1:8889/strategy
+查询合约资产
+curl -X POST -d '{"method":"queryContractAssets","params":["testStrategy","USDT"]}' http://127.0.0.1:8889/strategy
+查询仓位   仓位方向 long值从0改为1  short值从1改为-1
+curl -X POST -d '{"method":"queryPositions","params":["testStrategy","ETHUSDT,-1]}' http://127.0.0.1:8889/strategy
+
+
+查询币安U本位账户
+curl -X POST -d '{"method":"queryBinanceUsdtAccount","params":["mainaccount"]}' http://127.0.0.1:8889/strategy
+查询币安U本位账户风险
+curl -X POST -d '{"method":"queryBinanceUsdtRisk","params":["mainaccount","BTCUSDT"]}' http://127.0.0.1:8889/strategy
+查询币安U本位仓位模式
+curl -X POST -d '{"method":"queryBinanceUsdtPositionSide","params":["mainaccount"]}' http://127.0.0.1:8889/strategy
+
+修改币安U本位仓位模式   true为双向持仓  false为单向持仓
+curl -X POST -d '{"method":"changeBinanceUsdtPositionSide","params":["mainaccount","false"]}' http://127.0.0.1:8889/strategy
+修改币安U本位杠杆大小
+curl -X POST -d '{"method":"changeBinanceUsdtLeverage","params":["mainaccount","BTCUSDT",10]}' http://127.0.0.1:8889/strategy
+
+查询市价单合约资产
+curl -X POST -d '{"method":"queryTradeContractAssets","params":["testStrategy","USDT","BTCUSDT"]}' http://127.0.0.1:8889/strategy
+查询限价单合约资产
+curl -X POST -d '{"method":"queryLimitTradeContractAssets","params":["testStrategy","USDT","BTCUSDT","17000"]}' http://127.0.0.1:8889/strategy
+
+
+下单接口修改：
+u本位市价单 insertMarketUOrder  
+尾部添加一个参数positionside   
+
+u本位市价单 insertLimitUOrder  
+尾部添加一个参数positionside 
+
+数据类型positionside   1:LONG  -1:SHORT  2:NONE
+单向持仓填NONE
+双向持仓配合订单side填写
+开多：BUY LONG
+开空：SELL SHORT
+平多：SELL LONG
+平空：BUY SHORT
+
+
+####FILv3.5#####################################
+功能更新：
+1.系统下单资金校验
+2.母账户成交校验
+3.修复py的positionside的bug
+4.修复其他bug
+
+配置更新：
+config文件更新账户校验间隔频率设置，默认180s
+"accountcheck_interval":180,
+
+####FILv3.6#####################################
+
+queryBinanceUPremiumIndex
+查询币安的u本位的标记价格
+{
+    "method":"queryBinanceUPremiumIndex",
+    "params":[
+        "BTCUSDT"
+    ]
+}
+

@@ -1,0 +1,34 @@
+
+/* includes alternating gray and white with on-hover color */
+.worth {
+	border-collapse: collapse;
+	text-align: center;
+	/* height: 200px; */
+}
+.worth td, th {
+	border: 1px solid #cad9ea;
+	color: #666;
+	height: 30px;
+	padding: 5px; 
+    font-family:verdana,arial,sans-serif;
+    font-size: 10pt;
+}
+.worth thead th
+{
+	background-color: #CCE8EB;
+	width:auto ;
+    min-width: 30px;
+    overflow:hidden;
+    white-space:nowrap;
+    text-overflow:ellipsis;   
+}
+.worth tr:nth-child(odd) {
+	background: #fff;
+}
+.worth tr:nth-child(even) {
+	background: #F5FAFA;
+}
+.worth tr:hover {
+    background: #eee;
+    cursor: pointer;
+}

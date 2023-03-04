@@ -1,0 +1,7 @@
+login -RefreshToken=e91fe57e6b7446ad963ed98f9026b160
+ls
+loglist
+who
+help
+loglist
+exit

@@ -1,0 +1,62 @@
+{
+    "risk": {
+        "count": 100,
+        "upAmount": 200,
+        "downAmount": 100,
+        "upPrice": 200,
+        "downPrice": 100
+    },
+    "influx": {
+        "host": "127.0.0.1",
+        "httpport": 8086,
+        "udpport": 8089,
+        "db": "testfil",
+        "usr": "test",
+        "password": "test",
+        "precision": "ms"
+    },
+    "mysql": {
+        "host": "127.0.0.1",
+        "jdbcport": 3306,
+        "xdevport": 33000,
+        "db": "testfil",
+        "usr": "root",
+        "password": "reaL2022"
+    },
+    "binance": {
+        "host": "testnet.binance.vision",
+        "port": "443",
+        "timeout": 10000,
+        "wshost": "testnet.binance.vision",
+        "wsport": "9443",
+        "uhost": "testnet.binancefuture.com",
+        "uport": "443",
+        "utimeout": 10000,
+        "uwshost": "stream.binancefuture.com",
+        "uwsport": "443",
+        "thost": "dapi.binance.com",
+        "tport": "443",
+        "ttimeout": 10000,
+        "twshost": "dstream.binance.com",
+        "twsport": "443"
+    },
+    "bitmex": {
+        "restfulurl": "https://www.bitmex.com/api/v1",
+        "wssurl": "wss://ws.bitmex.com/realtime",
+        "timeout": 10000
+    },
+    "fil_host": "0.0.0.0",
+    "fil_port": 8889,
+    "trace_host": "0.0.0.0",
+    "trace_port": 8888,
+    "histest_host": "0.0.0.0",
+    "histest_port": 8887,
+    "clean_interval": 86400,
+    "order_clean_interval": 2592000,
+	"accountcheck_interval":180,
+    "worth_interval": 300,
+    "exchangeinfo_interval": 86400,
+    "feepercent": "0.001",
+    "mainAccountReserve": "100",
+    "initExchangeinfo":0
+}

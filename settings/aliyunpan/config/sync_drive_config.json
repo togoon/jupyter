@@ -1,0 +1,17 @@
+{
+    "configVer": "1.0",
+    "syncTaskList": [
+        {
+            "name": "设计文档备份",
+            "localFolderPath": "D:/tickstep/Documents/设计文档",
+            "panFolderPath": "/备份盘/我的文档",
+            "mode": "upload"
+        },
+        {
+            "name": "手机图片备份",
+            "localFolderPath": "D:/tickstep/Photos/手机图片",
+            "panFolderPath": "/备份盘/手机图片",
+            "mode": "upload"
+        }
+    ]
+}

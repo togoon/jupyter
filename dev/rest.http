@@ -1,0 +1,174 @@
+###系统变量###httpbin.org################
+
+### 变量定义
+@hostname = httpbin.org
+@port = 80
+@host = {{hostname}}:{{port}}
+@httpbin = {{hostname}}
+@contentType = application/json
+@createdAt = {{$datetime iso8601}}
+@modifiedBy = {{$processEnv USERNAME}}
+
+@User-Agent = rest-client
+@Accept-Language = en-GB,en-US;q=0.8,en;q=0.6,zh-CN;q=0.4
+@ConTypeJson = application/json
+
+### 发送JSON数据
+POST {{httpbin}}/post
+Content-Type: {{$ConTypeJson}}
+//这里必须有一空行
+
+{
+    "guid": {{$guid}},
+    "random": {{$randomInt 1 100}},
+    "timestamp": {{$timestamp }},
+    "datetime": {{$datetime iso8601}},
+    "localDatetime": {{$localDatetime 'YYYYMMDD hh:mm:ss.ms'}},
+    "processEnv": {{$processEnv NAME}},
+}
+
+
+###行情接口###binancefuture################
+@binancefuture = http://testnet.binancefuture.com
+@binance = http://www.binance.com
+@fapi = {{binance}}/fapi/v1
+@capi = {{binance}}/api/v3
+@dapi = {{binancefuture}}/dapi/v1
+@eapi = eapi.binance.com/eapi/v1
+
+
+### 测试服务器连通性 PING
+GET {{fapi}}/ping
+
+### 获取服务器时间
+# @name res
+GET {{fapi}}/time
+
+###
+@serverTime = {{res.response.body.$.serverTime}}
+
+###
+get http://www.binance.com/fapi/v1/time
+
+###
+get https://fapi.binance.com/fapi/v1/time
+
+### 获取交易规则和交易对 U本位
+GET {{fapi}}/exchangeInfo
+
+###
+GET {{binancefuture}}/fapi/v1/exchangeInfo
+
+### 获取交易规则和交易对 币本位
+GET {{dapi}}/exchangeInfo
+
+### 获取交易规则和交易对 现货
+GET {{capi}}/exchangeInfo
+
+### 获取交易规则和交易对 欧式期权 proxy err
+GET {{eapi}}/exchangeInfo
+
+### 深度信息
+GET {{fapi}}/depth?symbol=btcusdt&limit=5
+
+### 近期成交
+GET {{fapi}}/trades?symbol=btcusdt&limit=5
+
+### 查询历史成交(MARKET_DATA) err
+GET {{fapi}}/historicalTrades?symbol=btcusdt&limit=5
+
+# {
+#   "code": -2014,
+#   "msg": "API-key format invalid."
+# }
+
+### 近期成交(归集)
+GET {{fapi}}/aggTrades?symbol=btcusdt&limit=5
+
+### K线数据
+get {{fapi}}/klines?symbol=BTCUSDT&interval=1m&limit=2
+
+### 连续合约K线数据
+get {{fapi}}/continuousKlines?pair=BTCUSDT&contractType=PERPETUAL&interval=1m&limit=2
+
+### 价格指数K线数据
+get {{fapi}}/indexPriceKlines?pair=BTCUSDT&contractType=PERPETUAL&interval=1m&limit=2
+
+### 标记价格K线数据
+get {{fapi}}/markPriceKlines?symbol=BTCUSDT&contractType=PERPETUAL&interval=1m&limit=2
+
+### 最新标记价格和资金费率
+get {{fapi}}/premiumIndex?symbol=BTCUSDT
+
+### 查询资金费率历史
+get {{fapi}}/fundingRate?symbol=BTCUSDT&limit=2
+
+### 24hr价格变动情况 symbol
+get {{fapi}}/ticker/24hr?symbol=BTCUSDT
+
+### 最新价格 symbol
+get {{fapi}}/ticker/price
+
+### 当前最优挂单 symbol
+get {{fapi}}/ticker/bookTicker?symbol=BTCUSDT
+
+### 获取未平仓合约数
+get {{fapi}}/openInterest?symbol=BTCUSDT
+
+### 合约持仓量
+get {{binancefuture}}/futures/data/openInterestHist?symbol=BTCUSDT&period='5m'
+
+### 大户账户数多空比
+get {{binancefuture}}/futures/data/topLongShortAccountRatio?symbol=BTCUSDT&period='5m'
+
+### 大户持仓量多空比
+get {{binancefuture}}/futures/data/topLongShortPositionRatio?symbol=BTCUSDT&period='5m'
+
+### 多空持仓人数比
+get {{binancefuture}}/futures/data/globalLongShortAccountRatio?symbol=BTCUSDT&period='5m'
+
+### 合约主动买卖量
+get {{binancefuture}}/futures/data/takerlongshortRatio?symbol=BTCUSDT&period='5m'
+
+### 杠杆代币历史净值K线 err
+get {{fapi}}/lvtKlines?symbol=BTCUP&interval=1m
+
+### 综合指数交易对信息 symbol
+get {{fapi}}/indexInfo
+
+### 多资产模式资产汇率指数 symbol
+get {{fapi}}/assetIndex
+
+
+
+###账户和交易接口####################################
+
+### 更改持仓模式(TRADE) dualSidePosition
+POST {{fapi}}/positionSide/dual
+
+
+
+### 查询持仓模式(USER_DATA)
+GET  {{fapi}}/positionSide/dual
+X-MBX-APIKEY=fcc2838327a124367acd634323b93b1fb53d6fc66e84d679169a78adcaf1bf3e
+
+
+
+
+###########################################################
+
+
+
+### listenKey
+post {{fapi}}/listenKey
+X-MBX-APIKEY:fcc2838327a124367acd634323b93b1fb53d6fc66e84d679169a78adcaf1bf3e
+
+#   "listenKey": "Rs42LbWgixBtP2F9eWUYpBy6mjTykbEedRHjnRmtebL84tKbNvKrqQhAiz26VjJ6"
+
+### 延长listenKey有效期 (USER_STREAM)
+PUT {{fapi}}/listenKey
+
+### 关闭listenKey (USER_STREAM)
+DELETE {{fapi}}/listenKey
+
+

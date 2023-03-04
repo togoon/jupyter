@@ -1,0 +1,134 @@
+### RESTclient
+https://httpbin.org/get
+
+###
+curl --request GET \
+    --url http://httpbin.org/get \
+    --header 'user-agent: vscode-restclient'
+###
+{{$guid}}
+{{$randomInt min max}}
+{{$timestamp [offset option]}}
+{{$datetime rfc1123|iso8601 [offset option]}}
+{{$localDatetime rfc1123|iso8601 [offset option]}}
+{{$processEnv [%]envVarName}}
+{{$dotenv [%]variableName}}
+{{$aadToken [new] [public|cn|de|us|ppe] [<domain|tenantId>] [aud:<domain|tenantId>]}}
+
+### 变量定义
+# GET https://baidu.com 
+@hostname = httpbin.org
+@port = 8080
+@host = {{hostname}}:{{port}}
+@contentType = application/json
+@createdAt = {{$datetime iso8601}}
+@modifiedBy = {{$processEnv USERNAME}}
+
+###
+// echo {{hostname}} 
+
+### 变量引用
+# @name r
+GET http://{{hostname}}/get
+
+###
+GET http://httpbin.org/ip
+
+###
+GET http://httpbin.org/user-agent
+
+###
+PUT http://httpbin.org/put
+
+###
+DELETE  http://httpbin.org/anything
+
+###
+PATCH   http://httpbin.org/anything
+
+###
+POST https://example.com/comments HTTP/1.1
+content-type: application/json
+
+{
+    "name": "sample",
+    "time": "Wed, 21 Oct 2015 18:27:50 GMT"
+}
+
+### 发送JSON数据
+POST https://httpbin.org/post
+Content-Type: application/json
+//这里必须有一空行
+
+{
+    "query": {"a":1,"b":2}
+}
+
+
+### 发送form-urlencoded数据
+POST https://httpbin.org/post
+Content-Type: application/x-www-form-urlencoded
+//这里必须有一空行
+
+a=1&b=2
+
+### 模拟浏览器请求一个网页
+GET https://httpbin.org/
+Accept: text/javascript, application/javascript, application/ecmascript, application/x-ecmascript, */*; q=0.01
+Accept-Encoding: gzip, deflate, br
+Accept-Language: zh-CN,zh-TW;q=0.9,zh;q=0.8,en-US;q=0.7,en;q=0.6
+Connection: keep-alive
+Cookie: BIDUPSID=CF844808573053195E4D5760343A0DE0; PSTM=1553656042; delPer=0; BD_HOME=0; BD_UPN=12314753; BD_CK_SAM=1; PSINO=5; H_PS_645EC=6b64FQkUWvWCrKmgQDniAqN96VXzdqVpuyfqvfkw4NzIO0Y4DAo2FNn4hlI; BAIDUID=E4E13D8CA9AC39C0994B17987F621780:FG=1; H_PS_PSSID=1464_21082_28721_28557_28697_28585_28638_26350_28604_28606
+Host: www.baidu.com
+Referer: https://www.baidu.com/
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/73.0.3683.86 Safari/537.36
+X-Requested-With: XMLHttpRequest
+
+### 定义一个变量
+
+@testurl = http://httpbin.org/cookies/set?name=value
+
+GET  {{testurl}}
+
+
+### binancefuture
+@binancefuture = http://testnet.binancefuture.com
+@fapi = {{binancefuture}}/fapi/v1
+
+### 测试服务器连通性 PING
+GET {{fapi}}/ping
+
+### 获取服务器时间
+GET {{fapi}}/time
+
+获取交易规则和交易对
+### 获取服务器时间
+GET {{fapi}}/time
+
+### 获取服务器时间
+GET {{fapi}}/time
+
+
+### 获取服务器时间
+GET {{fapi}}/time
+
+### 获取服务器时间
+GET {{fapi}}/time
+
+### 获取服务器时间
+GET {{fapi}}/time
+
+### binance continuousKlines
+get {{fapi}}/continuousKlines?pair=BTCUSDT&contractType=PERPETUAL&interval=1m&limit=2
+
+###
+GET {{fapi}}/exchangeInfo
+
+
+### listenKey
+post {{fapi}}/listenKey
+X-MBX-APIKEY:fcc2838327a124367acd634323b93b1fb53d6fc66e84d679169a78adcaf1bf3e
+
+### 延长listenKey有效期 (USER_STREAM)
+PUT {{fapi}}/listenKey
+

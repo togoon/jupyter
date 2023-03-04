@@ -1,0 +1,104 @@
+{
+	"RiskInterval":60,
+	"OrderTimePeriod":600,
+	"Orderweight":1,
+	"Requestweight":1,
+	"UFRnum":9000,
+	"GTCnum":4000,
+	"DRnum":9000,
+	"UFRLimit": [{
+		"gatetype": "binance",
+		"threshold": "0.8",
+		"toWarn": true,
+		"toForbid": true,
+		"enable":false
+	}],
+	"GTCLimit": [{
+		"gatetype": "binance",
+		"threshold": "0.8",
+		"toWarn": true,
+		"toForbid": true,
+		"enable":false
+	}],
+	"DRLimit": [{
+		"gatetype": "binance",
+		"threshold": "0.8",
+		"minAmount": "50",
+		"toWarn": true,
+		"toForbid": true,
+		"enable":false
+	}],
+	"LeverageLimit": [{
+		"AccountID": [1],
+		"threshold": "0.95",
+		"toWarn": true,
+		"toForbid": true,
+		"IsMain":true,
+		"enable":false
+	},
+	{
+		"AccountID": [2],
+		"threshold": "0.95",
+		"toWarn": true,
+		"toForbid": true,
+		"IsMain":false,
+		"enable":false
+	}],
+	"PositionLimit": [{
+		"AccountID": [1],
+		"tradetype": "usdt",
+		"symbols": [{
+			"symbol": "BTCUSDT",
+			"threshold": "0.95"
+		}],
+		"toWarn": true,
+		"toForbid": true,
+		"IsMain":true,
+		"enable":false
+	},{
+		"AccountID": [2],
+		"tradetype": "usdt",
+		"symbols": [{
+			"symbol": "BTCUSDT",
+			"threshold": "0.9"
+		}],
+		"toWarn": true,
+		"toForbid": true,
+		"IsMain":false,
+		"enable":false
+	}],
+	"LossLimit": [{
+		"AccountID": [1],
+		"threshold": "-100",
+		"toWarn": true,
+		"toForbid": true,
+		"toCloseAll": true,
+		"IsMain":true,
+		"enable":false
+	},{
+		"AccountID": [2],
+		"threshold": "-50",
+		"toWarn": true,
+		"toForbid": true,
+		"toCloseAll": true,
+		"IsMain":false,
+		"enable":false
+	}],
+	"WorthLimit": [{
+		"AccountID": [1],
+		"threshold": "0.8",
+		"toWarn": true,
+		"toForbid": true,
+		"toCloseAll": true,
+		"IsMain":true,
+		"enable":false
+	},{
+		"AccountID": [2],
+		"threshold": "0.8",
+		"toWarn": true,
+		"toForbid": true,
+		"toCloseAll": true,
+		"IsMain":false,
+		"enable":false
+	}]
+}

@@ -1,0 +1,41 @@
+{
+    "binance": {
+        "host": "https://api.binance.com",
+        "port": "443",
+        "timeout": 10000,
+        "wshost": "wss://stream.binance.com",
+        "wsport": "9443",
+        "uhost": "https://fapi.binance.com",
+        "uport": "443",
+        "utimeout": 10000,
+        "uwshost": "wss://fstream.binance.com",
+        "uwsport": "443",
+        "thost": "https://dapi.binance.com",
+        "tport": "443",
+        "ttimeout": 10000,
+        "twshost": "wss://dstream.binance.com",
+        "twsport": "443"
+    },
+    "binancefuture": {
+        "uhost": "https://testnet.binancefuture.com",
+        "uport": "443",
+        "utimeout": 10000,
+        "uwshost": "wss://stream.binancefuture.com",
+        "uwsport": "443",
+        "thost": "https://testnet.binancefuture.com",
+        "tport": "443",
+        "ttimeout": 10000,
+        "twshost": "wss://dstream.binancefuture.com",
+        "twsport": "443"
+    },
+    "account_type" : "binance",
+    "account_name" : "Real2022",
+    "api_key" : "T6qUmdYPmqwfHOo3ttCJilZMYyxkdaDGROhJ8fZhgmGgTEagXsnXLsXeCUW7LdXG",
+    "secret_key" : "oDJzCvyN9BDfyIgUc2dibgYeadxQxH9afu4peYuIyfa4sOFOwLQ57Rqui9N95gzJ",
+    "accountAlias": "oCAuFzSgAumY",
+    "strategy_name": "similarity",
+    "account_encrypt" : "",
+    "leverage": 2,
+    "totalAdjRate": -0.5,
+    "depth_limit": 5
+}

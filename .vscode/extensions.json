@@ -1,0 +1,28 @@
+{
+    "recommendations": [
+        "ms-vscode.cpptools-extension-pack",
+        "ms-toolsai.jupyter",
+        "ms-toolsai.jupyter-renderers",        
+        "formulahendry.code-runner",
+        "alefragnani.bookmarks",
+        "usernamehw.errorlens",
+        "ms-ceintl.vscode-language-pack-zh-hans",
+        "oderwat.indent-rainbow",
+        "cweijan.vscode-myssql-client2",
+        "humao.rest-client",
+        "rangav.vscode-thunder-client",
+        "visualstudioexptteam.vscodeintellicode",
+        "visualstudioexptteam.intellicode-api-usage-examples",
+        "visualstudioexptteam.vscodeintellicode-completions",
+        "visualstudioexptteam.vscodeintellicode-insiders",
+        "ms-python.vscode-pylance",
+        "editorconfig.editorconfig",
+        "mkxml.vscode-filesize",
+        "gruntfuggly.todo-tree",
+        "rid9.datetime",
+        "grapecity.gc-excelviewer",
+        "cweijan.vscode-office",
+        "janisdd.vscode-edit-csv",
+        
+    ]
+}

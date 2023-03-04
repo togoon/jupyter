@@ -1,0 +1,1000 @@
+ 1002  lsof -i:19011
+ 1003  lsof -i
+ 1004  netstat -ntulp
+ 1005  cd /root/FIL/strategy/similarity/
+ 1006  . setEnv.sh 
+ 1007  ll -lrstha
+ 1008  free -m
+ 1009  top
+ 1010  free -m
+ 1011  top
+ 1012  cd /root/FIL/strategy/similarity/
+ 1013  . setEnv.sh 
+ 1014  pwd
+ 1015  top
+ 1016  cd /root/FIL/strategy/similarity
+ 1017  . setEnv.sh 
+ 1018  cd ..
+ 1019  ll
+ 1020  cd worth
+ 1021  ll -lrstha
+ 1022  python3 worth2.py 
+ 1023  curl -X POST -d '{"method":"queryContractAssets","params":["testStrategy","USDT"]}' http://127.0.0.1:8808/strategy
+ 1024  cd ..
+ 1025  ll
+ 1026  cd trace/
+ 1027  ll
+ 1028  vim config.json 
+ 1029  ls
+ 1030  cd FIL
+ 1031  ls
+ 1032  cd trace
+ 1033  ls
+ 1034  vim config.json 
+ 1035  ls
+ 1036  cd FIL_test
+ 1037  ls
+ 1038  cd test
+ 1039  ls
+ 1040  cd ../../
+ 1041  ls
+ 1042  cd FIL
+ 1043  ls
+ 1044  ls logs
+ 1045  mkdir test
+ 1046  cd test
+ 1047  ls
+ 1048  chmod 755 Trace
+ 1049  ls
+ 1050  ./Trace -h
+ 1051  ./Trace init -h
+ 1052  ./Trace init -c ~/FIL/test/config.json
+ 1053  ls
+ 1054  vim config.json 
+ 1055  ls
+ 1056  screen -L -S trace_test_allkline
+ 1057  screen -ls
+ 1058  screen -r trace_test_allkline 
+ 1059  curl -X POST -d '{"method":"createMainAccount","params":["mainaccount",3,0]}' http://127.0.0.1:10086/strategy
+ 1060  curl -X POST -d '{"method":"recharge","params":["mainaccount","USDT","8000000.0"]}' http://127.0.0.1:10086/strategy
+ 1061  curl -X POST -d '{"method":"createSubAccount","params":["subaccount",1,"1000000.0"]}' http://127.0.0.1:10086/strategy
+ 1062  curl -X POST -d '{"method":"hello","params":["test-strategy","mainaccount","subaccount","127.0.0.1",10088]}' http://127.0.0.1:10086/strategy
+ 1063  screen -L -S py-test-all-subkline
+ 1064  ls
+ 1065  cd logs
+ 1066  cd ../
+ 1067  cd logs
+ 1068  ll
+ 1069  ll -h
+ 1070  less screenlog_trace_test_allkline_bash_0.log
+ 1071  less screenlog_py-test-all-subkline_bash_0.log 
+ 1072  top
+ 1073  less screenlog_py-test-all-subkline_bash_0.log 
+ 1074  cd /root/FIL/strategy/similarity/
+ 1075  . setEnv.sh
+ 1076  cd ../worth
+ 1077  ll -lrstha
+ 1078  python3 worth2.py 
+ 1079  xclock
+ 1080  imagemagick --version
+ 1081  convert --version
+ 1082  sudo apt install imagemagick
+ 1083  convert --version
+ 1084  ll -lrstha
+ 1085  df -hl
+ 1086  lsblk
+ 1087  xterm -ti vt340
+ 1088  lsix testmulti50.jpg
+ 1089  display testmulti50.jpg
+ 1090  pws
+ 1091  pwd
+ 1092  ubsub.py -N Pyemd2 -y BTCUSDT -Q 150 -s 8401 -c 9401
+ 1093  ll -lrstha
+ 1094  top
+ 1095  ps -ef | grep Trace
+ 1096  ps -ef | grep python3
+ 1097  free -m
+ 1098  q
+ 1099  cd FIL
+ 1100  cd logs
+ 1101  ll
+ 1102  less screenlog_py-test-all-subkline_bash_0.log 
+ 1103  grep delta screenlog_py-test-all-subkline_bash_0.log 
+ 1104  q
+ 1105  cd ../
+ 1106  cd test
+ 1107  ls
+ 1108  less config.json 
+ 1109  curl fapi.binance.com/fapi/v1/time
+ 1110  curl -X GET fapi.binance.com/fapi/v1/time
+ 1111  ls
+ 1112  cd FIL/logs
+ 1113  ls
+ 1114  cd ../test
+ 1115  ls
+ 1116  mv Trace Trace.bak
+ 1117  ls
+ 1118  chmod 755 Trace
+ 1119  ls
+ 1120  ps -ef | grep Trace
+ 1121  kill 2111498
+ 1122  ps -ef | grep Trace
+ 1123  screen -ls
+ 1124  screen -r trace_test_allkline 
+ 1125  ls
+ 1126  screen -ls
+ 1127  screen -r py-test-all-subkline 
+ 1128  cd ../../
+ 1129  ls
+ 1130  cd /root
+ 1131  ls
+ 1132  sudo fallocate -l 2G /swapfile
+ 1133  sudo dd if=/dev/zero of=/swapfile bs=1024 count=2097152
+ 1134  sudo chmod 600 /swapfile
+ 1135  sudo mkswap /swapfile
+ 1136  sudo swapon /swapfile
+ 1137  free -m
+ 1138  screen -ls
+ 1139  screen -r py-test-all-subkline 
+ 1140  cd FIL/logs
+ 1141  ll
+ 1142  less screenlog_py-test-all-subkline_bash_0.log 
+ 1143  cd FIL/logs
+ 1144  ls
+ 1145  screen -ls
+ 1146  screen -r py-test-all-subkline 
+ 1147  screen -ls
+ 1148  screen -r trace_test_allkline 
+ 1149  screen -r py-test-all-subkline 
+ 1150  history | grep curel
+ 1151  history | grep curl
+ 1152  screen -r py-test-all-subkline 
+ 1153  screen -r trace_test_allkline 
+ 1154  ll
+ 1155  less screenlog_trace_test_allkline_bash_0.log 
+ 1156  top
+ 1157  ls
+ 1158  cd FIL/logs/
+ 1159  ll
+ 1160  less screenlog_py-test-all-subkline_bash_0.log 
+ 1161  top
+ 1162  cd FIL/logs
+ 1163  ll
+ 1164  less screenlog_py-test-all-subkline_bash_0.log 
+ 1165  top
+ 1166  cd FIL/logs
+ 1167  ll
+ 1168  less screenlog_trace_test_allkline_bash_0.log 
+ 1169  less screenlog_py-test-all-subkline_bash_0.log 
+ 1170  top
+ 1171  cd /root/FIL/strategy/similarity/
+ 1172  . setEnv.sh 
+ 1173  cd /root
+ 1174  ll -lrstha
+ 1175  cd strateg63/
+ 1176  ll -lrstha
+ 1177  cd cd libs
+ 1178  cd libs/
+ 1179  ll -lrstha
+ 1180  pwd
+ 1181  cd /root/FIL/strategy/
+ 1182  cd similarity/
+ 1183  ll -lrstha
+ 1184  vim main.py 
+ 1185  pwd
+ 1186  vim log.txt 
+ 1187  cd /root/FIL/strategy/similarity/
+ 1188  . setEnv.sh 
+ 1189  top
+ 1190  cd /root/FIL/strategy/similarity/
+ 1191  . setEnv.sh
+ 1192  ll -lrstha
+ 1193  pwd
+ 1194  cd bak
+ 1195  ll -lrstha
+ 1196  wget https://github.com/hackerb9/lsix/archive/master.zip
+ 1197  ll -lrstha
+ 1198  unzip lsix-master.zip
+ 1199  unzip master.zip 
+ 1200  ll -lrstha
+ 1201  sudo cp lsix-master/lsix /usr/local/bin/
+ 1202  sudo chmod +x /usr/local/bin/lsix
+ 1203  pwd
+ 1204  cd ../../worth/
+ 1205  cd ../multiple/
+ 1206  ll -lrstha
+ 1207  cd ../..
+ 1208  ll -lrstha
+ 1209  cd trace
+ 1210  ll
+ 1211  cd ../strategy/multiple/
+ 1212  ll -lrstha
+ 1213  vim log1.txt 
+ 1214  vim log6.txt 
+ 1215  ps aux | grep testmulti6 
+ 1216  kill -15 1883883
+ 1217  ps aux | grep testmulti6 
+ 1218  vim log6.txt 
+ 1219  ps aux | grep  testmulti4
+ 1220  kill -15 1883857
+ 1221  ll -lrstha
+ 1222  vim log17.txt
+ 1223  vim log8.txt 
+ 1224  ps aux | grep  testmulti7
+ 1225  kill -9 1883896
+ 1226  vim log8.txt 
+ 1227  vim multiStop.sh 
+ 1228  . multiStop.sh 
+ 1229  ll -lrstah
+ 1230  top
+ 1231  cd /root/FIL/strategy/similarity
+ 1232  . setEnv.sh 
+ 1233  cd /root/FIL/strategy/similarity
+ 1234  . setEnv.sh 
+ 1235  ll -lrstha
+ 1236  cd /root/FIL/strategy/similarity/
+ 1237  . setEnv.sh 
+ 1238  top
+ 1239  cd /root/FIL/strategy/similarity/
+ 1240  . setEnv.sh 
+ 1241  top
+ 1242  top -cbx
+ 1243  top -c
+ 1244  cd /root/similarity/
+ 1245  ll -rsthla
+ 1246  vim log.txt 
+ 1247  cd /root/FIL/logs
+ 1248  ll -lrstha
+ 1249  vim screenlog_Trace2_bash_0.log 
+ 1250  top
+ 1251  cd /root/FIL/strategy/similarity/
+ 1252  . setEnv.sh 
+ 1253  cd ../multiple/
+ 1254  ll -rsthla
+ 1255  cd -
+ 1256  ll -lrstha
+ 1257  vim log.txt 
+ 1258  cd ../worth
+ 1259  ll -lrstha
+ 1260  cd ../similarity/
+ 1261  ll -lrstha
+ 1262  ps aux | grep simil
+ 1263  ps aux | grep test
+ 1264  ps aux | grep testStrategy
+ 1265  kill -9 1816691 
+ 1266  ps aux | grep testStrategy
+ 1267  mv log.txt log/log_20220731A.txt
+ 1268  ll -lrstha
+ 1269  mv log.txt bak/log_20220731A.txt
+ 1270  ll -lrstha
+ 1271  . similarityStart.sh*
+ 1272  tail -f log.txt 
+ 1273  ps aux | grep test
+ 1274  kill -9 2362501
+ 1275  ls
+ 1276  cd FIL
+ 1277  ls
+ 1278  top
+ 1279  ls
+ 1280  cd logs
+ 1281  ls
+ 1282  less screenlog_trace_test_allkline_bash_0.log 
+ 1283  less screenlog_py-test-all-subkline_bash_0.log 
+ 1284  less screenlog_Trace2_bash_0.log 
+ 1285  ls /var/log
+ 1286  less /var/log/syslog
+ 1287  less /var/log/syslog.1
+ 1288  ll -h /var/log
+ 1289  cp /var/log/syslog.4.gz .
+ 1290  ls
+ 1291  gzip -d syslog.4.gz 
+ 1292  ls
+ 1293  less syslog.4 
+ 1294  cp /var/log/syslog.3.gz .
+ 1295  gzip -d syslog.3.gz 
+ 1296  less syslog.3
+ 1297  ls
+ 1298  less screenlog_Trace2_bash_0.log 
+ 1299  cd /root/FIL/strategy/similarity/
+ 1300  . setEnv.sh 
+ 1301  top
+ 1302  pwd
+ 1303  top
+ 1304  cd /root/FIL/strategy/similarity
+ 1305  . setEnv.sh 
+ 1306  cd /root/FIL/strategy/similarity
+ 1307  . setEnv.sh 
+ 1308  ll -lrstha
+ 1309  . similarityStart.sh 
+ 1310  tail -f log.txt 
+ 1311  ps aux | grep test
+ 1312  . similarityStop.sh 
+ 1313  ps aux | grep test
+ 1314  ps aux | grep testStrategy
+ 1315  cd /root/FIL/strategy/similarity &&  . setEnv.sh
+ 1316  cd /root/FIL/strategy/similarity/
+ 1317  . setEnv.sh 
+ 1318  pwd
+ 1319  cd ..
+ 1320  ll
+ 1321  cd ..
+ 1322  ll
+ 1323  cd trace
+ 1324  ll
+ 1325  ll -lrstha
+ 1326  ./Trace run -c ./config.json
+ 1327  cd /root/FIL/strategy/similarity/
+ 1328  . setEnv.sh 
+ 1329  pwd
+ 1330  cd /root/FIL/strategy/similarity
+ 1331  . setEnv.sh 
+ 1332  cd /root/FIL/strategy/similarity
+ 1333  . setEnv.sh 
+ 1334  top
+ 1335  cd /root/FIL/strategy/similarity | . setEnv.sh
+ 1336  cd /root/FIL/strategy/similarity &  . setEnv.sh
+ 1337  cd /root/FIL/strategy/similarity 
+ 1338  . setEnv.sh
+ 1339  top
+ 1340  cd /root/FIL/strategy/similarity && . setEnv.sh
+ 1341  cd ../../trace/
+ 1342  ll -lrstha
+ 1343  nohup ./Trace run -c ./config.json &
+ 1344  ll -lrstha
+ 1345  vim nohup.out 
+ 1346  ps aux | grep config
+ 1347  kill -9 2399005
+ 1348  ps aux | grep config
+ 1349  nohup ./Trace run -c ./config.json &  >> /root/FIL/logs/screenlog_Trace2_bash_0.log 
+ 1350  pwd
+ 1351  ps aux | grep config
+ 1352  kill -9 2399052
+ 1353  ps aux | grep config
+ 1354  cd /root/FIL/trace &&  nohup ./Trace run -c ./config.json  >> /root/FIL/logs/screenlog_Trace2_bash_0.log  2>&1  &
+ 1355  cd ../strategy/sim
+ 1356  cd ../strategy/similarity/
+ 1357  ll -lrstha
+ 1358  curl -X POST -d '{"method":"hello","params":["testStrategy","testMain","testSub","127.0.0.1",29090]}' http://127.0.0.1:8808/strategy
+ 1359  curl -X POST -d '{"method":"queryPositions","params":["testStrategy", "BTCUSDT", 0]}' http://127.0.0.1:8808/strategy
+ 1360  curl -X POST -d '{"method":"queryContractAssets","params":["testStrategy","USDT"]}' http://127.0.0.1:8808/strategy
+ 1361  curl -X POST -d '{"method":"queryPositions","params":["testStrategy", "BTCUSDT", 1]}' http://127.0.0.1:8808/strategy
+ 1362  nohup python3 -u main.py -n testStrategy -s 8808 -c 29090 -X BTCUSDT -p 10m -w 42 -d 84 -t 1000000  >> log.txt 2>&1  &
+ 1363  tail -f log.txt 
+ 1364  ps aux | grep python
+ 1365  ps aux | grep test
+ 1366  cd /root/FIL/strategy/similarity
+ 1367  . setEnv.sh 
+ 1368  ps aux | grep config
+ 1369  kill -15 1801649 
+ 1370  ps aux | grep config
+ 1371  kill -9 1801649
+ 1372  ps aux | grep config
+ 1373  cd ../../trace/
+ 1374  ll -lrstha
+ 1375  cd ..
+ 1376  ll
+ 1377  cd logs
+ 1378  ll -lrstha
+ 1379  mv screenlog_Trace2_bash_0.log  screenlog_Trace2_bash_0_20220801.log
+ 1380  ll -lrstha
+ 1381  ps aux | grep config
+ 1382  ps aux | grep trace
+ 1383  ll -lrstha
+ 1384  vim screenlog_Trace2_bash_0.log
+ 1385  vim screenlog_Trace2_bash_0_20220801.log
+ 1386  pwd
+ 1387  tail -f screenlog_Trace2_bash_0.log
+ 1388  vim screenlog_Trace2_bash_0_20220801.log
+ 1389  tail -f screenlog_Trace2_bash_0.log
+ 1390  vim screenlog_Trace2_bash_0.log
+ 1391  ll -lrstha
+ 1392  tail -f screenlog_Trace2_bash_0.log
+ 1393  man 7 signal
+ 1394  cd /root/FIL/strategy/similarity && . setEnv.sh
+ 1395  top
+ 1396  cd /root/FIL/strategy/similarity && . setEnv.sh
+ 1397  cd ../pyemd/
+ 1398  ll -lrstha
+ 1399  curl -X POST -d '{"method":"accountTransfer","params":["testMain","testSub","pyemd2","USDT","1000000.0",0]}' http://127.0.0.1:8808/strategy
+ 1400  curl -X POST -d '{"method":"hello","params":["pyemd2","testMain","testSub","127.0.0.1",29091]}' http://127.0.0.1:8808/strategy
+ 1401  curl -X POST -d '{"method":"accountTransfer","params":["testMain","testSub","pyemd2","USDT","1000000.0",0]}' http://127.0.0.1:8808/strategy
+ 1402  nohup python3 -u main.py -n pyemd2 -s 8808 -c 29091 -X BTCUSDT -p 10m -w 42 -d 84 -t 1000000  >> log.txt 2>&1  &
+ 1403  ll -lrstha
+ 1404  tail -f log.txt 
+ 1405  ps aux | grep pyemd
+ 1406  nohup python3 -u main.py -n pyemd2 -s 8808 -c 29091 -X BTCUSDT -p 10m -w 42 -d 84 -t 1000000  >> log.txt 2>&1  &
+ 1407  ps aux | grep pyemd
+ 1408  tail -f log.txt 
+ 1409  ps aux | grep pyemd
+ 1410  ll -lrstha
+ 1411  . pyemdStop.sh
+ 1412  ps aux | grep pyemd
+ 1413  .  pyemdStart.sh
+ 1414  ps aux | grep pyemd
+ 1415  tail -f log.txt 
+ 1416  vim log.txt 
+ 1417  pwd
+ 1418  cd /root/FIL_test/trace/worth/
+ 1419  ll -lrstha
+ 1420  python3 worth.py 
+ 1421  ll -lrstha
+ 1422  cd ..
+ 1423  cd /root/FIL/strategy/pyemd/
+ 1424  ll -lrstha
+ 1425  vim log.txt
+ 1426  cd ..
+ 1427  cd -
+ 1428  ps aux | grep vscode
+ 1429  ps aux | grep vscode | grep -v grep | awk '{print $2}'| xargs kill -9
+ 1430  ps axu | grep python3
+ 1431  tail -f log.txt 
+ 1432  ll -lrstha
+ 1433  mv log.txt bak/log_20220804A.txt
+ 1434  mv pyemd2_20220803.log bak\pyemd2_20220803A.log
+ 1435  . pyemdStop.sh 
+ 1436  ll -lrstha
+ 1437  mv bakpyemd2_20220803A.log bak/pyemd2_20220803A.log
+ 1438  ll -lrstha
+ 1439  . pyemdStart.sh 
+ 1440  tail -f log.txt 
+ 1441  ll -lrstha
+ 1442  mv log.txt bak/log_20220804B.txt
+ 1443  mv pyemd2_20220804.log bak/pyemd2_20220804B.log
+ 1444  ll -lrstha
+ 1445  . pyemdRestart.sh 
+ 1446  ll -lrstha
+ 1447  tail -f log.txt 
+ 1448  cd /root/FIL/strategy/similarity && . setEnv.sh
+ 1449  cd ../worth/
+ 1450  ll -lrstha
+ 1451  python3 worth2.py 
+ 1452  cd ../similarity/
+ 1453  ll -lrstha
+ 1454  vim log.txt
+ 1455  mv testmulti1_* bak/
+ 1456  ll -lrstha
+ 1457  mv testmulti_* bak/
+ 1458  mv testmulti* bak/
+ 1459  ll -lrstha
+ 1460  cd bak
+ 1461  ll -lrstha
+ 1462  vim log_20220731A.txt
+ 1463  pwd
+ 1464  cd ..
+ 1465  ll -lrstha
+ 1466  ps aux | grep vscode
+ 1467  pwd
+ 1468  vim log.txt 
+ 1469  ll -rsthal
+ 1470  vim Pyemd_20220804.log
+ 1471  ps aux | grep pyemd
+ 1472  lsof -i:9090
+ 1473  netstat -ntulp |grep 9090
+ 1474  netstat -anp | grep 9090
+ 1475  cd /root/FIL/strategy/similarity && . setEnv.sh
+ 1476  cd ../pyemd/
+ 1477  cp pyemdStart.sh pyemdRestart.sh
+ 1478  cd /root/FIL/strategy/similarity && . setEnv.sh
+ 1479  top
+ 1480  cd /root/FIL/strategy/similarity && . setEnv.sh
+ 1481  cd ../pyemd/
+ 1482  ll -lrstha
+ 1483  tail -f log.txt 
+ 1484  cd /root/FIL/strategy/similarity && . setEnv.sh
+ 1485  ps aux | grep pyemd
+ 1486  ps aux | grep pyhton3
+ 1487  ps aux | grep pyhton
+ 1488  ps aux | grep python
+ 1489  kill -15 1571243 1580071 
+ 1490  ps aux | grep Pyemd2
+ 1491  ll -lrstha
+ 1492  vim log.txt 
+ 1493  cd /root/FIL/strategy/similarity && . setEnv.sh
+ 1494  top
+ 1495  cd /root/FIL/strategy/similarity && . setEnv.sh
+ 1496  cd ../pyemd/
+ 1497  ll -lrstha
+ 1498  vim log.txt 
+ 1499  . pyemdRestart.sh 
+ 1500  tail -f log.txt
+ 1501  cd /root/FIL/strategy/similarity && . setEnv.sh
+ 1502  cd ../pyemd/
+ 1503  ll -lrstha
+ 1504  tail -f log.txt 
+ 1505  ll -lrstha
+ 1506  mv log.txt bak/log_20220806A.txt
+ 1507  ll -lrsth
+ 1508  mv pyemd2_20220804.log bak/pyemd2_20220804A.log
+ 1509  mv pyemd2_20220806.log bak/pyemd2_20220806A.log
+ 1510  ll -lrstha
+ 1511  . pyemdRestart.sh 
+ 1512  ll -lrstha
+ 1513  mv pyemd2_20220806.log bak/pyemd2_20220806B.log
+ 1514  mv log.txt bak/log_20220806B.txt
+ 1515  . pyemdRestart.sh 
+ 1516  cd /root/FIL/strategy/similarity && . setEnv.sh
+ 1517  cd ../pyemd/
+ 1518  tail -f log.txt 
+ 1519  cd /root/FIL/strategy/similarity && . setEnv.sh
+ 1520  vim log.txt 
+ 1521  ll -lrstha
+ 1522  mv testTrade_20220725.log testTrade_20220726.log  testStrategy_20220721.log testStrategy_20220731.log testStrategy_20220801.log Pyemd_20220731.log Pyemd_20220801.log Pyemd_20220802.log Pyemd_20220804.log  bak/
+ 1523  ll -lrstha
+ 1524  mv Pyemd_20220806.log my_log.txt bak/
+ 1525  ll -lrstha
+ 1526  cd /root/FIL_test/trace
+ 1527  ll -lrstha
+ 1528  cd -
+ 1529  ll -lrstha
+ 1530  cp trace.db trace_20220807A.db
+ 1531  ll -lrstha 
+ 1532  cd -
+ 1533  cd ../pyemd/
+ 1534  ll -lrstha
+ 1535  . pyemdRestart.sh 
+ 1536  cd FIL
+ 1537  cd logs
+ 1538  ls
+ 1539  top
+ 1540  ls
+ 1541  ll -h
+ 1542  cd FIL/logs
+ 1543  ll -h
+ 1544  less screenlog_trace_test_allkline_bash_0.log
+ 1545  cd FIL/logs
+ 1546  ls
+ 1547  kess syslog.3
+ 1548  less syslog.3
+ 1549  cd /root/FIL/strategy/similarity && . setEnv.sh
+ 1550  cd ../pyemd/
+ 1551  tail -f log.txt 
+ 1552  cd /root/FIL/strategy/similarity && . setEnv.sh
+ 1553  cd ../pyemd/
+ 1554  tail -f log.txt 
+ 1555  cd /root/FIL/strategy/similarity && . setEnv.sh
+ 1556  cd ..
+ 1557  who
+ 1558  cd /root/FIL/strategy/similarity && . setEnv.sh
+ 1559  top
+ 1560  who
+ 1561  date
+ 1562  w
+ 1563  pkill -kill -t pts/0
+ 1564  pkill -kill -t pts/1
+ 1565  cd /root/FIL/strategy/similarity && . setEnv.sh
+ 1566  ll -lrstha
+ 1567  top
+ 1568  w
+ 1569  cd /root/FIL/strategy/similarity && . setEnv.sh
+ 1570  cd ../pyemd/
+ 1571  vim log.txt 
+ 1572  tail -f log.txt 
+ 1573  wget https://swupdate.hillstonenet.com:1338/sslvpn/download?os=linux
+ 1574  wget https://swupdate.hillstonenet.com:1338/sslvpn/download?os=linux --nocheck-certificate
+ 1575  wget https://swupdate.hillstonenet.com:1338/sslvpn/download?os=linux --no-check-certificate
+ 1576  ll
+ 1577  file download\?os\=linux 
+ 1578  file download\?os\=linux -b
+ 1579  file download\?os\=linux -b -z
+ 1580  file download\?os\=linux -i
+ 1581  move download\?os\=linux scvpn_linux_1.2.2
+ 1582  mv download\?os\=linux scvpn_linux_1.2.2
+ 1583  ll
+ 1584  chmod +x scvpn_linux_1.2.2 
+ 1585  ll sc*
+ 1586  ./scvpn_linux_1.2.2 
+ 1587  rm scvpn_linux_1.2.2 
+ 1588  ll
+ 1589  cd FIL/trace
+ 1590  ls
+ 1591  mv Trace Trace.bak
+ 1592  ls
+ 1593  chmod 755 Trace
+ 1594  ls
+ 1595  ll -h
+ 1596  top
+ 1597  wget
+ 1598  wget https://swupdatehillstonenet.com:1338/sslvpn/download?os=linux
+ 1599  cd /root/FIL/strategy/similarity && . setEnv.sh
+ 1600  cd ../pyemd/
+ 1601  vim log.txt 
+ 1602  tail -f log.txt 
+ 1603  curl http://localhost:5000/worthpt
+ 1604  cd ../flask/worth/
+ 1605  curl http://localhost:5000/worthpt
+ 1606  ps aux | grep flask
+ 1607  crontab -e
+ 1608  top
+ 1609  ps aux | grep flask
+ 1610  ll -lrstha
+ 1611  cd templates/
+ 1612  ll -lrstha
+ 1613  cd ../bak
+ 1614  ll -lrstha
+ 1615  ps aux | grep flask
+ 1616  ll -lrstha
+ 1617  cd -
+ 1618  ll -lrstha
+ 1619  ps aux | grep flask
+ 1620  top
+ 1621  cd /root/FIL/strategy/similarity && . setEnv.sh
+ 1622  vim log.txt 
+ 1623  cd ../flask/worth/
+ 1624  tail -f worth.log 
+ 1625  top
+ 1626  cd /root/FIL/strategy/similarity && . setEnv.sh
+ 1627  w
+ 1628  vim log.txt 
+ 1629  top
+ 1630  cd ../flask/worth/
+ 1631  ll -lrstha
+ 1632  flask run
+ 1633  pwd
+ 1634  vim worth.log 
+ 1635  cd templates
+ 1636  ll -lrstha
+ 1637  crontab -e
+ 1638  cd ..
+ 1639  . worthStart.sh 
+ 1640  ps aux | grep flask
+ 1641  jobs
+ 1642  kill -9 %1
+ 1643  kill -9 2461511
+ 1644  ps aux | grep flask
+ 1645  . worthStart.sh 
+ 1646  ps aux | grep vscode | grep -v grep | awk '{print $2}'| xargs kill -9
+ 1647  ps aux | grep python3
+ 1648  ps aux | grep vscode | grep -v grep | awk '{print $2}'| xargs kill -9
+ 1649  pwd
+ 1650  cd ../../pyemd/
+ 1651  ll -lrstha
+ 1652  vim log.txt 
+ 1653  tail -f log.txt 
+ 1654  curl -X POST -d '{"method":"queryContractAssets","params":["pyemd2","USDT"]}' http://127.0.0.1:8808/strategy
+ 1655  tail -f log.txt 
+ 1656  ll -lrstha
+ 1657  . worthStart.sh 
+ 1658  vim worth.log 
+ 1659  ll -lrstha
+ 1660  cd bak
+ 1661  ll -lrstha
+ 1662  cd ..
+ 1663  ll -lrstha
+ 1664  vim worthStart.sh 
+ 1665  crotab -e
+ 1666  crontab -e
+ 1667  cd templates/
+ 1668  ll -lrstha
+ 1669  crontab -e
+ 1670  /root/FIL/strategy/flask/worth/worthStart.sh  >> /root/FIL/strategy/flask/worth/worth.log
+ 1671  cd ..
+ 1672  ll -lrstha
+ 1673  chmod +777 worthStart.sh
+ 1674  ll -lrstha
+ 1675  chmod +777 app.py worth.log
+ 1676  ll -lrstha
+ 1677  /root/FIL/strategy/flask/worth/worthStart.sh  >> /root/FIL/strategy/flask/worth/worth.log
+ 1678  vim worthStart.sh 
+ 1679  cd bak
+ 1680  ll -lrstha
+ 1681  cd /root/FIL/strategy/similarity && . setEnv.sh
+ 1682  vim log.txt 
+ 1683  w
+ 1684  ll -lrstha
+ 1685  cd ../flask/worth/bak
+ 1686  ll -lrstha
+ 1687  cd ../templates/
+ 1688  ll -lrstha
+ 1689  cd 
+ 1690  cd -
+ 1691  cd ..
+ 1692  ll
+ 1693  vim worth.log 
+ 1694  vim worthStart.sh
+ 1695  . worthStart.sh 
+ 1696  cd templates/
+ 1697  ll -lrstha
+ 1698  cd ../bak
+ 1699  ll -lrstha
+ 1700  sz worth_20220811.html
+ 1701  cd /root/FIL/strategy/similarity && . setEnv.sh
+ 1702  ll -lrstha
+ 1703  cd templates/
+ 1704  ll -lrstha
+ 1705  top
+ 1706  vim worth.html 
+ 1707  cd ../bak
+ 1708  ll
+ 1709  vim worth_20220811.html
+ 1710  cd ..
+ 1711  ll -lrstha
+ 1712  . worthStart.sh  >> worth.log 
+ 1713  cd /root/FIL/strategy/similarity && . setEnv.sh
+ 1714  cd ../flask/worth/
+ 1715  ll -lrstha
+ 1716  tail -f worth.log 
+ 1717  cd bak
+ 1718  ll -lrstha
+ 1719  vim worth_20220811.html 
+ 1720  ll -lrstha
+ 1721  cd ../templates/
+ 1722  ll
+ 1723  cd ..
+ 1724  . worthStart.sh 
+ 1725  ll -lrshat
+ 1726  cd templates/
+ 1727  ll
+ 1728  cd ..
+ 1729  . worthStart.sh 
+ 1730  ll -lrstha
+ 1731  cd /root/FIL/strategy/similarity && . setEnv.sh
+ 1732  cd ../flask/worth/
+ 1733  vim worthStart.sh 
+ 1734  crontab -e
+ 1735  rm worth.log 
+ 1736  ll -lrstha
+ 1737  cd bak
+ 1738  ll -lrstha
+ 1739  cd ../templates/
+ 1740  ll
+ 1741  cd ..
+ 1742  ll
+ 1743  vim log.txt 
+ 1744  . worthStart.sh 
+ 1745  w
+ 1746  ll -lrstha
+ 1747  cd bak
+ 1748  ll -lrstha
+ 1749  vim worth_20220812.html 
+ 1750  cd ..
+ 1751  vim log.txt 
+ 1752  cd templates/
+ 1753  ll -lrstha
+ 1754  vim worth.html 
+ 1755  cd ..
+ 1756  vim worthStart.sh 
+ 1757  crontab -e
+ 1758  /root/FIL/strategy/flask/worth/worthStart.sh  >> /root/FIL/strategy/flask/worth/log.txt  2>&1
+ 1759  top
+ 1760  cd /root/FIL/strategy/similarity && . setEnv.sh
+ 1761  vim log.txt 
+ 1762  ps aux | grep python3
+ 1763  cd ../
+ 1764  ll
+ 1765  cd ..
+ 1766  ll
+ 1767  cd trace/
+ 1768  ll 
+ 1769  cd ../logs/
+ 1770  ll
+ 1771  ll -lrstha
+ 1772  vim screenlog_Trace2_bash_0.log
+ 1773  ll -lrstha
+ 1774  mv screenlog_Trace2_bash_0.log  screenlog_Trace2_bash_0_20220813.log
+ 1775  ll -lrstha
+ 1776  cd ../strategy/
+ 1777  ll
+ 1778  cd similarity/
+ 1779  ll
+ 1780  . similarityStop.sh
+ 1781  cd ../pyemd/
+ 1782  ll
+ 1783  . pyemdStop.sh
+ 1784  ll -lrstha
+ 1785  cd -
+ 1786  ll -lrstha
+ 1787  mv testStrategy_20220802.log Pyemd_20220807.log bak/
+ 1788  rm -rf my_log.txt 
+ 1789  mv log.txt bak/lot_20220813A.txt
+ 1790  ll -lrstha
+ 1791  . similarityStart.sh 
+ 1792  ll -lrstha
+ 1793  tail -f log.txt
+ 1794  cd -
+ 1795  cd ../pyemd/
+ 1796  ll -lrstha
+ 1797  mv pyemd2_20220806.log bak/
+ 1798  mv pyemd2_20220807.log bak/pyemd2_20220807.log
+ 1799  mv log.txt bak/log_20220813A.txt
+ 1800  ll -lrstha
+ 1801  . pyemdStart.sh 
+ 1802  tail -f log.txt 
+ 1803  ps aux | grep vscode | grep -v grep | awk '{print $2}'| xargs kill -9
+ 1804  sync; echo 1 > /proc/sys/vm/drop_caches 
+ 1805  tail -f log.txt 
+ 1806  vim log.txt 
+ 1807  tail -f log.txt 
+ 1808  cd ../flask/worth/
+ 1809  ll -lrstha
+ 1810  vim log.txt 
+ 1811  vim worthStart.sh 
+ 1812  cd templates/
+ 1813  ll -lrstha
+ 1814  cd ../bak
+ 1815  ll -lrstha
+ 1816  cd ..
+ 1817  vim worthStart.sh 
+ 1818  crontab -e
+ 1819  tail -f log.txt 
+ 1820  vim worthStart.sh 
+ 1821  crontab -e
+ 1822  tail -f log.txt 
+ 1823  cd templates/
+ 1824  ll -lrstha
+ 1825  vim worth.html 
+ 1826  crontab -e
+ 1827  cd ../bak
+ 1828  ll -lrstha
+ 1829  top
+ 1830  cd ..
+ 1831  ll -lrstha
+ 1832  vim app.py 
+ 1833  cd ../../pyemd/
+ 1834  vim log.txt 
+ 1835  tail -f log.txt 
+ 1836  top
+ 1837  cd /root/FIL/strategy/similarity && . setEnv.sh
+ 1838  w
+ 1839  cd ../flask/worth/
+ 1840  cd templates/
+ 1841  ll -lrstha
+ 1842  vim worth.html 
+ 1843  cd ..
+ 1844  vim log.txt 
+ 1845  cd ../../pyemd/
+ 1846  vim log.txt 
+ 1847  cd ..
+ 1848  ll -lrstha
+ 1849  cd trace
+ 1850  ll -lrstha
+ 1851  ps aux | grep trace
+ 1852  ps aux | grep Trace
+ 1853  top
+ 1854  cd /root/FIL_
+ 1855  cd /root/FIL_test/
+ 1856  ll -lrsta
+ 1857  cd trace
+ 1858  ll -lrstha
+ 1859  cd /root
+ 1860  ll -lrsstha
+ 1861  vim screenlog.0-20220715-1134
+ 1862  cd similarity/
+ 1863  ll -rstahl
+ 1864  vim log.txt 
+ 1865  history
+ 1866  ps aux | grep Trace
+ 1867  ps aux | grep config
+ 1868  pwd
+ 1869  cd /root/FIL/trace/
+ 1870  ll -lrstha
+ 1871  ps aux | grep config
+ 1872  kill -15 2399100
+ 1873  ps aux | grep config
+ 1874  kill -9  2399100
+ 1875  ps aux | grep config
+ 1876  cd /root/FIL/trace &&  nohup ./Trace run -c ./config.json  >> /root/FIL/logs/screenlog_Trace2_bash_0.log  2>&1  &
+ 1877  ps aux | grep config
+ 1878  ps aux | grep python
+ 1879  ps aux | grep 8808
+ 1880  curl -X POST -d '{"method":"hello","params":["testStrategy","testMain","testSub","127.0.0.1",29090]}' http://127.0.0.1:8808/strategy
+ 1881  curl -X POST -d '{"method":"hello","params":["pyemd2","testMain","testSub","127.0.0.1",29091]}' http://127.0.0.1:8808/strategy
+ 1882  ps aux | grep 8808
+ 1883  top
+ 1884  cd ../strategy/similarity/
+ 1885  tail -f log.txt 
+ 1886  cd /root/FIL/strategy/similarity && . setEnv.sh
+ 1887  cd ../flask/worth/
+ 1888  cd bak
+ 1889  vim worth_20220814.html 
+ 1890  cd ../../../similarity/
+ 1891  ll -lrstha
+ 1892  tail -f log.txt
+ 1893  vim log.txt 
+ 1894  curl -X POST -d '{"method":"queryPositions","params":["testStrategy","BTCUSDT",0]}' http://127.0.0.1:8808/strategy
+ 1895  date
+ 1896  curl -X POST -d '{"method":"queryPositions","params":["testStrategy","BTCUSDT",0]}' http://127.0.0.1:8808/strategy
+ 1897  vim log.txt 
+ 1898  curl -X POST -d '{"method":"queryContractAssets","params":["testStrategy","USDT"]}' http://127.0.0.1:8808/strategy
+ 1899  curl -X POST -d '{"method":"queryContractAssets","params":["pyemd2","USDT"]}' http://127.0.0.1:8808/strategy
+ 1900  find . -type f -name "*.txt" | xargs grep "clearance" | grep -v grep 
+ 1901  find . -type f -name "*.log" | xargs grep "clearance" | grep -v grep 
+ 1902  find . -type f -name "*.txt" | xargs grep -inr "clearance" | grep -v grep 
+ 1903  find . -type f -name "*.txt" | xargs grep -inr "clearance" 
+ 1904  ll -lrstha
+ 1905  rm -rf my_log.txt
+ 1906  ll -lrstha
+ 1907  curl -X POST -d '{"method":"queryPositions","params":["testmulti1","BTCUSDT",0]}' http://127.0.0.1:8808/strategy 
+ 1908  curl -X POST -d '{"method":"queryPositions","params":["testmulti1","BTCUSDT",1]}' http://127.0.0.1:8808/strategy 
+ 1909  ps aux | grep python3
+ 1910  kill -9 2500030
+ 1911  ps aux | grep python3
+ 1912  kill -9 2501805
+ 1913  ps aux | grep python3
+ 1914  kill -9 2501940
+ 1915  ps aux | grep simi
+ 1916  ps aux | grep testS
+ 1917  ll
+ 1918  vim similarityStop.sh
+ 1919  . similarityStop.sh
+ 1920  ll -lrstha
+ 1921  mv log.txt bak/log_20220814A.txt
+ 1922  mv testStrategy_20220813.log bak/testStrategy_20220813.log
+ 1923  . similarityStart.sh 
+ 1924  tail -f log.txt
+ 1925  . similarityStop.sh 
+ 1926  . similarityStart.sh 
+ 1927  tail -f log.txt
+ 1928  . similarityStop.sh 
+ 1929  . similarityStart.sh 
+ 1930  tail -f log.txt
+ 1931  . similarityStop.sh 
+ 1932  . similarityStart.sh 
+ 1933  tail -f log.txt
+ 1934  cd /root/FIL/strategy/similarity && . setEnv.sh
+ 1935  top
+ 1936  curl -X POST -d '{"method":"queryPositions","params":["testStrategy","BTCUSDT",0]}' http://127.0.0.1:8808/strategy
+ 1937  curl -X POST -d '{"method":"queryPositions","params":["testStrategy","BTCUSDT",1]}' http://127.0.0.1:8808/strategy
+ 1938  cd ../../logs/
+ 1939  ll -lrstha
+ 1940  vim screenlog_Trace2_bash_0.log
+ 1941  curl -X POST -d '{"method":"queryPositions","params":["testStrategy","BTCUSDT",0]}' http://127.0.0.1:8808/strategy
+ 1942  cd FIL/logs/
+ 1943  ll -h
+ 1944  less screenlog_Trace2_bash_0.log
+ 1945  cd FIL/logs/
+ 1946  ll -h
+ 1947  grep "strategy:2" screenlog_Trace2_bash_0.log
+ 1948  cd FIL
+ 1949  ls
+ 1950  cd ../
+ 1951  ll -h
+ 1952  less  screenlog.0-2022-6-30
+ 1953  less screenlog.0-20220715-1134
+ 1954  ll -h
+ 1955  cd FIL_test
+ 1956  ll -h
+ 1957  cd trace
+ 1958  ls
+ 1959  ll -h
+ 1960  cd FIL/logs/
+ 1961  ll -h
+ 1962  less screenlog_Trace2_bash_0.log 
+ 1963  cd FIL/logs/
+ 1964  ll -h
+ 1965  less screenlog_Trace2_bash_0.log
+ 1966  cd /root/FIL/strategy/similarity && . setEnv.sh
+ 1967  free
+ 1968  top
+ 1969  pwd
+ 1970  ll -lrstha
+ 1971  w
+ 1972  pkill -kill -t pts/0
+ 1973  pkill -kill -t pts/1
+ 1974  w
+ 1975  cd /root/FIL/strategy/similarity && . setEnv.sh
+ 1976  curl -X POST -d '{"method":"queryContractAssets","params":["testmulti12","USDT"]}' http://127.0.0.1:8808/strategy
+ 1977  curl -X POST -d '{"method":"queryPositions","params":["testmulti12","BTCUSDT",0]}' http://127.0.0.1:8808/strategy
+ 1978  curl -X POST -d '{"method":"queryPositions","params":["testmulti12","BTCUSDT",1]}' http://127.0.0.1:8808/strategy
+ 1979  cd ../../logs/
+ 1980  ll -lsrath
+ 1981  vim screenlog_Trace2_bash_0.log
+ 1982  ll -lrstha
+ 1983  docker ps -a
+ 1984  sudo docker exec -it mysql-fil bash
+ 1985  cd FIL/logs/
+ 1986  ls
+ 1987  cd ../
+ 1988  ls
+ 1989  cd trace/
+ 1990  ls
+ 1991  less config.json 
+ 1992  cd FIL/trace
+ 1993  ls
+ 1994  ll -h
+ 1995  rm Trace.bak 
+ 1996  mv Trace Trace.bak
+ 1997  ls
+ 1998  chmod 755 Trace
+ 1999  ls
+ 2000  cd /root/FIL/strategy/similarity && . setEnv.sh
+ 2001  history >> history_20220816.txt

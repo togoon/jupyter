@@ -1,0 +1,4 @@
+2022-08-14 21:30:22,018:INFO:my:2092263996.py:24:__init__:2500030: self.name='testmulti1', self.symbol='BTCUSDT', self.total=1000000.0, self.count=0, self.flagDict={'side': '', 'posBuy': 0, 'posSell': 0, 'isNewDay': False, 'isOpenBuy': False, 'isOpenSell': False, 'isCloseBuy': False, 'isCloseSell': False, 'isOpen': False, 'isClose': False, 'isTrig': False, 'isCorr': False}
+2022-08-14 21:30:22,049:INFO:my:1951861339.py:11:test:2500030: start
+2022-08-14 22:30:54,337:INFO:my:2092263996.py:24:__init__:2500030: self.name='testmulti1', self.symbol='BTCUSDT', self.total=1000000.0, self.count=0, self.flagDict={'side': '', 'posBuy': 0, 'posSell': 0, 'isNewDay': False, 'isOpenBuy': False, 'isOpenSell': False, 'isCloseBuy': False, 'isCloseSell': False, 'isOpen': False, 'isClose': False, 'isTrig': False, 'isCorr': False}
+2022-08-14 22:30:54,364:INFO:my:859580854.py:11:test:2500030: start

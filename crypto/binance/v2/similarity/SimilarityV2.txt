@@ -1,0 +1,65 @@
+2.	Similarity.py
+a)	截取前面半天的k线，去寻找历史上N天前走势最相似的一天，如果那天的后半天是上涨的，那么做多，如果是下跌的，则做空，当天日终平仓。
+
+
+curl -X POST -d '{"method":"hello","params":["simi","0.001",18080,19090]}' http://127.0.0.1:8888/strategy
+curl -X POST -d '{"method":"recharge","params":["simi","USDT","1000000"]}' http://127.0.0.1:8888/strategy
+
+
+python3 main.py -n simi -s 18080 -c 19090 -X BTCUSDT  -t 1000
+
+
+
+simi  18080 19090
+curl -X POST -d '{"method":"hello","params":["simi","0.001",18080,19090]}' http://127.0.0.1:8888/strategy
+
+{"success":true,"message":"{\"name\":\"simi\" , \"time\":1654137561338, \"id\":55}"}
+
+curl -X POST -d '{"method":"recharge","params":["simi","USDT","10000"]}' http://127.0.0.1:8888/strategy
+
+{"success":true,"message":""}
+
+python3 main.py -n simi -s 18080 -c 19090 -X BTCUSDT -p 3m -t 1000
+curl -X POST -d '{"method":"hello","params":["simi","0.001",18080,19090]}' http://127.0.0.1:8888/strategy
+curl -X POST -d '{"method":"recharge","params":["simi","USDT","10000"]}' http://127.0.0.1:8888/strategy
+
+python3 main.py -n simil -s 18081 -c 19091 -X BTCUSDT -p 5m -t 10000
+python3 main.py -n simila -s 18082 -c 19092 -X BTCUSDT -p 15m -t 10000
+
+simil  18081 19091  , 100000 :10000 , 90895
+curl -X POST -d '{"method":"hello","params":["simil","0.001",18081,19091]}' http://127.0.0.1:8888/strategy
+curl -X POST -d '{"method":"recharge","params":["simila","USDT","100000"]}' http://127.0.0.1:8888/strategy
+nohup python3 main.py -n simil -s 18081 -c 19091 -X BTCUSDT -p 15m -t 10000 &
+
+
+curl -X POST -d '{"method":"queryWorth","params":["simila",0,0,10]}' http://127.0.0.1:8888/strategy
+curl -X POST -d '{"method":"queryAllBalances","params":["simila"]}' http://127.0.0.1:8888/strategy
+curl -X POST -d '{"method":"queryAllPositions","params":["simila"]}' http://127.0.0.1:8888/strategy
+
+
+
+
+curl -X POST -d '{"method":"hello","params":["simi","0.001",18080,19090]}' http://127.0.0.1:8888/strategy
+#curl -X POST -d '{"method":"recharge","params":["simi","USDT","10000"]}' http://127.0.0.1:8888/strategy
+python3 main.py -n simi -s 18080 -c 19090 -X BTCUSDT -p 3m -t 1000
+
+curl -X POST -d '{"method":"hello","params":["simil","0.001",18081,19091]}' http://127.0.0.1:8888/strategy
+#curl -X POST -d '{"method":"recharge","params":["simil","USDT","100000"]}' http://127.0.0.1:8888/strategy
+nohup python3 main.py -n simil -s 18081 -c 19091 -X BTCUSDT -p 5m -t 10000 &
+
+curl -X POST -d '{"method":"hello","params":["simila","0.001",18082,19092]}' http://127.0.0.1:8888/strategy
+#curl -X POST -d '{"method":"recharge","params":["simila","USDT","100000"]}' http://127.0.0.1:8888/strategy
+nohup python3 main.py -n simila -s 18082 -c 19092 -X BTCUSDT -p 15m -t 10000  > simila15.out 2>&1 &
+nohup python3 main.py -n simila -s 18082 -c 19092 -X BTCUSDT -p 15m -t 10000  &
+
+curl -X POST -d '{"method":"hello","params":["similar","0.001",18083,19093]}' http://127.0.0.1:8888/strategy
+#curl -X POST -d '{"method":"recharge","params":["similar","USDT","100000"]}' http://127.0.0.1:8888/strategy
+nohup python3 main.py -n similar -s 18083 -c 19093 -X BTCUSDT -p 1m -t 10000 > similar.out 2>&1 &
+
+
+curl -X POST -d '{"method":"hello","params":["similarity","0.001",18010,19010]}' http://127.0.0.1:8888/strategy
+#curl -X POST -d '{"method":"recharge","params":["similarity","USDT","100000"]}' http://127.0.0.1:8888/strategy
+nohup python3 main.py -n similarity -s 18010 -c 19010 -X BTCUSDT -p 10m -w 42 -d 84 -t 10000  &
+
+
+

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<国家调查>
+	<Node1>
+		<subNode>
+			<subNode1>
+				<subNode11>china    111-> 江苏 </subNode11>
+				<subNode11>china    112-> 天津 </subNode11> 
+				<subNode11>china    113-> 北京 </subNode11>
+				<subNode11>china    114-> 上海 </subNode11>
+				<subNode11>china    115-> 广州 </subNode11>
+			</subNode1>
+		</subNode>
+		<subNode1>Asia    12-> 韩国 </subNode1>
+		<subNode2>Asia    13-> 日本 </subNode2>
+		<subNode3>Asia    14-> 越南 </subNode3>
+		<subNode4>Asia    15-> 柬埔寨 </subNode4>
+		<subNode5>Asia    16-> 老挝 </subNode5>
+	</Node1>
+	<Node2>
+		<subNode>America  21-> 巴西 </subNode>
+		<subNode>America  22-> 阿根廷 </subNode>
+		<subNode>America  23-> 智利 </subNode>
+		<subNode>America  24-> 墨西哥 </subNode>
+		<subNode>America  25-> 巴拉圭 </subNode>
+		<subNode>America  26-> 美国 </subNode>
+		<subNode>America  27-> 加拿大 </subNode>
+	</Node2>
+	<Node3>
+		<subNode>Europe  31-> 英国</subNode>
+		<subNode>Europe  32-> 意大利 </subNode>
+		<subNode>Europe  33-> 法国</subNode>
+		<subNode>Europe  34-> 德国 </subNode>
+		<subNode>Europe  35-> 西班牙</subNode>
+		<subNode>Europe  36-> 匈牙利 </subNode>
+	</Node3>
+	<Node5>THE END </Node5>
+</国家调查> 

@@ -1,0 +1,329 @@
+{
+    "C_Cpp.updateChannel": "Insiders",
+    "editor.suggestSelection": "first",
+    "vsintellicode.modify.editor.suggestSelection": "automaticallyOverrodeDefaultValue",
+    "workbench.editorAssociations": {
+        "*.ipynb": "jupyter-notebook",
+        "*.png": "imagePreview.previewEditor"
+    },
+    "window.title": "${remoteName}${separator}${separator}${activeEditorLong}",
+    "code-runner.runInTerminal": true,
+    "code-runner.executorMap": {
+        "javascript": "node",
+        "java": "cd $dir && javac $fileName && java $fileNameWithoutExt",
+        "java1": "cd $dir && 'C:\\Program Files (x86)\\Java\\jdk1.8.0_291\bin\\javac.exe' $fullFileName && java $fileNameWithoutExt",
+        "c": "cd $dir && gcc $fileName -o $fileNameWithoutExt && $dir$fileNameWithoutExt",
+        "cpp": "cd $dir && g++ -g $fileName -lpthread -o $fileNameWithoutExt && $dir$fileNameWithoutExt",
+        "cc": "cd $dir && g++ -g $fileName -o $fileNameWithoutExt && $dir$fileNameWithoutExt",
+        "objective-c": "cd $dir && gcc -framework Cocoa $fileName -o $fileNameWithoutExt && $dir$fileNameWithoutExt",
+        "php": "php",
+        "python": "python3 -u",
+        "perl": "perl",
+        "perl6": "perl6",
+        "ruby": "ruby",
+        "go": "go run",
+        "lua": "lua",
+        "groovy": "groovy",
+        "powershell": "powershell -ExecutionPolicy ByPass -File",
+        "bat": "cmd /c",
+        "shellscript": "bash",
+        "fsharp": "fsi",
+        "csharp": "cd $dir && dotnet run",
+        "vbscript": "cscript //Nologo",
+        "typescript": "ts-node",
+        "coffeescript": "coffee",
+        "scala": "scala",
+        "swift": "swift",
+        "julia": "julia",
+        "crystal": "crystal",
+        "ocaml": "ocaml",
+        "r": "Rscript",
+        "applescript": "osascript",
+        "clojure": "lein exec",
+        "haxe": "haxe --cwd $dirWithoutTrailingSlash --run $fileNameWithoutExt",
+        "rust": "cd $dir && rustc $fileName && $dir$fileNameWithoutExt",
+        "racket": "racket",
+        "scheme": "csi -script",
+        "ahk": "autohotkey",
+        "autoit": "autoit3",
+        "dart": "dart",
+        "pascal": "cd $dir && fpc $fileName && $dir$fileNameWithoutExt",
+        "d": "cd $dir && dmd $fileName && $dir$fileNameWithoutExt",
+        "haskell": "runhaskell",
+        "nim": "nim compile --verbosity:0 --hints:off --run",
+        "lisp": "sbcl --script",
+        "kit": "kitc --run",
+        "v": "v run",
+        "sass": "sass --style expanded",
+        "scss": "scss --style expanded",
+        "less": "cd $dir && lessc $fileName $fileNameWithoutExt.css",
+        "FortranFreeForm": "cd $dir && gfortran $fileName -o $fileNameWithoutExt && $dir$fileNameWithoutExt",
+        "fortran-modern": "cd $dir && gfortran $fileName -o $fileNameWithoutExt && $dir$fileNameWithoutExt",
+        "fortran_fixed-form": "cd $dir && gfortran $fileName -o $fileNameWithoutExt && $dir$fileNameWithoutExt",
+        "fortran": "cd $dir && gfortran $fileName -o $fileNameWithoutExt && $dir$fileNameWithoutExt"
+    },
+    "code-runner.saveFileBeforeRun": true,
+    "files.autoSave": "onFocusChange",
+    // "files.autoSaveDelay": 100,
+    "editor.fontLigatures": false,
+    "dashboard.projectData": null,
+    "explorer.confirmDragAndDrop": false,
+    "editor.formatOnType": true,
+    // "clang-format.executable": "/absolute/path/to/clang-format",
+    "editor.codeActionsOnSave": null,
+    "[c]": {
+        "editor.defaultFormatter": "ms-vscode.cpptools"
+    },
+    "[cpp]": {
+        "editor.defaultFormatter": "ms-vscode.cpptools"
+    },
+    "[cc]": {
+        "editor.defaultFormatter": "ms-vscode.cpptools"
+    },
+    "[h]": {
+        "editor.defaultFormatter": "ms-vscode.cpptools"
+    },
+    "terminal.integrated.copyOnSelection": true,
+    "vsicons.dontShowNewVersionMessage": true,
+    "explorer.confirmDelete": false,
+    "workbench.enableExperiments": false,
+    "workbench.settings.enableNaturalLanguageSearch": false,
+    "update.showReleaseNotes": false,
+    "update.mode": "none",
+    "json.schemaDownload.enable": false,
+    "editor.inlineSuggest.enabled": true,
+    "settingsSync.ignoredSettings": [],
+    "editor.formatOnSaveMode": "modifications",
+    "cmake.configureOnOpen": true,
+    "java.home": "c:\\Program Files\\Java\\jdk1.8.0_291",
+    "java.configuration.checkProjectSettingsExclusions": false,
+    "editor.fontSize": 14,
+    "files.autoGuessEncoding": true,
+    "bracketPairColorizer.depreciation-notice": false,
+    "notebook.lineNumbers": "on",
+    "window.zoomLevel": 0,
+    "sync.autoUpload": true,
+    "sync.quietSync": true,
+    "sync.forceDownload": true,
+    "sync.forceUpload": true,
+    "sync.autoDownload": true,
+    "sync.gist": "c18c8e77cc6a428af547f44f69acff03",
+    "jupyter.askForKernelRestart": false,
+    "terminal.integrated.scrollback": 99999,
+    "workbench.iconTheme": "vscode-icons",
+    "security.workspace.trust.untrustedFiles": "open",
+    "remote.SSH.remotePlatform": {
+        "47.241.99.13": "linux",
+        "8.219.68.31": "linux"
+    },
+    "editor.wordWrap": "wordWrapColumn",
+    "editor.rulers": [
+        100,
+    ],
+    "editor.wordWrapColumn": 100,
+    "[python]": {
+        "editor.defaultFormatter": "ms-python.python"
+    },
+    "window.commandCenter": false,
+    "blockman.n01LineHeight": 0,
+    "workbench.colorCustomizations": {
+        "sash.hoverBorder": "#ac47cd",
+        "statusBar.background": "#9130b1",
+        "statusBar.foreground": "#e7e7e7",
+        "statusBarItem.hoverBackground": "#ac47cd",
+        "statusBarItem.remoteBackground": "#9130b1",
+        "statusBarItem.remoteForeground": "#e7e7e7"
+    },
+    "diffEditor.wordWrap": "off",
+    "editor.guides.indentation": false,
+    "editor.guides.bracketPairs": false,
+    "editor.inlayHints.enabled": "on",
+    "window.menuBarVisibility": "compact",
+    "editor.renderLineHighlightOnlyWhenFocus": true,
+    "python.autoComplete.extraPaths": [
+        "/opt/python/latest/lib/python3.10",
+    ],
+    "python.analysis.extraPaths": [
+        "/opt/python/latest/lib/python3.10"
+    ],
+    "python.analysis.completeFunctionParens": true,
+    "python.analysis.inlayHints.functionReturnTypes": true,
+    "jupyter.jupyterInterruptTimeout": 1000,
+    "jupyter.jupyterLaunchTimeout": 5000,
+    "git.postCommitCommand": "sync",
+    "editor.foldingImportsByDefault": true,
+    "todo-tree.regex.regex": "((%|#|//|<!--|^\\s*\\*)\\s*($TAGS):|^\\s*- \\[ \\])",
+    "todo-tree.general.tags": [
+        "todo",
+        "bug",
+        "tag",
+        "done",
+        "mark",
+        "test",
+        "[x]",
+        "NOTE",
+        "HACK",
+        "XXX",
+        "STAR",
+        "FIXME",
+        "update",
+        "debug",
+        "warning",
+        "info",
+        "error",
+        "critical",
+    ],
+    "todo-tree.regex.regexCaseSensitive": false,
+    "todo-tree.highlights.defaultHighlight": { //如果相应变量没赋值就会使用这里的默认值
+        "foreground": "black", //字体颜色
+        "background": "yellow", //背景色
+        "icon": "check", //标签样式 check 是一个对号的样式
+        "rulerColour": "yellow", //边框颜色
+        "type": "tag", //填充色类型  可在TODO TREE 细节页面找到允许的值 
+        "iconColour": "yellow" //标签颜色
+    },
+    "todo-tree.highlights.customHighlight": {
+        "todo": {
+            "icon": "check-circle", //标签样式
+            "background": "#c9c552", //背景色
+            "rulerColour": "#c9c552", //外框颜色
+            "iconColour": "#c9c552", //标签颜色
+        },
+        "done": {
+            "background": "green",
+            "icon": "check-circle-fill",
+            "rulerColour": "green",
+            "iconColour": "green",
+        },
+        "HACK": {
+            "icon": "question",
+            "background": "#04dc00ea",
+            "rulerColour": "#04dc00ea",
+            "iconColour": "#04dc00ea",
+        },
+        "FIXME": {
+            "background": "#04dc00f3",
+            "icon": "flame",
+            "rulerColour": "#04dc00f3",
+            "iconColour": "#04dc00f3",
+        },
+        "XXX": {
+            "icon": "unverified",
+            "background": "#02dc00",
+            "rulerColour": "#02dc00",
+            "iconColour": "#02dc00",
+        },
+        "tag": {
+            "background": "#38b2f4",
+            "icon": "tag",
+            "rulerColour": "#38b2f4",
+            "iconColour": "#38b2f4",
+            "rulerLane": "full"
+        },
+        "mark": {
+            "background": "#f90",
+            "icon": "bookmark",
+            "rulerColour": "#f90",
+            "iconColour": "#f90",
+        },
+        "test": {
+            "background": "#df7be6",
+            "icon": "beaker",
+            "rulerColour": "#df7be6",
+            "iconColour": "#df7be6",
+        },
+        "update": {
+            "background": "#d65d8e",
+            "icon": "versions",
+            "rulerColour": "#d65d8e",
+            "iconColour": "#d65d8e",
+        },
+        "[x]": {
+            "icon": "light-bulb",
+            "background": "BurlyWood",
+            "rulerColour": "BurlyWood",
+            "iconColour": "BurlyWood",
+        },
+        "NOTE": {
+            "foreground": "RoyalBlue",
+            "icon": "note",
+            "rulerColour": "RoyalBlue",
+            "iconColour": "RoyalBlue"
+        },
+        "STAR": {
+            // "foreground": "white",
+            "background": "Gold",
+            "icon": "star",
+            "rulerColour": "Gold",
+            "iconColour": "Gold"
+        },
+        "bug": {
+            "background": "#eb5c5c",
+            "icon": "bug",
+            "rulerColour": "#eb5c5c",
+            "iconColour": "#eb5c5c",
+        },
+        "debug": {
+            "background": "#0ba1f3",
+            "icon": "mirror",
+            "rulerColour": "#0ba1f3",
+            "iconColour": "#0ba1f3",
+        },
+        "info": {
+            "background": "#909399",
+            "icon": "info",
+            "foreground": "white",
+            "iconColour": "white",
+        },
+        "warning": {
+            "icon": "alert",
+            "foreground": "#909399",
+        },
+        "error": {
+            "foreground": "white",
+            "background": "#de2a3fcd",
+            "icon": "x-circle",
+            "rulerColour": "#de2a3fcd",
+            "iconColour": "#de2a3fcd",
+        },
+        "critical": {
+            "foreground": "white",
+            "background": "red",
+            "icon": "x-circle-fill",
+            "rulerColour": "red",
+            "iconColour": "red",
+        },
+    },
+    "dateTime.locale": "zh-cn",
+    "dateTime.showDayOfMonth": true,
+    "dateTime.showDayOfWeek": true,
+    "dateTime.showMonth": true,
+    "dateTime.showSeconds": true,
+    "dateTime.timeZone": "Asia/Shanghai",
+    "dateTime.customFormat": "YYYY-MM-DD HH:mm:ss MMM/dddE W周 X z",
+    "peacock.surpriseMeOnStartup": true,
+    "workbench.editor.showTabs": true,
+    "peacock.affectTitleBar": false,
+    "peacock.affectActivityBar": false,
+    "peacock.keepBadgeColor": true,
+    "editor.minimap.enabled": false,
+    "git.enableSmartCommit": true,
+    "git.confirmSync": false,
+    "git.autofetch": true,
+    "peacock.remoteColor": "#9130b1",
+    "editor.tabCompletion": "on",
+    "terminal.integrated.profiles.linux": {
+        "bash_l": {
+            "icon": "terminal-bash",
+            "path": "bash",
+            "args": [
+                "-l", 
+            ]
+        }
+    },
+    "terminal.integrated.defaultProfile.linux": "bash_l",
+    "files.associations": {
+        "ostream": "cpp",
+        "iostream": "cpp"
+    }
+}

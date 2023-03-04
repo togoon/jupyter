@@ -1,0 +1,1160 @@
+del F:\_desktop.ini /f /s /q /a （F代表你要操作的盘符，如果是C盘就把F改成C）
+强制删除F盘下所有目录内（包括X盘本身）的_desktop.ini文件并且不提示是否删除。
+/f 表示强制删除文件
+/s表示子目录都要删除该文件
+/q表示无声，不提示
+/a根据属性选择要删除的文件
+
+R 只读文件 S 系统文件
+H 隐藏文件 A 存档文件
+- 表示“否”的前缀
+
+例：
+删除F盘下及其子目录下的所有指定文件
+del F:/*.pdb /f /s /q /a (删除F盘下的所有后缀名为pdb的文件)
+
+@echo off
+for /f "delims=" %%i in ('dir /s/b/ad 123*') do (
+rd /s/q "%%~i"
+)
+exit
+
+
+@echo off
+for /f "delims=" %%i in ('dir /s/b/ad 123*') do (
+rd /s/q "%%~i"
+)
+exit
+
+
+
+@echo off
+for /f "delims=" %%i in ('dir /s/b/ad p10*') do (
+rd /s/q "%%~i"
+)
+exit
+这样有没有错
+@echo off
+for /f "delims=" %%i in ('dir /s/b/ad p10*') do (
+rd /s/q "%%~i"
+)
+for /f "delims=" %%i in ('dir /s/b/aE p10*') do (
+rd /s/q "%%~i"
+)
+exit
+
+
+FOR /F %A in (a.lis) DO @ERASE %A
+
+
+dir p10*.jpg /S /B > a.lis
+FOR /F %A in (a.lis) DO @ERASE %A
+
+del /f /s /q C:\Users\dell\AppData\Local\Temp\*.*
+cd C:\Users\dell\AppData\Local\Temp
+rd /s /q C:\Users\dell\AppData\Local\Temp
+
+dir 123456.789 /s
+这样可以查找所有包含这个文件的文件夹
+
+dir 1234567 /ad /s
+
+这个可以查找文件夹名（包含子文件夹）
+
+
+for /f "delims=" %%a in ('dir /ad/s/b "D:\12345567"') do rd /s /q %%a
+
+
+dir /ad/s/b ".svn"
+
+for /f "delims=" %%a in ('dir /ad/s/b DIRNAME') do rd /s/q "%%~a"
+
+
+
+for /f "delims=" %%a in ('dir /ad/s/b .svn') do echo "%%~a"
+
+for /f %%i in ('dir %cd% /s/b/a:d')  do (
+@echo %%i
+@echo %%~ni
+)
+
+@echo off
+
+
+for /f %%i in ('dir %cd% /s/b/a:d')  do ( 
+echo %%i  %errorlevel%  
+echo %%i|findstr ".svn" >nul
+if %errorlevel% equ 0 (
+echo ok
+) else (
+echo no
+)
+
+
+)
+
+
+
+
+
+
+
+@echo off
+
+for /f %%i in ('dir %cd% /s/b/a:d')  do ( echo %%i )
+echo 
+echo
+
+for /f %%i in ('dir %cd% /s/b/a:d')  do ( 
+echo %%i 
+echo %%i|findstr ".svn" >nul && (if exist %%i (rd /s /q %%i ) )
+
+
+)
+
+
+echo
+echo
+for /f %%i in ('dir %cd% /s/b/a:d')  do ( echo %%i )
+
+
+pause
+
+
+@echo off
+
+
+for /f %%i in ('dir %cd% /s/b/a:d')  do ( 
+echo %%i 
+echo %%i|findstr ".svn" >nul && (if exist %%i (rd /s /q %%i ) )
+
+
+)
+
+
+echo.
+echo.
+for /f %%i in ('dir %cd% /s/b/a:d')  do ( echo %%i )
+
+
+pause
+
+
+www.jb51.net
+数据源md5文件为 file.md5
+本地md5校验文件为 file.md5.local
+以下语句判断md5.local是否一致
+diff -r file.md5 file.md5.local
+if [ $? -ne 0 ];then
+echo "数据下载异常或者MD5校验未通过" >> mail1
+else 
+echo "数据下载成功并且MD5校验通过" >> mail1
+fi
+
+
+在C++中执行cmd指令的两种方法：
+方法1：system("calc");
+方法2: WinExec("calc",SW_NORMAL);
+
+相关提醒：
+1.使用这两个函数时不需要另外添加头文件，因为system函数声明在了stdlib.h中，而WinExec函数声明在了WinBase.h中。
+2.一定要注意两种方法的区别,具体如下所示，
+  system函数在执行时，不会顺序执行接下来的代码，而会停留在system语句上，直到cmd指令执行完毕；
+  WinExec函数在执行时，会顺序执行接下来的代码，不管其cmd指令是否执行完成；
+
+
+
+certutil -hashfile yourfilename.ext MD5
+
+certutil -hashfile yourfilename.ext SHA1
+
+certutil -hashfile yourfilename.ext SHA256
+
+
+
+去除代码中行号：正则
+^\s*([0-9]+)[\.]*
+
+可以用正则找到这些行号给去掉就好：
+带点的：
+^\s*([0-9]+)\.
+不带点：
+^\s*([0-9]+)
+综合起来：
+^\s*([0-9]+)[\.]*
+
+复制到VScode编辑器中打开搜索替换，启用搜索的正则表达式：
+将正则表达式输进去，替换那行什么都不输入即可，全部替换掉即可。
+
+VScode开启正则表达式搜索
+
+二、删除所有的单行注释
+注释用正则快速删除(还是利用以上所述vsCode的正则功能)
+
+1.最佳方案，自定义的删除注释#
+找到# 注释，#''注释，不包括头部的# -- coding: utf-8 -- ，也不包括任何'# -'开头的注释
+^(\s*#\s|#(\ ){1})(?!\-).*$
+替换为空
+
+2.最佳将多余空行去掉，多如下操作几次即可： n 正则找到换行
+\s*\n[\s]*\n 替换为 \n
+替换为空
+
+vs开正则替换删除以# 开头的整行字符
+^\#\s{1}.*$
+替换为空
+
+2.删除 console.log(.*);所在的行
+将
+^(\s*(console.log\()).*?[(\))(\);)(\)\s)(\);\s)]$
+替换为空
+
+3.删除// 所在的行
+^(\s*(\/\/)|(\/\/)(\ ){1})(?!\-).*$
+替换为空
+
+三、vs如何快速统计项目总代码行数呢，如下：
+vsCode编辑器 | 查找和替换 | 在文件中查找
+查找选项选 选择正则表达式
+
+^b*[^:b#/]+.*$
+
+全局搜索，一共有多少结果就是多少行
+
+https://bh.sb/
+
+system("chcp 65001");
+
+WideCharToMultiByte()
+MultiByteToWideChar()
+
+
+#include <iostream>
+using namespace std;
+int main()
+{
+    cout << "你好世界!" << endl;
+
+    setlocale(LC_ALL, "");  // 宽字节输出中文
+    wcout << L"你好世界!" << endl;
+
+    return 0;
+}
+
+
+int* p = new int(17);  
+delete p;  
+p = NULL;  
+
+if ( p != NULL)  
+{  
+   .....  
+}   
+
+void delp(int *a)
+{
+	delete a;  //崩溃
+	a = nullptr;
+}
+
+int *a = new int(10);
+delp(a);
+
+void del2(int **a)
+{
+	delete *a; //正常释放
+	*a = NULL;
+}
+
+void del2(int *&a)
+{
+	delete *a;
+	*a = NULL;
+}
+
+{,}
+fopen,fclose
+malloc,free
+new,delete
+生,死
+
+没有前者，何须后者？
+只有使用new动态分配的指针才需要用delete回收，防止内存泄露。没有用new的是静态分配，系统会在程序销毁时自动回收。
+
+
+如果
+int* a;
+int* b;
+float* c;
+a = new int;
+b = new int;
+c = new float;
+使用new了，
+就要
+delete a;
+a = NULL;
+delete b;
+b= NULL;
+delete c;
+c =NULL;
+如果没用new,是别的地方传进来的，就要在传进来的地方delete
+有new 必有delete，要配上对。
+
+new出来的内存，必须delete，这也是一个编程的好习惯。
+但实际上这样做还是不安全的，
+比如你new出来之后，在delete之前，发生了异常，那么delete就运行不到。
+
+解决办法是如楼上各位所说，使用智能指针，
+它在构造时获取指针，在析构函数中保证了delete指针。
+
+stl中有auto_ptr， 但因为无法复制等问题，已经过时了，
+现在一般使用boost::shared_ptr,
+这是最强的智能指针，已经进入了最新的标准库
+也可以如下方式使用:
+std::tr1::shared_ptr
+
+
+grep -i "error"   #忽略大小写区分
+grep -v "grep"  #忽略grep命令本身，在文档中过滤掉包含有grep字符的行
+
+ubuntu默认没有开启cron日志记录 
+
+1. 修改rsyslog 
+
+vim /etc/rsyslog.d/50-default.conf 
+cron.* /var/log/cron.log 
+
+#将cron前面的注释符去掉 
+
+2.重启rsyslog 
+service rsyslog restart 
+
+3.查看crontab日志 
+tail /var/log/cron.log
+
+默认cron会发送邮件把任务的运行结果比如错误信息发送到系统用户的邮箱中，而不会在log中出现具体的脚本运行输出的信息，所以我们可以指定一下每个任务的输出日志路径：
+0 2 * * * db_backup task; >> /var/log/db_backup.log 2>&1
+这样我们就可以去相应的日志文件查看脚本输出结果了。
+
+
+chmod a+x 执行文件
+
+ vim hu.cron 
+
+（
+
+      esc + i  编辑
+
+     每天10点运行脚本： 0 10 * * * root /脚本/所在/位置.sh >> /var/log/mon.log 2>&1 （打印日志）
+
+     每5分钟运行一次脚本： 0 10 * * * root /脚本/所在/位置.sh >> /var/log/mon.log 2>&1 （打印日志）
+
+      Esc +：+ w + q    保存并退出
+
+ ）
+
+## 给 /home/hive/ 目录下的所有脚本赋予执行权限
+chmod +x /home/hive/*.sh
+## 如果脚本在windowns环境下编辑，需要将脚本转化为unix格式
+sed -i "s/\r$//" /home/hive/*.sh
+
+service crond start //启动服务 
+service crond stop //关闭服务 
+service crond restart //重启服务 
+service crond reload //重新载入配置
+
+查看crontab服务状态：service crond status 
+手动启动crontab服务：service crond start 
+
+sudo apt-get install cron
+
+sudo service cron start
+sudo service cron reload
+service cron restart
+
+service cron status
+sudo vim /etc/crontab
+
+at -f test-cron.sh -v 10:25 
+
+
+sudo vim /etc/crontab
+
+sudo vim /etc/rsyslog.d/50-default.conf 
+tail -f /var/log/cron.log
+
+cd /home/wang && ./temp.sh >/dev/null 2>&1
+
+cd /home/wang && ./temp.sh >temp.log 
+
+清除7天前的sql数据
+添加定时任务见上，此处只说明如何编写删除7天前的命令，将其加到指定的sheel脚本中即可：
+
+
+sudo find /home/ubuntu/backup/sqlbackup/ -mtime +7 -name "*.sql" -exec rm -rf {} \;
+其中：find后紧跟想要清除的文件的目录
+-mtime +7：表示7天前的时间
+
+“*.sql”：以.sql结尾的文件
+
+-exec rm -rf {} \;：执行文件清除（反斜杠\是分号;的转移符号）
+
+运行计划任务时:
+service crond restart
+提示：
+crond: unrecognized service
+安装计划任务：
+yum -y install vixie-cron
+
+     1. ubuntu下crontab的服务程序是cron，并且默认cron服务的log是没有的，我们必须手动开启
+
+          a. sudo vim /etc/rsyslog.d/50-default.conf
+
+          b. 找到cron.*那一行把注释去掉
+
+          c. 然后重启cron服务  sudo service cron restart
+
+          d. 这样就可以在/var/log里面发现有cron的日志文件了，我们就可以通过查看日志文件找到问题所在
+
+          */2 * * * * sh /home/chenguolin/tmp/s.sh >/dev/null 2>&1
+
+at -f test-cron.sh -v 10:25 
+
+Minute at now + 5 minutes 任务在5分钟后运行
+Hour at now + 1 hour 任务在1小时后运行
+Days at now + 3 days 任务在3天后运行
+Weeks at now + 2 weeks 任务在两周后运行
+Fixed at midnight 任务在午夜运行
+Fixed at 10:30pm 任务在晚上10点30分开始
+Fixed at 1:00 12/20/04 任务在2004年12月20日凌晨1点开始
+
+将atd服务启动：/etc/init.d/atd start
+
+std: unrecognized service
+
+apt-get install at
+使用方法:
+
+添加
+at 11:13
+warning: commands will be executed using /bin/sh
+at> <EOT> # 按Ctrl+D
+job 1 at Fri Aug 5 11:13:00 2016
+删除
+at -r 1 # 任务1
+查询
+atq # 大概表示query吧
+
+
+#文件名
+FILE_NAME='a.txt'
+#获取文件做后修改时间戳
+LAST_MODIFY_TIMESTAMP=`stat -c %Y  $FILE_NAME`
+#格式化时间戳
+formart_date=`date '+%Y-%m-%d %H:%M:%S' -d @$LAST_MODIFY_TIMESTAMP`
+echo $formart_date
+
+at -f test-cron.sh -v 10:25 
+
+[ -f t2.log ] && [ -r t2.log ]
+
+ls -l t2.log | awk '{print $8}'
+
+ls -l --time-style=iso
+
+stat t2.log
+
+#!/bin/sh
+ 
+#判断文件存在，判断是否为文件夹等
+testPath="/Volumes/MacBookProHD/Mr.Wen/08 shell命令"
+testFile="/Volumes/MacBookProHD/Mr.Wen/08 shell命令/fileWen"
+ 
+#判断文件夹是否存在 -d
+if [[ ! -d "$testPath" ]]; then
+echo "文件夹不存在"
+else
+echo "文件夹存在"
+fi
+ 
+#判断文件夹是否存在，并且具有可执行权限
+if [[ ! -x "$testFile" ]]; then
+echo "文件不存在并且没有可执行权限"
+else
+echo "文件存在并有可执行权限"
+fi
+ 
+#判断文件是否存在
+if [[ ! -f "$testFile" ]]; then
+echo "文件不存在"
+else
+echo "文件存在"
+fi
+
+shell习题第18题：检查新文件
+
+有一台服务器作为web应用，有一个目录(/data/web/attachment)不定时会被用户上传新的文件，但是不知道什么时候会被上传。所以，需要我们每5分钟做一次检测是否有新文件生成。请写一个shell脚本去完成检测。检测完成后若是有新文件，还需要将新文件的列表输出到一个按年、月、日、时、分为名字的日志里
+
+【核心要点】
+
+find -mmin -5
+
+date +%Y%m%d%H%M
+
+【脚本】
+
+#!/bin/bash
+
+basedir=/data/web/attachment
+t=`date +%Y%m%d%H%M`
+
+find $basedir -type f -mmin -5 > /tmp/file.list
+n=`wc -l /tmp/file.list | awk '{print $1}'`
+if [ $n -gt 0 ]; then
+   mv /tmp/file.list /tmp/$t.list
+fi
+
+
+shell 读取文件内容 (2012-08-09 17:09:26)转载▼
+标签： 杂谈	
+写法一：
+----------------------------------------------------------------------------
+#!/bin/bash
+
+while read line
+do
+    echo $line
+done < file(待读取的文件)
+----------------------------------------------------------------------------
+
+写法二：
+----------------------------------------------------------------------------
+#!/bin/bash
+
+cat file(待读取的文件) | while read line
+do
+    echo $line
+done
+----------------------------------------------------------------------------
+
+写法三：
+----------------------------------------------------------------------------
+for line in `cat file(待读取的文件)`
+do
+    echo $line
+done
+----------------------------------------------------------------------------
+
+说明：
+for逐行读和while逐行读是有区别的,如:
+$ cat file
+aaaa
+bbbb
+cccc dddd
+
+$ cat file | while read line; do echo $line; done
+aaaa
+bbbb
+cccc dddd
+
+$ for line in $(<file); do echo $line; done
+aaaa
+bbbb
+cccc
+dddd
+
+== 实践 === 
+#! bin/sh
+while read line
+do
+   wget -p ${line:0:59}
+done < '/root/mysql/mysql.log'
+
+# MD5_RFRHO= [ -f $FILE_PATH$FILE_NAME_RFRHO ] && md5sum $FILE_PATH$FILE_NAME_RFRHO | cut -d ' ' -f1 || ""
+MD5_RFRHK= [ -f $FILE_PATH$FILE_NAME_RFRHK ] && md5sum $FILE_PATH$FILE_NAME_RFRHK | cut -d ' ' -f1 || ""
+MD5_RFRFTZ= [ -f $FILE_PATH$FILE_NAME_RFRFTZ ] && md5sum $FILE_PATH$FILE_NAME_RFRFTZ | cut -d ' ' -f1 || ""
+
+
+----------------------------------
+Linux 中创建执行脚本 `sudo vim /etc/init.wsl`
+#! /bin/sh
+/etc/init.d/ssh start
+/etc/init.d/mysql start
+/etc/init.d/php-fpm start
+/etc/init.d/nginx start 
+给予脚本执行权限 `sudo chmod +x /etc/init.wsl`
+在Windows中创建脚本 `linux-start.vbs`
+Set ws = WScript.CreateObject("WScript.Shell")        
+ws.run "wsl -d ubuntu -u root /etc/init.wsl"
+移动到Windows开机启动项
+Windows 下
+
+Win+R
+输入
+
+shell:startup
+将
+
+linux-start.vbs
+拖入到打开的文件夹中
+
+----------------------------------------------
+ 安装daemonize
+
+sudo apt-get install daemonize
+3. 执行以下命令开启
+
+sudo daemonize /usr/bin/unshare --fork --pid --mount-proc /lib/systemd/systemd --system-unit=basic.target
+ 
+exec sudo nsenter -t $(pidof systemd) -a su - $LOGNAME
+ 
+在WSL中跑了一些测试服务 比如 mysql nginx等，但关机后每次都要手动开启甚是吃力，本想着用rc.local来编辑开机启动 ，无奈不支持啊！先看看非WSL环境中是怎么实现的。
+
+在 Ubuntu 18一下，设置开机自动启动一般是编辑 /etc/rc.local
+
+在 Ubuntu 18以上则需要链接 rc-local.service 文件 然后创建 rc.local 文件并修改权限，大概是这样的：
+
+ln -fs /lib/systemd/system/rc-local.service /etc/systemd/system/rc-local.service  
+touch /etc/rc.local  
+chmod 755 /etc/rc.local  
+然后编辑rc.local 大概格式是这样的：
+
+#!/bin/bash
+service start ....
+exit 0   
+然而，WSL中并不支持通过rc.local 来实现开机启动。但在这有个偏方，可以通过windows 的启动项来启动 rc.local中的脚本。
+
+win+r shell:startup <- 进入启动目录
+
+创建一个VBScript脚本wls_rclocal.vbs
+写入内容 , 通过bash命令参数去执行rc.local
+set ws=wscript.createobject("wscript.shell")
+ws.run "C:\Windows\System32\bash.exe -c 'sudo /etc/rc.local'",0
+进入WSL终端 创建 sudoers 文件
+vim /etc/sudoers.d/rc-local
+编辑配置如下内容，yourusername 为 linux账户名称 ， 后面的路径则是需要启动的程序路径。这里的作用是无需输入用户名和密码即以sudo/超级账户执行配置的程序和脚本。
+yourusername * = (root) NOPASSWD: /etc/rc.local
+yourusername * = (root) NOPASSWD: /etc/init.d/mysql
+yourusername * = (root) NOPASSWD: /etc/xxxxxx
+重启电脑，登录账户后就会执行wls_rclocal.vbs，通过VBS执行rc.local中的启动脚本。
+
+
+在shell脚本里如何定时执行一段命令,比如每隔5秒执行一次.
+最好有例子
+
+|
+#! /bin/sh
+while((1))
+do
+echo "hello world!"
+sleep 5
+done
+
+
+　　解决办法
+
+　　export PATH=$PATH:/bin:/usr/bin:/usr/local/bin
+
+　　例子 ：
+
+　　每月每天每小时的第 0 分钟执行一次 /bin/ls ：
+
+　　0 * * * * /bin/ls
+
+　　在 12 月内， 每天的早上 6 点到 12 点中，每隔 20 分钟执行一次 /usr/bin/backup ：
+
+　　*/20 6-12 * 12 * /usr/bin/backup
+
+　　周一到周五每天下午 5:00 寄一封信给 alex@domain.name ：
+
+　　0 17 * * 1-5 mail -s “hi” alex@domain.name 《 /tmp/maildata
+
+　　每月每天的午夜 0 点 20 分， 2 点 20 分， 4 点 20 分。。。。执行 echo “haha”
+　　20 0-23/2 * * * echo “haha”
+
+　　如果你在定时任务时shell脚本停止执行，那么多半是shell脚本未导入环境变量，可加入本文介绍的相关代码。
+
+
+对于task.json 使用STL中的多线程需要在编译末尾(argc) 增加：
+
+"-lpthread",
+1
+使用Boost中的多线程需要添加:
+
+"-lboost_thread",
+"-lboost_system"
+
+
+            "clang.cflags": [
+                "-I${workspaceRoot}/dev"
+            ]
+			
+                "${workspaceRoot}",
+                "C:/mingw64v8/x86_64-w64-mingw32/include",
+                "C:/boost-master/libs",
+                "C:/boost-master/libs/predef/include/boost/predef/os"			
+
+如果不是用new来创建的对象，那么，应该使用.符号来使用属性。
+如果使用new创建的对象，则使用->符号来使用属性。
+ 
+但实际上，最终还是.符号，->符号只是语法糖。
+因为pMan是指针，所以*pMan是指针所指内存空间上的对象值，于是，调用属性是这样的：(*pMan).IQ
+但每次都这么调用，很麻烦，于是就有了pMan->IQ这种方便的形式。
+
+
+在C++中new和delete是要成对出现的
+比如
+int*p = new int[n];//n >=1,n是整数
+
+使用数直接操作p[i]就可以了，i>=0 && i<n
+
+注意要释放内存
+delete []p;
+
+
+在windows API 中CWnd::SetTimer 和KillTimer 是开启和关闭定时器的方法，SetTimer和KillTimer的方法定义如下
+
+UINT SetTimer(
+
+       HWND hWnd,               // 接收定时器消息的窗口句柄
+
+       UINT nIDEvent,           // 定时器的ID号
+
+       UINT uElapse,            // 定时时间
+
+       TIMERPROC lpTimerFunc        // 指向消息处理函数的指针
+
+);
+
+KillTimer(
+
+HWND hWnd,                    //接收定时器消息的窗口句柄
+
+UINT_PTR uIDEvent        //定时器的ID号
+
+);
+
+同时你可以设置回调函数TIMERPROC lpTimerFunc 在这其中完成你所需要的工作，例如检测当前时间是否是8点或10点。
+
+在MFC中，由于SetTimer函数的封装，定在MFC里调用SetTimer和KillTimer时不用传递窗口句柄，所以你可以这样使用开启定时器 SetTimer(1,1000,NULL)；//定时器号为1,每一秒钟产生一次(以毫秒为单位) ，不使用回调函数。 关闭定时器 KillTimer(1)； //关闭ID的1的定时器。
+
+1）在控制面板中双击任务计划，打开了Windows任务计划窗口。
+2）双击添加任务，打开任务计划向导。点击下一步。
+3）点击浏览，选择要运行的程序
+4）输入计划名称，选择 每天
+5）设置起始时间、选择每天、起始日期。下一步。
+6）输入密码，该密码是该系统的用户名（用 默认 即可）的密码。下一步
+7）选择在单击完成时，打开此任务的高级属性。
+8）在高级属性窗口中，选择日程安排标签，选择高级
+9）高级计划选项中，勾选重复任务，持续时间：设为24小时。
+10）即可达到每小时更新一次，一天24小时工作了。
+
+
+国开有62环境，56环境 ； 需要先确认下国开最终编译/运行该程序的环境？ ，长官， Ben Chen 的程序是在国开哪个环境运行？
+
+if exist %rfrmd5fp% (
+    for /f "tokens=1,2 delims= " %%i in (%rfrmd5fp%) do (
+        if exist %rfrPath%\%%j (
+            @REM echo %%i %%j
+            for /f "skip=1 delims=" %%k in ('certutil -hashfile "%rfrPath%\%%j"  MD5') do (
+                if %%i == %%k (
+                    @REM call env.bat &  mktimp -i %rfrPath%\%%j
+                )
+            ) 
+        ) else (
+            echo Import Error : %rfrPath%\%%j no exist, please check it!
+        )
+    )
+) else (
+    echo Import Error : %rfrmd5fp% no exist, please check it!
+)
+
+
+线控耳机方面的操作使用：
+1、耳机中间按键按1次：停止现在播放的音乐
+2、耳机中间按键连按2次：播放下一首歌曲
+3、耳机中间按键连按3次：返回上一首歌曲
+4、耳机接听电话：按一下耳机中间的按键，再按一下就挂机
+5、耳机拍摄照片：在开启相机功能后，直接按一下“＋”键即可直接拍摄
+6、耳机常按中间按键：出现siri 语音助理选项（前提是必须得开启siri功能）
+
+
+-----------------       Printing sCUSTOMER... ---------12-------------
+
+CUSTOMER.Audit_Id= "00000008";
+CUSTOMER.Audit_Table= "CUSTOMER";
+CUSTOMER.Audit_Version= "1";
+CUSTOMER.Audit_Current= "Y";
+CUSTOMER.Audit_EntityState= "VER";
+CUSTOMER.Audit_Authorized= "Y";
+CUSTOMER.Audit_PendingAction= "";
+CUSTOMER.Audit_PendingState= "";
+CUSTOMER.Audit_IsHistory= "N";
+CUSTOMER.Audit_User= "qauser";
+CUSTOMER.Audit_Action= "IMLIVE";
+CUSTOMER.Audit_DateTime= "20141007 11:34:56";
+CUSTOMER.Audit_ExtStateName= "LIVE";
+CUSTOMER.Audit_StateId= "0";
+CUSTOMER.Id= "OURAGT";
+CUSTOMER.InputDate= <Date>19950124;
+CUSTOMER.ShortName= "OUR AGENT";
+CUSTOMER.LegalName= "Our Agent";
+CUSTOMER.ContactName= "";
+CUSTOMER.FullName= "OUR AGENT";
+CUSTOMER.AdLine1= "50 Broad Street";
+CUSTOMER.AdLine2= "New York, NY";
+CUSTOMER.AdLine3= "";
+CUSTOMER.AdLine4= "";
+CUSTOMER.AdLine5= "";
+CUSTOMER.Country= "US";
+CUSTOMER.ZipCode= "10005";
+CUSTOMER.FaxNo= "212-222-3456";
+CUSTOMER.TelexNumber= "";
+CUSTOMER.TelexAnswerBack= "";
+CUSTOMER.PhoneNumber= "212-111-2345";
+CUSTOMER.LogicalCountry= "US";
+CUSTOMER.LogicalForeign= "N";
+CUSTOMER.LogicalContinent= "NA";
+CUSTOMER.PhysicalCountry= "US";
+CUSTOMER.PhysicalForeign= "N";
+CUSTOMER.PhysicalContinent= "";
+CUSTOMER.Sensitive= "N";
+CUSTOMER.ConfirmLang= "ENGLISH";
+CUSTOMER.ConfirmReq= "Y";
+CUSTOMER.BankIndicator= "Y";
+CUSTOMER.Parent= "";
+CUSTOMER.CompanyAffil= "N";
+CUSTOMER.ParentAffil= "N";
+CUSTOMER.LBSFAffil= "N";
+CUSTOMER.ISDAAffil= "Y";
+CUSTOMER.GroupID= "";
+CUSTOMER.CookeRatio= 0.00000000000000;
+CUSTOMER.DefCreditGroup= "";
+CUSTOMER.CustType= "";
+CUSTOMER.GLAccount= "";
+CUSTOMER.DefCarrier= "";
+CUSTOMER.CustRoleList[0].CustRole= "AGENT";
+CUSTOMER.CustRoleList[1].CustRole= "BANK";
+CUSTOMER.CustRoleList[2].CustRole= "CLEARER";
+CUSTOMER.CustRoleList[3].CustRole= "TRADING";
+CUSTOMER.BkCodeList[0].BkCode= "DTCC";
+CUSTOMER.BkCodeList[0].BkValue= "00000007891";
+CUSTOMER.BkCodeList[1].BkCode= "SWIFT";
+CUSTOMER.BkCodeList[1].BkValue= "OURAGTXX";
+CUSTOMER.Comment1= "";
+CUSTOMER.Comment2= "";
+CUSTOMER.CoDeskLevel= "";
+CUSTOMER.ChaserReq= "N";
+CUSTOMER.ChaserDelay= "0";
+CUSTOMER.EmuConversion= "";
+CUSTOMER.City= "";
+CUSTOMER.CustomNetting= "N";
+CUSTOMER.NetParent= "N";
+CUSTOMER.MAStatusCheck= "N";
+CUSTOMER.MirrorBack= "Y";
+CUSTOMER.InternalCustType= "";
+CUSTOMER.Department= "";
+CUSTOMER.Email= "";
+CUSTOMER.NetTrades= "N";
+CUSTOMER.MembershipList[0].MemberOrg= "DTCC";
+CUSTOMER.MembershipList[0].MemberLevel= "COMPARISON";
+CUSTOMER.MembershipList[0].TradeType= "MUST";
+CUSTOMER.MembershipList[0].MPDefName= "INDEX_CDS";
+CUSTOMER.MembershipList[0].ProductType= "";
+CUSTOMER.MembershipList[0].SubAccount= "";
+CUSTOMER.MembershipList[1].MemberOrg= "DTCC";
+CUSTOMER.MembershipList[1].MemberLevel= "COMPARISON";
+CUSTOMER.MembershipList[1].TradeType= "MUST";
+CUSTOMER.MembershipList[1].MPDefName= "SN_CDS";
+CUSTOMER.MembershipList[1].ProductType= "";
+CUSTOMER.MembershipList[1].SubAccount= "";
+CUSTOMER.NetschmID= "";
+CUSTOMER.CreditRoll= "Y";
+CUSTOMER.CLSEligible= "N";
+CUSTOMER.ClearingModel= "";
+CUSTOMER.Threshold= 0.00000000000000;
+CUSTOMER.IslamicCustomer= "N";
+CUSTOMER.AllLocations= "Y";
+CUSTOMER.LegalEntityId= "";
+CUSTOMER.PaymentReq= "Y";
+CUSTOMER.GenerateUSI= "N";
+CUSTOMER.MatchingEligible= "N";
+CUSTOMER.CorpSector= "";
+CUSTOMER.FinNature= "";
+CUSTOMER.ClrThreshold= "";
+CUSTOMER.CEName= "";
+CUSTOMER.CESeniority= "";
+CUSTOMER.CECcy= "";
+CUSTOMER.CEDocClause= "";
+CUSTOMER.CloseOutPeriod= "10";
+CUSTOMER.cIssuer= "N";
+AUDITLOG.StartState= "";
+AUDITLOG.StartAuthorized= "N";
+AUDITLOG.EndState= "";
+AUDITLOG.EndAuthorized= "N";
+AUDITLOG.PendingAction= "";
+AUDITLOG.Id= "0";
+AUDITLOG.Table= "CUSTOMER";
+AUDITLOG.Version= "0";
+AUDITLOG.User= "summit";
+AUDITLOG.DateTime= "19800101 00:00:00";
+AUDITLOG.Description= "";
+AUDITLOG.ProcessFlag= "0";
+AUDITLOG.StdAction= "";
+AUDITLOG.ExtStateName= "";
+AUDITLOG.ExtActionName= "";
+AUDITLOG.TransitionId= "";
+AUDITLOG.SequenceNumber= "0";
+AUDITLOG.TransactionNumber= "0";
+
+
+delivery	交货
+sales	销售量
+others	其他
+attending internal meetings	参加内部会议
+attending internal training	参加内部培训
+bench	长椅
+delivering internal training	提供内部培训
+management activities	管理活动
+maternity leave	产假
+medical leave	病假
+non productive travel	非生产性旅行
+paid time off	带薪休假
+paternity leave	陪产假
+project non chargeable	项目不收费
+project non chargeable travel	项目不收费旅行
+unpaid leave	无薪休假 
+
+strcpy
+原型：extern char *strcpy(char *dest,char *src);
+用法：＃i nclude
+功能：把src所指由NULL结束的字符串复制到dest所指的数组中。
+说明：src和dest所指内存区域不可以重叠且dest必须有足够的空间来容纳src的字符串。
+返回指向dest的指针。
+memcpy
+原型：extern void *memcpy(void *dest, void *src, unsigned int count);
+用法：＃i nclude
+功能：由src所指内存区域复制count个字节到dest所指内存区域。
+说明：src和dest所指内存区域不能重叠，函数返回指向dest的指针。
+memset
+原型：extern void *memset(void *buffer, int c, int count);
+用法：＃i nclude
+功能：把buffer所指内存区域的前count个字节设置成字符c。
+说明：返回指向buffer的指针。
+
+首先必须搞清楚pthread_exit是linux线程库POSIX底下的一个结束线程（自身）的函数，在多线程环境中，pthread_exit只会清理本线程的资源，不会影响其他并行的线程，而exit(0)，return(0)则不同，具体可见下程序，linux下gcc编译：
+#include <stdio.h>
+#include <pthread.h>
+#include <stdlib.h>
+void thread(void)
+{
+int i;
+for(i=0;i<3;i++)
+printf("This is a pthread.\n");
+pthread_exit(0); //可以不要，会自动调用
+}
+int main(void)
+{
+pthread_t id;
+int i,ret;
+ret=pthread_create(&id,NULL,(void *) thread,NULL);
+if(ret!=0){
+printf ("Create pthread error!\n");
+exit (1);
+}
+for(i=0;i<3;i++)
+printf("This is the main process.\n");
+pthread_join(id,NULL);//阻塞主线程，等待id线程结束。
+return (0); //结束本进程内所有线程
+}
+
+
+/**
+ * @name: GetLocalTimeWithMs
+ * @msg: 获取本地时间，精确到毫秒
+ * @param {type} 
+ * @return: string字符串，格式为YYYYMMDDHHMMSSsss，如：20190710130510368
+ */
+static string GetLocalTimeWithMs(void)
+{
+    string defaultTime = "19700101000000000";
+    try
+    {
+        struct timeval curTime;
+        gettimeofday(&curTime, NULL);
+        int milli = curTime.tv_usec / 1000;
+
+        char buffer[80] = {0};
+        struct tm nowTime;
+        localtime_r(&curTime.tv_sec, &nowTime);//把得到的值存入临时分配的内存中，线程安全
+        strftime(buffer, sizeof(buffer), "%Y%m%d%H%M%S", &nowTime);
+
+        char currentTime[84] = {0};
+        snprintf(currentTime, sizeof(currentTime), "%s%03d", buffer, milli);
+
+        return currentTime;
+    }
+    catch(const std::exception& e)
+    {
+        return defaultTime;
+    }
+    catch (...)
+    {
+        return defaultTime;
+    }
+}
+
+
+	time_t nowtime;
+	struct tm* p;;
+	time(&nowtime);
+	p = localtime(&nowtime);
+	// printf("%04d-%02d-%02d %02d:%02d:%02d\n",p->tm_year+1900,p->tm_mon+1,p->tm_mday,p->tm_hour,p->tm_min,p->tm_sec);
+
+    char cuTime[20] = {0};
+    snprintf(cuTime, sizeof(cuTime),"%04d-%02d-%02d %02d:%02d:%02d", p->tm_year+1900,p->tm_mon+1,p->tm_mday,p->tm_hour,p->tm_min,p->tm_sec);
+    printf("%s\n",cuTime);
+
+    struct timeval curTime;
+    gettimeofday(&curTime, NULL);
+
+    struct tm nowTime;
+    localtime_r(&curTime.tv_sec, &nowTime);
+    char buffer[80] = {0};
+    strftime(buffer, sizeof(buffer), "%Y-%m-%d %H:%M:%S", &nowTime);
+
+    char currentTime[84] = {0};
+    snprintf(currentTime, sizeof(currentTime), "%s.%03d", buffer, (int)curTime.tv_usec / 1000);
+
+    printf("%s\n", currentTime);
+
+	using namespace std;
+	struct tm t2006 {0};
+    t2006.tm_year = 2006 - 1900;
+    t2006.tm_mon = 1;
+    t2006.tm_mday = 1;
+    time_t nowtime;
+    time(&nowtime);
+    //当前时间和2006年1月1日之间相差的秒数
+    double diff = difftime(nowtime, mktime(&t2006));
+	return 0;
+
+	
+    int epfd = epoll_create(POLL_SIZE);
+    struct epoll_event ev;
+    struct epoll_event *events = NULL;
+    nfds = epoll_wait(epfd, events, 20, 500);
+    {
+        for (n = 0; n < nfds; ++n) {
+            if (events[n].data.fd == listener) {
+                //如果是主socket的事件的话，则表示
+                //有新连接进入了，进行新连接的处理。
+                client = accept(listener, (structsockaddr *)&local, &addrlen);
+                if (client < 0) {
+                    perror("accept");
+                    continue;
+                }
+                setnonblocking(client);        //将新连接置于非阻塞模式
+                ev.events = EPOLLIN | EPOLLET; //并且将新连接也加入EPOLL的监听队列。
+                //注意，这里的参数EPOLLIN|EPOLLET并没有设置对写socket的监听，
+                //如果有写操作的话，这个时候epoll是不会返回事件的，如果要对写操作
+                //也监听的话，应该是EPOLLIN|EPOLLOUT|EPOLLET
+                ev.data.fd = client;
+                if (epoll_ctl(epfd, EPOLL_CTL_ADD, client, &ev) < 0) {
+                    //设置好event之后，将这个新的event通过epoll_ctl加入到epoll的监听队列里面，
+                    //这里用EPOLL_CTL_ADD来加一个新的epoll事件，通过EPOLL_CTL_DEL来减少一个
+                    //epoll事件，通过EPOLL_CTL_MOD来改变一个事件的监听方式。
+                    fprintf(stderr, "epollsetinsertionerror:fd=%d", client);
+                    return -1;
+                }
+            }
+            else if(event[n].events & EPOLLIN)
+            {
+                //如果是已经连接的用户，并且收到数据，
+                //那么进行读入
+                int sockfd_r;
+                if ((sockfd_r = event[n].data.fd) < 0)
+                    continue;
+                read(sockfd_r, buffer, MAXSIZE);
+                //修改sockfd_r上要处理的事件为EPOLLOUT
+                ev.data.fd = sockfd_r;
+                ev.events = EPOLLOUT | EPOLLET;
+                epoll_ctl(epfd, EPOLL_CTL_MOD, sockfd_r, &ev)
+            }
+            else if(event[n].events & EPOLLOUT)
+            {
+                //如果有数据发送
+                int sockfd_w = events[n].data.fd;
+                write(sockfd_w, buffer, sizeof(buffer));
+                //修改sockfd_w上要处理的事件为EPOLLIN
+                ev.data.fd = sockfd_w;
+                ev.events = EPOLLIN | EPOLLET;
+                epoll_ctl(epfd, EPOLL_CTL_MOD, sockfd_w, &ev)
+            }
+            do_use_fd(events[n].data.fd);
+        }
+    }
+	
+	
+日期和时间组合：%date:~0,4%%date:~5,2%%date:~8,2%%time:~0,2%%time:~3,2%%time:~6,2%
+set NOW_TIME=%date:~0,4%%date:~5,2%%date:~8,2%%time:~0,2%%time:~3,2%%time:~6,2%
+
+打印结果：
+20180531161014
+当time的小时的值小于10的时候，如下面时间：
+
+C:\Users\zh>time
+当前时间: 9:31:02.13
+输入新时间:
+上面字串“%date:~0,4%%date:~5,2%%date:~8,2%%time:~0,2%%time:~3,2%%time:~6,2%” 解析时会报错误，如何解决？
+
+解决方法，加入判断条件即可：
+
+set NOW_TIME_HH=%time:~0,2%
+if "%NOW_TIME_HH%" lss "10" (set NOW_TIME_HH=0%time:~1,1%) else (set NOW_TIME_HH=%time:~0,2%)
+set NOW_TIME=%date:~0,4%%date:~5,2%%date:~8,2%%NOW_TIME_HH%%time:~3,2%%time:~6,2%
+
+ 
+
+set NOW_ONLY_TIME=%NOW_TIME_HH%:%time:~3,2%:%time:~6,2%    ---- 只取当前时间(如：13:14:55)	
+
+
+trdblt  -F MMTEST -XML -o D:\summit\spool\summit\TRDBLT_2330_summit_20171013005740\TRDBLT_2330_summit_20171013005740 -PM STANDARD 
+
+|TFLTDATA| (Fixing:(|TF_FIXING| (NextFixing:(|TF_DTRNG| ()) ChkAveraging:"N" )) TDate:(|TF_DTRNG| ()) MDate:(|TF_DTRNG| ()) InDate:(|TF_DTRNG| ()) Strike:(|TF_STKRNG| ()) Notional:(|TF_AMTRNG| ()) Expiry:(|TF_DTRNG| ()) Effective:(|TF_DTRNG| ()) Amended:(|TF_DTRNG| ()) TradeID:"10021GE" TradeStatus:"DONE+VER" EuroConversionDate:(|TF_DTRNG| ()) LastUpdate:(|TF_TIMRNG| (FromDateTime:"19800101 00:00:00" ToDateTime:"19800101 00:00:00" )) AuditSeqNum:(|TF_INTRNG| ()) Exercise:(|TF_DTRNG| ()) TEDate:(|TF_DTRNG| ()) DelivMonth:(|TF_DTRNG| ()) FXValueDate:(|TF_DTRNG| ()) FilterAttributesXML:XML:"<FilterAttributes><AcctNum></AcctNum><AliasId></AliasId><AllocTradeType></AllocTradeType><Audit_ExtStateName></Audit_ExtStateName><BondDefinitionMethod></BondDefinitionMethod><CAID></CAID><CATradeLinkType></CATradeLinkType><CEFilter></CEFilter><Class></Class><CompatibleMPVersion>N</CompatibleMPVersion><CreditEntity></CreditEntity><CreditEntityType></CreditEntityType><CreditTransactionType></CreditTransactionType><Deliverable></Deliverable><DesignatedRisks></DesignatedRisks><DocSubType></DocSubType><EQ_ISIN></EQ_ISIN><ExtRefId></ExtRefId><FXNDFLinkedTrdId></FXNDFLinkedTrdId><FXNDFResetTarget></FXNDFResetTarget><FairValueLevel></FairValueLevel><HedgeMethod></HedgeMethod><Holdings></Holdings><IBProductType></IBProductType><ISIN></ISIN><InstrSubType></InstrSubType><IntRateType></IntRateType><IsIBProduct></IsIBProduct><IsModifiedSpotDate></IsModifiedSpotDate><IsPnLTrade></IsPnLTrade><IsQuanto></IsQuanto><IsSplitValueDate></IsSplitValueDate><IsStreetTrade></IsStreetTrade><IssuerType></IssuerType><LastBusinessAction></LastBusinessAction><LinkageID></LinkageID><MPName></MPName><MPSubType></MPSubType><MUSTForm></MUSTForm><MatchingID></MatchingID><Portfolio></Portfolio><PortfolioBU></PortfolioBU><PortfolioManager></PortfolioManager><PortfolioStrategy></PortfolioStrategy><PortfolioType></PortfolioType><PreciousMetal></PreciousMetal><RelatedTrade></RelatedTrade><Settled></Settled><StockMktType></StockMktType><StockType></StockType><StrategyDefinitionMethod></StrategyDefinitionMethod><StrikeLFormat></StrikeLFormat><SuperCompany></SuperCompany><TermTradeStatus></TermTradeStatus><TrancheType></TrancheType><TransactionRID></TransactionRID><ViewName></ViewName><WarrantDataID></WarrantDataID></FilterAttributes>" )
+
+
+select n.TradeId, n.ValueDate, n.InstrumentId, n.InstValue, n.Accrual, o.InstValue as Old_InstValue, o.Accrual as Old_Accrual,
+    CASE WHEN n.InstValue <> o.InstValue OR n.Accrual <> o.Accrual THEN 'Y' ELSE ' ' END as IsDiff
+  from (select p.TradeId, p.ValueDate, i.InstrumentId, i.InstValue, i.Accrual from dmEXT_INST_VALUES i 
+       join dmEXT_PRICE_VALUES p on p.dmExtValueId = i.dmExtValueId and p.Provider = 'EXTERNAL' and p.Audit_Current = 'Y') n
+  left join (select p.TradeId, p.ValueDate, i.InstrumentId, i.InstValue, i.Accrual from EXTINSTVALUE_TEMP i 
+       join EXTPRICE_TEMP p on p.dmExtValueId = i.dmExtValueId and p.Provider = 'EXTERNAL' and p.Audit_Current = 'Y') o
+ on n.TradeId = o.TradeId and n.ValueDate = o.ValueDate and n.InstrumentId = o.InstrumentId
+ 
+ 
+select n.TradeId, n.ValueDate, n.TradeValue, n.Accrual, o.TradeValue as Old_TradeValue, o.Accrual as Old_Accrual, 
+       CASE WHEN n.TradeValue <> o.TradeValue OR n.Accrual <> o.Accrual THEN 'Y' ELSE ' ' END as IsDiff
+  from dmEXT_PRICE_VALUES n
+  left join EXTPRICE_TEMP o on n.TradeId = o.TradeId and n.ValueDate = o.ValueDate AND o.Provider = 'EXTERNAL' AND o.Audit_Current = 'Y'
+WHERE n.Provider = 'EXTERNAL' AND n.Audit_Current = 'Y'
+
+select * from dmEXT_INST_VALUES where dmExtValueId in (select dmExtValueId from dmEXT_PRICE_VALUES WHERE Provider = 'EXTERNAL' and TradeId = '41016HO' and ValueDate = '20210310') 
+
+
+select m.AsOfDate, s.MktTypeCount
+  from dmMKTDATA m
+  join (select Hist_Version, dmMktDataId, count(dmSpecNum) as MktTypeCount from dmMKTSPEC
+         group by Hist_Version, dmMktDataId) s 
+    on m.dmMktDataId = s.dmMktDataId and m.Hist_Version = s.Hist_Version
+ where Ccy = 'USD'
+   and dmIndex = 'LIBOR'
+   and Id = 'MO'
+ order by m.AsOfDate
+ 
+select * from dmMKTSPEC_HIST 
+ select * from dmMKTDATA_HIST 
+ 
+
+ 
+

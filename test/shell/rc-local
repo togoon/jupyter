@@ -1,0 +1,3 @@
+yourusername * = (root) NOPASSWD: /etc/rc.local
+yourusername * = (root) NOPASSWD: /etc/init.d/mysql
+yourusername * = (root) NOPASSWD: /etc/xxxxxx

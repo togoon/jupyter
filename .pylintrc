@@ -1,0 +1,14 @@
+[MASTER]
+max-statements=100
+disable=
+    C0103, # uppercase naming style
+    CXXXX, # add ad many as you need
+    line-too-long, #
+    missing-function-docstring, #
+    missing-class-docstring, #
+    trailing-newlines, #
+    logging-fstring-interpolation, #
+    too-many-arguments, #
+    too-many-branches, #
+    too-many-locals, #
+    f-string-without-interpolation, #

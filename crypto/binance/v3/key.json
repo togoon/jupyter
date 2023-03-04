@@ -1,0 +1,10 @@
+{
+	"keys": [{
+		"id": 1,
+		"type": "binance",
+		"pubkey": "40642311a14066133c8076db5472bfff3683d3d1c73e48ae4c6bfc0b405b1957",
+		"prikey": "dcff08b6bdbf37caa606e3c6eaa11c2d59d5dcb5f7b1cf7c959aa123e463a43b",
+		"tradetype": "usdt",
+		"desc": "test"
+	}]
+}

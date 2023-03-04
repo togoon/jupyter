@@ -1,0 +1,27 @@
+{
+	"keys": [{
+		"id": 1,
+		"type": "binance",
+		"pubkey": "40642311a14066133c8076db5472bfff3683d3d1c73e48ae4c6bfc0b405b1957",
+		"prikey": "dcff08b6bdbf37caa606e3c6eaa11c2d59d5dcb5f7b1cf7c959aa123e463a43b",
+		"tradetype": "usdt",
+		"desc": "test"
+	},
+	{
+		"id": 2,
+		"type": "binance",
+		"pubkey": "b183605895cec96614b1f5cfd455458c7a5c74a01f28d2a33ecda09de84eb0a4",
+		"prikey": "936fdaa1df30fba4cb8551439487beb56b4728d67c82a8e2b730a8b54ef361dd",
+		"tradetype": "usdt",
+		"desc": "test"
+	},
+	{
+		"id": 3,
+		"type": "binance",
+		"pubkey": "067d5cc151564fa0f0c89f81d1ee735aa84299ac1cf5c57c430844745954d2cf",
+		"prikey": "e590c6caeaa7ce53a41a8c81bdf33992d1057ecf9b5cb30474a83afe51bdbaa8",
+		"tradetype": "usdt",
+		"desc": "test"
+	}	
+	]
+}

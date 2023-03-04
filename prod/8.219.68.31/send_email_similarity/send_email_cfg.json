@@ -1,0 +1,17 @@
+{
+"mail_host":"smtp.163.com",
+"mail_user":"heyiting19940214@163.com",
+"mail_pass":"KDUBXNHIABUPFZSX",
+"receivers":["963955410@qq.com","heyiting19940214@163.com","lainaqie@gmail.com","Youngzhixi@126.com"],
+"filename":[],
+"subject":"similarity产品运行表",
+"html_content":{
+	"db_file_path":"//root//binance//crypto//strategy//worth//worth.db",
+	"sql":"select orderId, symbol, qty, price, side, updateDate from trades where time > %s ",
+	"diff":5,
+	"capital":1000,
+	"stoploss1":1.09,
+	"stoploss2":0.7,
+	"send_time":9
+	}
+}

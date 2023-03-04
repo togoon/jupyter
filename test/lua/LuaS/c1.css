@@ -1,0 +1,189 @@
+@import url(sp://ctrl/system/default.css);
+@import url(sp://ctrl/tabstrip/default.css);
+@import url(sp://ctrl/forms/default.css);
+@import url(sp://ctrl/table/default.css);
+@import url(sp://ctrl/scroll/default.css);
+@import url(sp://ctrl/codehotkeys/default.css);
+
+
+body
+{
+	width:100%%;
+	height:100%%;
+	margin:0;
+	padding:0;
+	color:#dbe4f0;
+	font:14px simsun,tahoma,arial,sans-serif;
+	overflow:hidden;
+}
+.containter
+{
+	margin:0;
+	padding:0;
+	width:100%%;
+	height:100%%;
+	background:#14171c;
+	padding:5px 20px;
+}
+.div_setting
+{
+	width:100%%;
+	height:100%%;
+	flow:horizontal;
+}
+.div_account
+{
+	width:400px;
+	height:100%%;
+	margin:5px;
+	border:1px solid #252a30;
+}
+
+.div_option
+{
+	width:430px;
+	height:100%%;
+	margin:5px;
+	border:1px solid #252a30;
+}
+
+.div_market
+{
+	width:540px;
+	height:100%%;
+	margin:5px;
+	border:1px solid #252a30;
+}
+
+.div_account_header, .div_option_header , .div_market_header
+{
+	height:30px;
+	line-height:30px;
+	background:#232a34;
+	color:#758293;
+	padding-left:10px;
+}
+
+.buysell_panel_top_right
+{
+	width:100%%;
+	height:100%%;
+	margin:0;
+	padding:0;
+}
+
+.buy_header{
+text-align: left;
+}
+
+.td_clickable
+{
+	behavior:clickable;
+}
+
+.div_log
+{
+	width:100%%;
+	height:100%%;
+	border:1px solid #252a30;
+	margin-left:5px;
+}
+.marginl_10
+{
+	margin-left:10px;
+}
+.width_40
+{
+	width:40px;
+	display:inline-block;
+}
+.width_50
+{
+	width:50px;
+	display:inline-block;
+}
+.width_65
+{
+	width:65px;
+	display:inline-block;
+}
+.width_80
+{
+	width:80px;
+	display:inline-block;
+}
+.width_120
+{
+	width:120px;
+	display:inline-block;
+}
+.marginb_5
+{
+	margin-bottom:5px;
+}
+label
+{
+	text-align:right;
+	display:inline-block;
+	font-size:14px;
+}
+.common_input
+{
+	background:#c4c4c4;
+	color:#000;
+	min-width:0;
+}
+.highlight_input
+{
+	hover-on! : self.highlighthover = true;
+	hover-off! : self.highlighthover = null;
+	focus-on! : self.highlightfocus = true;
+	focus-off! : self.highlightfocus = null;
+}
+[for]
+{
+	hover-on! : $1(#< self.for >).highlighthover = true;
+	hover-off! : $1(#< self.for >).highlighthover = null;
+	active-on! : $1(#< self.for >):focus = true;
+	cursor:pointer;
+}
+button[type="checkbox"]
+{
+	background:url(default/checkbox_no.png) no-repeat;
+	width:14px;
+	height:14px;
+}
+button[type="checkbox"]:checked
+{
+	background:url(default/checkbox_yes.png) no-repeat;
+}
+.btn_blue
+{
+	behavior:clickable;
+	width:64px;
+	height:26px;
+	line-height:26px;
+	display: inline-block;
+	text-align:center;
+	background-image:url(default/btn_blue.png);
+	background-repeat:no-repeat;
+	background-position:0 0;
+	vertical-align: middle;
+	border-radius:2px;
+	color:#fff;
+	font-size:14px;
+}
+.btn_blue:hover
+{
+	background-position:-64px 0;
+}
+.btn_blue:active
+{
+	background-position:-128px 0;
+}
+.btn_blue:disabled
+{
+	background-position:-257px 0;
+	color:#C4C4C4;
+
+}

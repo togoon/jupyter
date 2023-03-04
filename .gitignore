@@ -1,0 +1,12 @@
+LICENSE
+.git/
+tmp/*log*
+tmp/*origin*
+tmp/*pkl*
+tmp/*db*
+tmp/*html*
+tmp/*txt*
+tmp/*ipynb*
+tmp/*backup*
+crypto/logs
+tmp/ta-lib/

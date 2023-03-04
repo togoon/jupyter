@@ -1,0 +1,41 @@
+{
+    "binance": {
+        "host": "https://api.binance.com",
+        "port": "443",
+        "timeout": 10000,
+        "wshost": "wss://stream.binance.com",
+        "wsport": "9443",
+        "uhost": "https://fapi.binance.com",
+        "uport": "443",
+        "utimeout": 10000,
+        "uwshost": "wss://fstream.binance.com",
+        "uwsport": "443",
+        "thost": "https://dapi.binance.com",
+        "tport": "443",
+        "ttimeout": 10000,
+        "twshost": "wss://dstream.binance.com",
+        "twsport": "443"
+    },
+    "binancefuture": {
+        "uhost": "https://testnet.binancefuture.com",
+        "uport": "443",
+        "utimeout": 10000,
+        "uwshost": "wss://stream.binancefuture.com",
+        "uwsport": "443",
+        "thost": "https://testnet.binancefuture.com",
+        "tport": "443",
+        "ttimeout": 10000,
+        "twshost": "wss://dstream.binancefuture.com",
+        "twsport": "443"
+    },
+    "account_type" : "binance",
+    "account_name" : "Real2023",
+    "api_key" : "gYkl7R8EhUyMjWDbtnSa13K8sbD7bHqXnvPCpeXi3NWqyj5kM78DqWGVMQQmYEc9",
+    "secret_key" : "FFWIUASVt9SqVHK12jGGuGcwqxNgDqvae6naK5eKI3WnjciQmgxid25BfwoYHO0J",
+    "accountAlias": "FzoCmYTiTiFzSguX",
+    "strategy_name": "similarity_big",
+    "account_encrypt" : "",
+    "leverage": 2,
+    "totalAdjRate": -0.75,
+    "depth_limit": 5
+}

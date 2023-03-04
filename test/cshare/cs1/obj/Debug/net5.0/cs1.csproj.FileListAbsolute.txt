@@ -1,0 +1,16 @@
+C:\notes\cshare\cs1\bin\Debug\net5.0\cs1.exe
+C:\notes\cshare\cs1\bin\Debug\net5.0\cs1.deps.json
+C:\notes\cshare\cs1\bin\Debug\net5.0\cs1.runtimeconfig.json
+C:\notes\cshare\cs1\bin\Debug\net5.0\cs1.runtimeconfig.dev.json
+C:\notes\cshare\cs1\bin\Debug\net5.0\cs1.dll
+C:\notes\cshare\cs1\bin\Debug\net5.0\ref\cs1.dll
+C:\notes\cshare\cs1\bin\Debug\net5.0\cs1.pdb
+C:\notes\cshare\cs1\obj\Debug\net5.0\cs1.csproj.AssemblyReference.cache
+C:\notes\cshare\cs1\obj\Debug\net5.0\cs1.GeneratedMSBuildEditorConfig.editorconfig
+C:\notes\cshare\cs1\obj\Debug\net5.0\cs1.AssemblyInfoInputs.cache
+C:\notes\cshare\cs1\obj\Debug\net5.0\cs1.AssemblyInfo.cs
+C:\notes\cshare\cs1\obj\Debug\net5.0\cs1.csproj.CoreCompileInputs.cache
+C:\notes\cshare\cs1\obj\Debug\net5.0\cs1.dll
+C:\notes\cshare\cs1\obj\Debug\net5.0\ref\cs1.dll
+C:\notes\cshare\cs1\obj\Debug\net5.0\cs1.pdb
+C:\notes\cshare\cs1\obj\Debug\net5.0\cs1.genruntimeconfig.cache

@@ -1,0 +1,3 @@
+d1105e8122cb0ed31964dc529509d135    RFRHK.txt
+edb05f6872d3caa0e87c14cb7da4f655    RFRHO.txt
+e5d5bb70eda92dd0f8552a72d7b93251    RFRFTZ.txt

@@ -1,0 +1,9 @@
+Host github.com
+HostName github.com
+User ation119
+IdentityFile ~/.ssh/rsa
+
+Host ation120.github.com
+HostName github.com
+User ation120
+IdentityFile ~/.ssh/id_rsa_120
