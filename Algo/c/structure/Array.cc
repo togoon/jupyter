@@ -4,6 +4,7 @@
 
 #define MAX_ARRAY_DIM 8
 typedef int ElemType;
+
 typedef struct {
     ElemType *base; //存储数据
     int dim;
@@ -90,6 +91,7 @@ int Assign(Array *A,ElemType e)
 
 int main()
 {
+    printf("1111");
     Array A;
     InitArray(&A,3);
     int e=3;
@@ -98,3 +100,5 @@ int main()
 
     return 0;
 }
+
+
