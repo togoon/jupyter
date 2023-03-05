@@ -151,8 +151,52 @@ git config --local user.name "244564485"
         email = 244564485@qq.com
         name = 244564485
 
+```
+
+4. git sync 244  
 
 ```
+# 244564485
+cd ~/.ssh/
+ssh-keygen -t rsa -f ~/.ssh/id_rsa_244 -C "244564485@qq.com"  # ↵ ↵ ↵ 
+
+vim ~/.ssh/config  # git配置多个ssh_key
+Host 244564485.github.com
+HostName github.com
+User 244564485
+IdentityFile ~/.ssh/id_rsa_244
+
+ssh -T git@244564485.github.com
+
+cd ~/test
+git clone git@244564485.github.com:244564485/jupyter.git
+
+git config --local user.email "244564485@qq.com"
+git config --local user.name "244564485"
+
+# .git/config
+[core]
+        repositoryformatversion = 0
+        filemode = true
+        bare = false
+        logallrefupdates = true
+[remote "origin"]
+        url = git@244564485.github.com:244564485/jupyter.git
+        fetch = +refs/heads/*:refs/remotes/origin/*
+[branch "main"]
+        remote = origin
+        merge = refs/heads/main
+[user]
+        email = 244564485@qq.com
+        name = 244564485
+
+
+
+```
+
+
+
+
 
 # https://notebooks.edge.devcloud.intel.com/user/u184108/lab  # -d '+16 hour'
 cd /home/u184108
