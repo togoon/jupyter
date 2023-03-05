@@ -40,7 +40,7 @@ app_hourmin=`date -d "+${locHouradj} hour" '+%_H%M'`
 app_date=`date -d "+${locHouradj} hour" '+%Y%m%d'`
 # app_date=$(( 10#${app_date} ))
 
-echo 6. ${app_hour} ${app_minute} ${app_date}  >> ${curDir}/tmp/test.log 2>&1 
+echo 6. ${app_hour} ${app_minute} ${app_date} # >> ${curDir}/tmp/test.log 2>&1 
 
 if [ ${app_hour} -eq 4 -o ${app_hour} -eq 8 -o ${app_hour} -eq 10 -o ${app_hour} -eq 12 -o ${app_hour} -eq 14 -o ${app_hour} -eq 16 -o ${app_hour} -eq 18 -o ${app_hour} -eq 20 -o ${app_hour} -eq 22 -o ${app_hour} -eq 0 ] && [ ${app_minute} -eq 5 ]
 then
