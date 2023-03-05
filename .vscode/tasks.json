@@ -8,7 +8,7 @@
             "args": [
                 "-g",
                 "${file}",
-                "-lpthread",
+                "-lpthread", 
                 "-o",
                 "${fileDirname}/${fileBasenameNoExtension}"
             ],
