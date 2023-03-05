@@ -1,1 +1,15 @@
+<<<<<<< HEAD
 0000
+=======
+1111Everything up-to-date
+2222
+3333
+>>>>>>> 20230305 10:35:01
+To 244564485.github.com:244564485/jupyter.git
+ ! [rejected]        main -> main (non-fast-forward)
+error: failed to push some refs to 'git@244564485.github.com:244564485/jupyter.git'
+hint: Updates were rejected because a pushed branch tip is behind its remote
+hint: counterpart. Check out this branch and integrate the remote changes
+hint: (e.g. 'git pull ...') before pushing again.
+hint: See the 'Note about fast-forwards' in 'git push --help' for details.
+6. 10 40 20230305
