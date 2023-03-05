@@ -1,7 +1,7 @@
 # .gitignore
 LICENSE
 .git/
-# tmp/*log*
+tmp/*log*
 tmp/*origin*
 tmp/*pkl*
 tmp/*db*
