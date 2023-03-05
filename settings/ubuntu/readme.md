@@ -161,6 +161,7 @@ cd ~/.ssh/
 ssh-keygen -t rsa -f ~/.ssh/id_rsa_244 -C "244564485@qq.com"  # ↵ ↵ ↵ 
 
 vim ~/.ssh/config  # git配置多个ssh_key
+... ...
 Host 244564485.github.com
 HostName github.com
 User 244564485
@@ -190,7 +191,11 @@ git config --local user.name "244564485"
         email = 244564485@qq.com
         name = 244564485
 
-
+# .gtiTimer.sh
+git add .
+git commit -m "`date -d '+8 hour' '+%Y%m%d %H:%M:%S'`"  
+git pull --rebase origin main
+git push -u origin main
 
 ```
 
