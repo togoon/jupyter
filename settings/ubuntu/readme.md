@@ -135,6 +135,23 @@ git config --local user.name "ation3"
 git config --local user.email "244564485@qq.com"
 git config --local user.name "244564485"
 
+# .git/config
+[core]
+        repositoryformatversion = 0
+        filemode = true
+        bare = false
+        logallrefupdates = true
+[remote "origin"]
+        url = git@244564485.github.com:244564485/jupyter.git
+        fetch = +refs/heads/*:refs/remotes/origin/*
+[branch "main"]
+        remote = origin
+        merge = refs/heads/main
+[user]
+        email = 244564485@qq.com
+        name = 244564485
+
+
 ```
 
 # https://notebooks.edge.devcloud.intel.com/user/u184108/lab  # -d '+16 hour'
