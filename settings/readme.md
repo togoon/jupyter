@@ -957,6 +957,9 @@ deb [arch=amd64] https://mirrors.ustc.edu.cn/docker-ce/linux/ubuntu focal stable
 10. anaconda
 
 ```shell 
+sudo apt-get remove --auto-remove python3.8
+sudo apt-get purge python3.8
+
 wget https://repo.anaconda.com/archive/Anaconda3-2022.10-Linux-x86_64.sh
 bash Anaconda3-2021.05-Linux-x86_64.sh
 
@@ -966,6 +969,7 @@ wget --continue https://mirrors.tuna.tsinghua.edu.cn/anaconda/archive/Anaconda3-
 
 scp /mnt/c/users/at/downloads/Anaconda3-2022.10-Linux-x86_64.sh  /home/at/pkg/
 bash anaconda3.sh
+
 
 sudo vim ~/.bashrc
 export PATH=[your path to anaconda]/anaconda3/bin:$PATH
@@ -1010,6 +1014,7 @@ jupyter kernelspec list #
 conda install anaconda-clean
 
 python3 -m pip install EMD-signal akshare pandas_datareader torch requests_toolbelt mplfinance pyts pyecharts ccxt tushare aligo yfinance jwt   --upgrade
+
 
 
 
