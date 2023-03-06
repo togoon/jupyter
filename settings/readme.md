@@ -964,7 +964,9 @@ wget https://repo.anaconda.com/archive/Anaconda3-2022.10-Linux-x86_64.sh
 bash Anaconda3-2021.05-Linux-x86_64.sh
 
 wget --continue https//repo.anaconda.com/archive/Anaconda3-2022.10-Linux-x86_64.sh
+wget --continue https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh
 wget --continue https://mirrors.tuna.tsinghua.edu.cn/anaconda/archive/Anaconda3-2022.10-Linux-x86_64.sh 
+wget --continue https://mirrors.tuna.tsinghua.edu.cn/miniconda/Miniconda3-latest-Linux-x86_64.sh
 
 
 scp /mnt/c/users/at/downloads/Anaconda3-2022.10-Linux-x86_64.sh  /home/at/pkg/
