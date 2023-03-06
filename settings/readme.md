@@ -988,7 +988,10 @@ pip install -i https://pypi.tuna.tsinghua.edu.cn/simple pip -U
 pip config set global.index-url https://pypi.tuna.tsinghua.edu.cn/simple
 python3 -m pip install -r ~/test/jupyter/settings/requirements.txt 
 
-
+pip install pandas numpy matplotlib seaborn scipy tqdm  pymysql sqlalchemy  
+ flask pandas_datareader torch pymssql EMD-signal websocket-client ccxt statsmodels  
+ requests_toolbelt scikit-learn sshtunnel  pycryptodome  werkzeug  ipywidgets aligo
+ jwt gevent pyts sympy mplfinance akshare yfinance tushare pyecharts --upgrade
 
 sudo vim ~/.bashrc
 export PATH=[your path to anaconda]/anaconda3/bin:$PATH
