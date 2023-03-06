@@ -1,0 +1,8 @@
+channels:
+  - https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud/bioconda
+  - https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud/conda-forge
+  - https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/free
+  - conda-forge
+  - defaults
+channel_priority: flexible
+show_channel_urls: true
