@@ -972,6 +972,20 @@ wget -c https://mirrors.tuna.tsinghua.edu.cn/anaconda/miniconda/Miniconda3-lates
 scp /mnt/c/users/at/downloads/Anaconda3-2022.10-Linux-x86_64.sh  /home/at/pkg/
 bash anaconda3.sh
 
+bash Miniconda3-latest-Linux-x86_64.sh
+conda config --add channels https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/free
+conda config --add channels https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud/conda-forge
+conda config --add channels https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud/bioconda
+conda config --set show_channel_urls yes
+conda update conda
+conda create -n cling
+conda activate cling
+conda install jupyter notebook
+conda install xeus-cling -c conda-forge
+conda list
+
+pip install -i https://pypi.tuna.tsinghua.edu.cn/simple pip -U
+pip config set global.index-url https://pypi.tuna.tsinghua.edu.cn/simple
 
 sudo vim ~/.bashrc
 export PATH=[your path to anaconda]/anaconda3/bin:$PATH
