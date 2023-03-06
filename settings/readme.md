@@ -1007,6 +1007,7 @@ conda config --add channels conda-forge # 修改频道
 conda config --set channel_priority flexible
 conda install xeus-cling -c conda-forg  # 在jupyter中配置c++内核 jupyter notebook c++
 jupyter kernelspec list # 
+conda install anaconda-clean
 
 python3 -m pip install EMD-signal akshare pandas_datareader torch requests_toolbelt mplfinance pyts pyecharts ccxt tushare aligo yfinance jwt   --upgrade
 
