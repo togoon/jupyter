@@ -984,6 +984,8 @@ conda install jupyter notebook
 conda install xeus-cling -c conda-forge
 conda list
 
+pip install -i http://mirrors.aliyun.com/pypi/simple/ --trusted-host mirrors.aliyun.com 安装包
+
 pip install -i https://pypi.tuna.tsinghua.edu.cn/simple pip -U
 pip config set global.index-url https://pypi.tuna.tsinghua.edu.cn/simple
 python3 -m pip install -r ~/test/jupyter/settings/requirements.txt 
@@ -992,6 +994,15 @@ pip install pandas numpy matplotlib seaborn scipy tqdm  pymysql sqlalchemy
  flask pandas_datareader torch pymssql EMD-signal websocket-client ccxt statsmodels  
  requests_toolbelt scikit-learn sshtunnel  pycryptodome  werkzeug  ipywidgets aligo
  jwt gevent pyts sympy mplfinance akshare yfinance tushare pyecharts --upgrade
+
+pip config set global.index-url http://mirrors.aliyun.com/pypi/simple
+
+pip install -i http://mirrors.aliyun.com/pypi/simple/ --trusted-host mirrors.aliyun.com 安装包
+vi ~/.pip/pip.conf # pip.ini 
+[global]
+trusted-host =  mirrors.aliyun.com
+index-url = https://mirrors.aliyun.com/pypi/simple
+
 
 sudo vim ~/.bashrc
 export PATH=[your path to anaconda]/anaconda3/bin:$PATH
