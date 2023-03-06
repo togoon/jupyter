@@ -54,7 +54,7 @@ ${pathSeparator}  - / on macOS or linux, \ on Windows - the character used by th
     ]
 }
 
-```
+```'
 
 ## launch.json
 ```json
