@@ -984,7 +984,7 @@ conda install jupyter notebook
 conda install xeus-cling -c conda-forge
 conda list
 
-pip install -i http://mirrors.aliyun.com/pypi/simple/ --trusted-host mirrors.aliyun.com pandas
+pip install -i https://pypi.mirrors.ustc.edu.cn/simple/ --trusted-host mirrors.aliyun.com matplotlib seaborn  tqdm  pymysql sqlalchemy  --upgrade
 
 pip install -i https://pypi.tuna.tsinghua.edu.cn/simple pip -U
 pip config set global.index-url https://pypi.tuna.tsinghua.edu.cn/simple
@@ -1010,12 +1010,10 @@ http://pypi.douban.com/simple/ # 豆瓣
 https://pypi.tuna.tsinghua.edu.cn/simple/ # 清华大学
 
 https://pypi.python.org/simple/ # Python官方 
-http://pypi.v2ex.com/simple/ # v2ex 
-中国科学院 http://pypi.mirrors.opencas.cn/simple/
-清华大学 https://pypi.tuna.tsinghua.edu.cn/simple/
-中国科学技术大学 [http://pypi.mirrors.ustc.edu.cn/simple/
-华中理工大学：http://pypi.hustunique.com/
-山东理工大学：http://pypi.sdutlinux.org/
+http://pypi.v2ex.com/simple/ # v2ex  
+http://pypi.mirrors.opencas.cn/simple/ # 中国科学院 
+http://pypi.hustunique.com/ # 华中理工大学
+http://pypi.sdutlinux.org/ # 山东理工大学
 
 sudo vim ~/.bashrc
 export PATH=[your path to anaconda]/anaconda3/bin:$PATH
