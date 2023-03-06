@@ -996,6 +996,8 @@ pip install -r requirements.txt
 
 conda install pandas numpy matplotlib seaborn scipy tqdm pymysql sqlalchemy flask pymssql  websocket-client statsmodels scikit-learn sshtunnel  pycryptodome werkzeug ipywidgets gevent sympy    
 
+conda config --set channel_alias https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud
+conda config --show
 conda install xeus-cling -c conda-forg  # 在jupyter中配置c++内核 jupyter notebook c++
 jupyter kernelspec list # 
 
