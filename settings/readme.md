@@ -996,8 +996,8 @@ pip install -r requirements.txt
 
 conda install pandas numpy matplotlib seaborn scipy tqdm pymysql sqlalchemy flask pymssql  websocket-client statsmodels scikit-learn sshtunnel  pycryptodome werkzeug ipywidgets gevent sympy    
 
-conda install xeus-cling -c conda-forg  # jupyter notebook c++
-
+conda install xeus-cling -c conda-forg  # 在jupyter中配置c++内核 jupyter notebook c++
+jupyter kernelspec list # 
 
 python3 -m pip install EMD-signal akshare pandas_datareader torch requests_toolbelt mplfinance pyts pyecharts ccxt tushare aligo yfinance jwt   --upgrade
 
