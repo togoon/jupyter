@@ -987,6 +987,9 @@ conda list
 pip install -i https://pypi.tuna.tsinghua.edu.cn/simple pip -U
 pip config set global.index-url https://pypi.tuna.tsinghua.edu.cn/simple
 
+
+
+
 sudo vim ~/.bashrc
 export PATH=[your path to anaconda]/anaconda3/bin:$PATH
 export PATH=/home/at/anaconda3/bin:$PATH
