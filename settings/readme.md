@@ -966,10 +966,10 @@ bash Anaconda3-2021.05-Linux-x86_64.sh
 wget --continue https//repo.anaconda.com/archive/Anaconda3-2022.10-Linux-x86_64.sh
 wget --continue https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh
 wget --continue https://mirrors.tuna.tsinghua.edu.cn/anaconda/archive/Anaconda3-2022.10-Linux-x86_64.sh 
-# wget --continue https://mirrors.tuna.tsinghua.edu.cn/miniconda/Miniconda3-latest-Linux-x86_64.sh
+
 wget -c https://mirrors.tuna.tsinghua.edu.cn/anaconda/miniconda/Miniconda3-latest-Linux-x86_64.sh
 
-wget -c https://mirrors.bfsu.edu.cn/anaconda/miniconda/Miniconda3-py39_4.9.2-Linux-x86_64.sh
+wget -c https://mirrors.bfsu.edu.cn/anaconda/miniconda/Miniconda3-py310_23.1.0-1-Linux-x86_64.sh
 
 
 scp /mnt/c/users/at/downloads/Anaconda3-2022.10-Linux-x86_64.sh  /home/at/pkg/
