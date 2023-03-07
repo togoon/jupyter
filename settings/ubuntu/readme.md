@@ -527,6 +527,109 @@ source "$HOME/.cargo/env" # . "$HOME/.cargo/env" # 注意 rustc 添加环境变�
     #rustup -V # 
     rustc --version  # Rust语言的编译器
 
-20、Anaconda3 Miniconda3
+20、Anaconda3 Miniconda3 python
+
+sudo apt-get remove --auto-remove python3.8 #卸载python3.8
+sudo apt-get purge python3.8
+
+wget --continue https//repo.anaconda.com/archive/Anaconda3-2022.10-Linux-x86_64.sh # 下载 conda3
+wget --continue https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh
+wget --continue https://mirrors.tuna.tsinghua.edu.cn/anaconda/archive/Anaconda3-2022.10-Linux-x86_64.sh 
+
+wget -c https://mirrors.tuna.tsinghua.edu.cn/anaconda/miniconda/Miniconda3-latest-Linux-x86_64.sh
+
+wget -c https://mirrors.bfsu.edu.cn/anaconda/miniconda/Miniconda3-py310_23.1.0-1-Linux-x86_64.sh
+
+
+scp /mnt/c/users/at/downloads/Anaconda3-2022.10-Linux-x86_64.sh  /home/at/pkg/
+
+bash Anaconda3-2021.05-Linux-x86_64.sh
+bash anaconda3.sh
+
+bash Miniconda3-latest-Linux-x86_64.sh
+
+conda config --add channels https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/free
+conda config --add channels https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud/conda-forge
+conda config --add channels https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud/bioconda
+conda config --set show_channel_urls yes
+conda update conda
+conda create -n cling
+conda activate cling
+conda install jupyter notebook
+conda install xeus-cling -c conda-forge
+conda list
+
+conda clean -i
+conda env create -f clang.yml
+conda env create -f /home/at/test/jupyter/settings/ubuntu/clang.yml
+pip install jupyter-c-kernel
+
+pip install -i https://pypi.mirrors.ustc.edu.cn/simple/ --trusted-host pypi.mirrors.ustc.edu.cn  jupyter-c-kernel --upgrade
+
+pip install -i https://pypi.tuna.tsinghua.edu.cn/simple pip -U
+pip config set global.index-url https://pypi.tuna.tsinghua.edu.cn/simple
+python3 -m pip install -r ~/test/jupyter/settings/requirements.txt 
+
+pip install pandas numpy matplotlib seaborn scipy tqdm  pymysql sqlalchemy  flask pandas_datareader  pymssql EMD-signal websocket-client ccxt statsmodels requests_toolbelt sshtunnel  pycryptodome  werkzeug  ipywidgets aligo jwt gevent pyts sympy mplfinance akshare yfinance tushare pyecharts scikit-learn torch jupyter-c-kernel -i https://pypi.mirrors.ustc.edu.cn/simple/ --trusted-host pypi.mirrors.ustc.edu.cn  --upgrade
+
+
+
+pip install pandas numpy matplotlib seaborn scipy tqdm  pymysql sqlalchemy  
+ flask pandas_datareader  pymssql EMD-signal websocket-client ccxt statsmodels  
+ requests_toolbelt sshtunnel  pycryptodome  werkzeug  ipywidgets aligo
+ jwt gevent pyts sympy mplfinance akshare yfinance tushare pyecharts scikit-learn torch --upgrade
+  jupyter-c-kernel
+
+pip config set global.index-url http://mirrors.aliyun.com/pypi/simple
+
+pip install -i http://mirrors.aliyun.com/pypi/simple/ --trusted-host mirrors.aliyun.com 安装包
+vi ~/.pip/pip.conf # pip.ini 
+[global]
+trusted-host =  mirrors.aliyun.com
+index-url = https://mirrors.aliyun.com/pypi/simple
+
+sudo vim ~/.bashrc
+export PATH=[your path to anaconda]/anaconda3/bin:$PATH
+export PATH=/home/at/anaconda3/bin:$PATH
+source ~/.bashrc
+
+echo 'export PATH="/home/fjyy/anaconda3/bin:$PATH"' >> ~/.bashrc
+source ~/.bashrc
+
+conda create --name pytorch python=3.9 # 创建python环境
+conda create -n tensorflow python=3  # 建立一个名为tensorflow的虚拟环境
+conda activate pytorch # 进入自创建环境 
+conda activate tensorflow  # 激活虚拟环境
+conda deactivate #退出虚拟环境
+conda info --envs
+conda upgrade --all  # 工具包升级
+conda remove -n tensorflow --all   # 删除虚拟环境
+conda list   # 查看安装的包 查看环境内容
+conda install urllib3  # 安装包
+conda install scrapy==1.3  #安装指定版本的包
+conda install -n tensorflow scrapy #在tensorflow环境安装scrapy包
+conda remove urllib3 # 删除包
+conda env list # 查看当前存在的虚拟环境
+conda create -n tensor222 --clone tensorflow # conda环境克隆  
+conda create -n BBB --clone ~/path # 跨计算机克隆
+conda env export > environment.yaml   # 共享环境 保存为yaml文件
+conda env create -f environment.yaml # 只能安装原来环境中用conda install等命令直接安装的包，不包括pip安装的包。
+pip freeze > requirements.txt   # 把pip安装的导出到requirements.txt
+pip install -r requirements.txt
+
+conda install pandas numpy matplotlib seaborn scipy tqdm pymysql sqlalchemy flask pymssql  websocket-client statsmodels scikit-learn sshtunnel  pycryptodome werkzeug ipywidgets gevent sympy    
+
+
+conda config --set channel_alias https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud
+conda config --show
+conda update -n base conda # 更新conda
+conda update -all
+conda config --add channels conda-forge # 修改频道 
+conda config --set channel_priority flexible
+conda install xeus-cling -c conda-forg  # 在jupyter中配置c++内核 jupyter notebook c++
+jupyter kernelspec list # 
+conda install anaconda-clean
+
+python3 -m pip install EMD-signal akshare pandas_datareader torch requests_toolbelt mplfinance pyts pyecharts ccxt tushare aligo yfinance jwt   --upgrade
 
 
