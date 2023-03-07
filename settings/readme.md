@@ -989,7 +989,8 @@ conda install xeus-cling -c conda-forge
 conda list
 
 conda clean -i
-conda env create -f cling.yml
+conda env create -f clang.yml
+conda env create -f /home/at/test/jupyter/settings/ubuntu/clang.yml
 pip install jupyter-c-kernel
 
 pip install -i https://pypi.mirrors.ustc.edu.cn/simple/ --trusted-host pypi.mirrors.ustc.edu.cn  jupyter-c-kernel --upgrade
