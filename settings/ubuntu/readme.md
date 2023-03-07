@@ -200,9 +200,6 @@ git push -u origin main
 ```
 
 
-
-
-
 # https://notebooks.edge.devcloud.intel.com/user/u184108/lab  # -d '+16 hour'
 cd /home/u184108
 mkdir bin
@@ -291,6 +288,29 @@ sudo  apt-get   install  -f
 更新软件  sudo apt-get upgrade。  
 upgrade 是升级已安装的所有软件包，升级之后的版本就是本地索引里的，因此，在执行 upgrade 之前一定要执行 update, 这样才能是最新的。
 
+
+## .condarc
+channels:
+  - defaults
+    - conda-forge
+show_channel_urls: true
+channel_alias: http://mirrors.tuna.tsinghua.edu.cn/anaconda
+default_channels:
+  - http://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/free
+  - http://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/r
+  - http://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/pro
+  - http://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/msys2
+custom_channels:
+  conda-forge: http://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud
+  msys2: http://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud
+  bioconda: http://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud
+  menpo: http://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud
+  pytorch: http://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud
+  simpleitk: http://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud
+  channel_priority: flexible
+
+
+## .
 
 
 ## Ubuntu20.04 设置开机自启  
