@@ -613,10 +613,10 @@ jupyter notebook
 
 pip install pandas numpy matplotlib seaborn scipy tqdm  pymysql sqlalchemy  flask pandas_datareader  pymssql EMD-signal websocket-client ccxt statsmodels   requests_toolbelt sshtunnel  pycryptodome  werkzeug  ipywidgets aligo jwt gevent pyts sympy mplfinance akshare yfinance tushare pyecharts scikit-learn torch jupyter-c-kernel -i https://pypi.mirrors.ustc.edu.cn/simple/ --trusted-host pypi.mirrors.ustc.edu.cn  --upgrade
 
-conda install conda-pack # 安装-c conda-forge # pip install conda-pack
+conda install conda-pack # 安装 -c conda-forge # pip install conda-pack
 conda pack -n clang -o clang.tar.gz --ignore-editable-packages # 在源机器上打包 忽略报错 # -o 指定打包路径和名称 
 conda pack -p /home/at/bin/anaconda/envs/clang # 把某个特定路径的虚拟环境打包为  clang.tar.gz
-mkdir -p clang
+mkdir -p clang # 创建目录
 tar -xzf clang.tar.gz -C clang  # 在目标机器上操作, 将环境解压至该目录
 ./clang/bin/python # 使用python而不激活或修复前缀
 source clang/bin/activate # 激活环境,将路径添加到环境变量path
