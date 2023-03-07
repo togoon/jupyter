@@ -1,9 +1,6 @@
 name: clang
 channels:
     - conda-forge
-    - https://mirrors.ustc.edu.cn/anaconda/pkgs/free/
-    - https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/main
-    - https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/free
     - defaults
 dependencies:
     - python
