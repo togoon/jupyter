@@ -600,14 +600,12 @@ conda update -all
 conda config --add channels conda-forge # 修改频道 
 conda config --set channel_priority flexible
 conda config --set auto_activate_base false  #关闭自动激活环境  打开true
-conda install xeus-cling -c conda-forg  # 在jupyter中配置c++内核 jupyter notebook c++
-jupyter kernelspec list # 
 conda install anaconda-clean
 
 conda create --name clang python=3.9.13 openssl=1.1.1q pip=22.2.2 ca-certificates=2022 setuptools=63.4.1 sqlite=3.39.3  --offline
 conda activate clang
 conda install jupyter notebook
-conda install -c conda-forge xeus-cling
+conda install -c conda-forge xeus-cling  # 在jupyter中配置c++内核 jupyter notebook c++
 jupyter kernelspec list
 jupyter notebook
 
