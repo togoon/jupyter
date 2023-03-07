@@ -618,11 +618,11 @@ conda pack -n clang -o clang.tar.gz --ignore-editable-packages # 在源机器上
 conda pack -p /home/at/bin/anaconda/envs/clang # 把某个特定路径的虚拟环境打包为  clang.tar.gz
 mkdir -p clang
 tar -xzf clang.tar.gz -C clang  # 在目标机器上操作, 将环境解压至该目录
-./clang/bin/python
-source clang/bin/activate # adds `clang/bin` to your path
-conda-unpack
-ipython --version
-source clang/bin/deactivate
+./clang/bin/python # 使用python而不激活或修复前缀
+source clang/bin/activate # 激活环境,将路径添加到环境变量path
+conda-unpack # 从激活环境中清除前缀
+ipython --version # 脚本正常
+source clang/bin/deactivate # 停用环境以将其从环境变量 path 中删除
 
 
 
