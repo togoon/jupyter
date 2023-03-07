@@ -566,13 +566,11 @@ python3 -m pip install -r ~/test/jupyter/settings/requirements.txt
 
 pip install pandas numpy matplotlib seaborn scipy tqdm  pymysql sqlalchemy  flask pandas_datareader  pymssql EMD-signal websocket-client ccxt statsmodels requests_toolbelt sshtunnel  pycryptodome  werkzeug  ipywidgets aligo jwt gevent pyts sympy mplfinance akshare yfinance tushare pyecharts scikit-learn torch jupyter-c-kernel -i https://pypi.mirrors.ustc.edu.cn/simple/ --trusted-host pypi.mirrors.ustc.edu.cn  --upgrade
 
-
 sudo vim ~/.bashrc
 export PATH=[your path to anaconda]/anaconda3/bin:$PATH
 export PATH=/home/at/anaconda3/bin:$PATH
 #echo 'export PATH="/home/at/anaconda3/bin:$PATH"' >> ~/.bashrc
 source ~/.bashrc
-
 
 conda create --name pytorch python=3.9 # 创建python环境
 conda create -n tensorflow python=3  # 建立一个名为tensorflow的虚拟环境
@@ -593,9 +591,7 @@ conda create -n BBB --clone ~/path # 跨计算机克隆
 conda env export > environment.yaml   # 共享环境 保存为yaml文件
 conda env create -f environment.yaml # 只能安装原来环境中用conda install等命令直接安装的包，不包括pip安装的包。
 
-
 conda install pandas numpy matplotlib seaborn scipy tqdm pymysql sqlalchemy flask pymssql  websocket-client statsmodels scikit-learn sshtunnel  pycryptodome werkzeug ipywidgets gevent sympy    
-
 
 conda config --set channel_alias https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud
 conda config --show
@@ -607,8 +603,6 @@ conda install xeus-cling -c conda-forg  # 在jupyter中配置c++内核 jupyter n
 jupyter kernelspec list # 
 conda install anaconda-clean
 
-
-
 conda create --name clang python=3.9.13 openssl=1.1.1q pip=22.2.2 ca-certificates=2022 setuptools=63.4.1 sqlite=3.39.3  --offline
 conda activate clang
 conda install jupyter notebook
@@ -619,3 +613,4 @@ pip install pandas numpy matplotlib seaborn scipy tqdm  pymysql sqlalchemy  flas
 jupyter notebook
 conda env export > xxxxx.yml：导出
 conda install conda-pack
+
