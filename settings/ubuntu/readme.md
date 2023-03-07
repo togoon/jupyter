@@ -614,3 +614,31 @@ jupyter notebook
 conda env export > xxxxx.yml：导出
 conda install conda-pack
 
+conda pack -n my_env -o out_name.tar.gz  # 在源机器上打包 
+conda pack -p /explicit/path/to/my_env # my_env.tar.gz
+
+mkdir -p my_env
+tar -xzf my_env.tar.gz -C my_env  # 在目标机器上操作
+
+# Use python without activating or fixing the prefixes. Most python
+# libraries will work fine, but things that require prefix cleanups
+# will fail.
+$ ./my_env/bin/python
+
+# Activate the environment. This adds `my_env/bin` to your path
+$ source my_env/bin/activate
+
+# Run python from in the environment
+(my_env) $ python
+
+# Cleanup prefixes from in the active environment.
+# Note that this command can also be run without activating the environment
+# as long as some version of python is already installed on the machine.
+(my_env) $ conda-unpack
+
+# At this point the environment is exactly as if you installed it here
+# using conda directly. All scripts should work fine.
+(my_env) $ ipython --version
+
+# Deactivate the environment to remove it from your path
+(my_env) $ source my_env/bin/deactivate
