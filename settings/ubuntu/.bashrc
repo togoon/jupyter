@@ -118,14 +118,14 @@ fi
 
 # >>> conda initialize >>>
 # !! Contents within this block are managed by 'conda init' !!
-__conda_setup="$('/home/at/anaconda3/bin/conda' 'shell.bash' 'hook' 2> /dev/null)"
+__conda_setup="$('/home/at/bin/anaconda3/bin/conda' 'shell.bash' 'hook' 2> /dev/null)"
 if [ $? -eq 0 ]; then
     eval "$__conda_setup"
 else
-    if [ -f "/home/at/anaconda3/etc/profile.d/conda.sh" ]; then
-        . "/home/at/anaconda3/etc/profile.d/conda.sh"
+    if [ -f "/home/at/bin/anaconda3/etc/profile.d/conda.sh" ]; then
+        . "/home/at/bin/anaconda3/etc/profile.d/conda.sh"
     else
-        export PATH="/home/at/anaconda3/bin:$PATH"
+        export PATH="/home/at/bin/anaconda3/bin:$PATH"
     fi
 fi
 unset __conda_setup
@@ -133,7 +133,9 @@ unset __conda_setup
 
 
 #export PATH=/home/at/bin/anaconda3/bin:$PATH
-export PATH=/home/at/bin/anaconda3/bin:/home/at/bin/aliyunpan:$PATH
+#export PATH=/home/at/anaconda3/bin:/home/at/bin/aliyunpan:$PATH
+
+export PATH=/home/at/bin/aliyunpan:$PATH
 
 #echo 314159 | sudo service cron start
 export ALIYUNPAN_CONFIG_DIR=/home/at/test/jupyter/settings/aliyunpan/config
@@ -142,3 +144,4 @@ sudo -S service cron start << EOF
 314159
 EOF
 
+. "$HOME/.cargo/env"
