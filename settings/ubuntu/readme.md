@@ -609,12 +609,11 @@ conda activate clang
 conda install jupyter notebook
 conda install -c conda-forge xeus-cling
 jupyter kernelspec list
+jupyter notebook
 
 pip install pandas numpy matplotlib seaborn scipy tqdm  pymysql sqlalchemy  flask pandas_datareader  pymssql EMD-signal websocket-client ccxt statsmodels   requests_toolbelt sshtunnel  pycryptodome  werkzeug  ipywidgets aligo jwt gevent pyts sympy mplfinance akshare yfinance tushare pyecharts scikit-learn torch jupyter-c-kernel -i https://pypi.mirrors.ustc.edu.cn/simple/ --trusted-host pypi.mirrors.ustc.edu.cn  --upgrade
-jupyter notebook
-conda env export > xxxxx.yml：导出
-conda install conda-pack
 
+conda install conda-pack
 conda pack -n clang -o clang.tar.gz  # 在源机器上打包 
 conda pack -p /explicit/path/to/clang # clang.tar.gz
 mkdir -p clang
