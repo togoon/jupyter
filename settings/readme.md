@@ -984,6 +984,7 @@ conda install jupyter notebook
 conda install xeus-cling -c conda-forge
 conda list
 
+conda clean -i
 conda env create -f cling.yml
 pip install jupyter-c-kernel
 
