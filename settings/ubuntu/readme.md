@@ -581,8 +581,8 @@ conda env list # 查看当前存在的虚拟环境
 conda env export > environment.yaml   # 共享环境 保存为yaml文件
 conda activate pytorch # 进入自创建环境 
 conda activate tensorflow  # 激活虚拟环境
-conda deactivate #退出虚拟环境
-conda info --envs
+conda deactivate # 退出虚拟环境
+conda info --envs # -e 查看环境
 conda upgrade --all  # 工具包升级
 conda remove -n tensorflow --all   # 删除虚拟环境
 conda remove urllib3 # 删除包
@@ -613,9 +613,9 @@ jupyter notebook
 
 pip install pandas numpy matplotlib seaborn scipy tqdm  pymysql sqlalchemy  flask pandas_datareader  pymssql EMD-signal websocket-client ccxt statsmodels   requests_toolbelt sshtunnel  pycryptodome  werkzeug  ipywidgets aligo jwt gevent pyts sympy mplfinance akshare yfinance tushare pyecharts scikit-learn torch jupyter-c-kernel -i https://pypi.mirrors.ustc.edu.cn/simple/ --trusted-host pypi.mirrors.ustc.edu.cn  --upgrade
 
-conda install conda-pack
-conda pack -n clang -o clang.tar.gz  # 在源机器上打包 
-conda pack -p /explicit/path/to/clang # clang.tar.gz
+conda install conda-pack # 安装 pip install conda-pack
+conda pack -n clang -o clang.tar.gz --ignore-editable-packages # 在源机器上打包 忽略报错
+conda pack -p /explicit/path/to/clang # 把某个特定路径的虚拟环境打包为  clang.tar.gz
 mkdir -p clang
 tar -xzf clang.tar.gz -C clang  # 在目标机器上操作
 ./clang/bin/python
