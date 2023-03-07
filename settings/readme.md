@@ -999,6 +999,10 @@ pip install -i https://pypi.tuna.tsinghua.edu.cn/simple pip -U
 pip config set global.index-url https://pypi.tuna.tsinghua.edu.cn/simple
 python3 -m pip install -r ~/test/jupyter/settings/requirements.txt 
 
+pip install pandas numpy matplotlib seaborn scipy tqdm  pymysql sqlalchemy  flask pandas_datareader  pymssql EMD-signal websocket-client ccxt statsmodels requests_toolbelt sshtunnel  pycryptodome  werkzeug  ipywidgets aligo jwt gevent pyts sympy mplfinance akshare yfinance tushare pyecharts scikit-learn torch jupyter-c-kernel -i https://pypi.mirrors.ustc.edu.cn/simple/ --trusted-host pypi.mirrors.ustc.edu.cn  --upgrade
+
+
+
 pip install pandas numpy matplotlib seaborn scipy tqdm  pymysql sqlalchemy  
  flask pandas_datareader  pymssql EMD-signal websocket-client ccxt statsmodels  
  requests_toolbelt sshtunnel  pycryptodome  werkzeug  ipywidgets aligo
