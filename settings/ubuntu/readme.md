@@ -310,7 +310,31 @@ custom_channels:
   channel_priority: flexible
 
 
-## .
+## ~/.pip/pip.conf # pip.ini python库 pip源 python
+[global]
+trusted-host =  mirrors.aliyun.com
+index-url = https://mirrors.aliyun.com/pypi/simple
+
+pip install -i http://mirrors.aliyun.com/pypi/simple/ --trusted-host mirrors.aliyun.com 安装包
+
+http://mirrors.aliyun.com/pypi/simple/ # 阿里云
+https://pypi.mirrors.ustc.edu.cn/simple/ # 中国科技大学
+http://pypi.douban.com/simple/ # 豆瓣
+https://pypi.tuna.tsinghua.edu.cn/simple/ # 清华大学
+
+https://pypi.python.org/simple/ # Python官方 
+http://pypi.v2ex.com/simple/ # v2ex  
+http://pypi.mirrors.opencas.cn/simple/ # 中国科学院 
+http://pypi.hustunique.com/ # 华中理工大学
+http://pypi.sdutlinux.org/ # 山东理工大学
+
+pip install -i https://pypi.tuna.tsinghua.edu.cn/simple pip -U
+pip config set global.index-url https://pypi.tuna.tsinghua.edu.cn/simple
+python3 -m pip install -r ~/test/jupyter/settings/requirements.txt 
+
+pip install pandas numpy matplotlib seaborn scipy tqdm  pymysql sqlalchemy  flask pandas_datareader  pymssql EMD-signal websocket-client ccxt statsmodels requests_toolbelt sshtunnel  pycryptodome  werkzeug  ipywidgets aligo jwt gevent pyts sympy mplfinance akshare yfinance tushare pyecharts scikit-learn torch jupyter-c-kernel -i https://pypi.mirrors.ustc.edu.cn/simple/ --trusted-host pypi.mirrors.ustc.edu.cn  --upgrade
+
+
 
 
 ## Ubuntu20.04 设置开机自启  
@@ -503,4 +527,6 @@ source "$HOME/.cargo/env" # . "$HOME/.cargo/env" # 注意 rustc 添加环境变�
     #rustup -V # 
     rustc --version  # Rust语言的编译器
 
-    
+20、Anaconda3 Miniconda3
+
+
