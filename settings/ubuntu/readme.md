@@ -577,6 +577,8 @@ conda create -n tensorflow python=3  # 建立一个名为tensorflow的虚拟环�
 conda create -n tensor222 --clone tensorflow # conda环境克隆  
 conda create -n BBB --clone ~/path # 跨计算机克隆
 conda env create -f environment.yaml # 只能安装原来环境中用conda install等命令直接安装的包，不包括pip安装的包
+conda env list # 查看当前存在的虚拟环境
+conda env export > environment.yaml   # 共享环境 保存为yaml文件
 conda activate pytorch # 进入自创建环境 
 conda activate tensorflow  # 激活虚拟环境
 conda deactivate #退出虚拟环境
@@ -588,11 +590,6 @@ conda list   # 查看安装的包 查看环境内容
 conda install urllib3  # 安装包
 conda install scrapy==1.3  #安装指定版本的包
 conda install -n tensorflow scrapy #在tensorflow环境安装scrapy包
-
-conda env list # 查看当前存在的虚拟环境
-
-conda env export > environment.yaml   # 共享环境 保存为yaml文件
-
 
 conda install pandas numpy matplotlib seaborn scipy tqdm pymysql sqlalchemy flask pymssql  websocket-client statsmodels scikit-learn sshtunnel  pycryptodome werkzeug ipywidgets gevent sympy    
 
