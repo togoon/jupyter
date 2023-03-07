@@ -984,6 +984,9 @@ conda install jupyter notebook
 conda install xeus-cling -c conda-forge
 conda list
 
+conda env create -f cling.yml
+
+
 pip install -i https://pypi.mirrors.ustc.edu.cn/simple/ --trusted-host pypi.mirrors.ustc.edu.cn  jupyter-c-kernel --upgrade
 
 pip install -i https://pypi.tuna.tsinghua.edu.cn/simple pip -U
