@@ -184,7 +184,7 @@ sudo apt install mysql-server mysql-common # APT自动安装MySQL8的服务端�
 
 sudo service mysql status
 sudo service mysql start # stop
-mysql -uroot -p # root帐号登陆 
+mysql -u root -p # root帐号登陆 
 quit exit
 
 sudo mysql
@@ -203,8 +203,8 @@ Remove test database : N
 Reload privilege tables : Y 
 
 
-mysql -uroot -p # 无密码root帐号登陆 -h 180.76.XXX.XX  127.0.0.1
-use mysql;
+mysql -u root -p # 无密码root帐号登陆 -h 180.76.XXX.XX  127.0.0.1
+use mysql; # 设置当前库
 select host, user, authentication_string, plugin from user; # 查看MySQL远程访问权限配置
 GRANT ALL PRIVILEGES ON *.* TO 'root'@'%'; # 授权 root 用户的所有权限并设置远程访问
 # update user set host='%' where user='root';  # 远程登录
