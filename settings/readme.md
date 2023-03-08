@@ -393,7 +393,7 @@ create table <表名> ( <字段名1> <类型1> [,..<字段名n> <类型n>]); # �
 rename table 原表名 to 新表名; # 修改表名
 insert into <表名> [( <字段名1>[,..<字段名n > ])] values ( 值1 )[, ( 值n )]; # 表插入数据
 delete from 表名 where 表达式; # 删除表中数据
-truncate [tablename]; # 清空表内容
+truncate [tablename]; # 清空表内容 不需要drop; 保留表但删除所有记录truncate; 删除部分记录delete
 update 表名 set 字段=新值,…  where 条件 # 修改表中数据
 alter table 表名 add字段 类型 其他; # 增加字段
 ALTER TABLE table_name DROP field_name; # 删除字段
@@ -401,10 +401,12 @@ alter table [tablename] change [columnname] [newcolumnname] [type]; # 重命名�
 ALTER TABLE table_name CHANGE old_field_name new_field_name field_type; # 修改原字段名称及类型
 alter table 表名 add index 索引名 (字段名1[，字段名2 …]); # 加索引
 
+<SELECT clause> [FROM clause] [WHERE clause] [GROUP BY clause] [HAVING clause] [ORDER BY clause] [LIMIT clause]
+#开始->FROM子句->WHERE子句->GROUP BY子句->HAVING子句->ORDER BY子句->SELECT子句->LIMIT子句->最终结果
 
-SELECT * FROM worth where id >= 4000 order by id DESC LIMIT 0,5 ;
+select * FROM worth where id >= 4000 order by id DESC LIMIT 0,5 ;
 
-SELECT selfid, symbol, side, type, clientorderid, price, quantity, status, from_unixtime(floor(createtime / 1000)) as orderdatetime from FIL_testfil.orders where selfid >= 500
+select distinct selfid, symbol, side, type, clientorderid, price, quantity, status, from_unixtime(floor(createtime / 1000)) as orderdatetime from FIL_testfil.orders where selfid >= 500
 
 select id, mainID, subID, strategyID, symbol, tradeid, clientorderid, price, quantity, commission, commissionasset, tradetime, from_unixtime(floor(tradetime / 1000)) as tradedatetime, tradetype, handletime, gatetype from Trace_testtrace.trades where strategyID = 2
 
