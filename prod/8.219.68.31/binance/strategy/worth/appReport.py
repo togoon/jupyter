@@ -23,13 +23,13 @@ import sqlalchemy
 from sqlalchemy import create_engine
 
 
-version = '1.0.0'
+version = '1.0.1'
 
 worthDir = '.'
 # dbfile = '%s/%s' % ('/root/FIL_test/trace', 'trace.db')
 dbfile = f"{worthDir}/worth.db"
 
-####v1.0###########################################################################
+####v1.0#simulation#sqlite3#####################################################
 
 nameList1 = ['similarity','Panel_mom2']  #策略名称 , 'Panel_mom', 'Pyemd2', 'similarity'
 amtDict1 = {'similarity':10000,'Pyemd2':10000,'Panel_mom2':10000} #单笔下单金额
@@ -123,7 +123,7 @@ def getWorth1(nameList):
     conn.close()
 
 
-####v2.4###########################################################################
+####v2.4#simulation#mysql####################################################
 
 
 amtDict2 = {'similarity2':1000000} #单批下单金额  ,'Pyemd2':10000,'Panel_mom2':10000
@@ -230,10 +230,10 @@ def getWorth2():
     totalWorthdf2.to_pickle('%s/%s/%s2.pkl' % (worthDir , 'static', "totalWorthdf" ) )
 
 
-####v3.0###########################################################################
+####v3.0#real#sqlite3###############################################################
 
 
-nameList3 = ['similarity','similarity_big',]  #策略名称 , 'Panel_mom', 'Pyemd2', 'similarity', 'similarity_big'
+nameList3 = ['similarity_big',]  #策略名称 , 'Panel_mom', 'Pyemd2', 'similarity', 'similarity_big'
 totalWorthdf3= pd.DataFrame()
 csvdf3 = pd.DataFrame()
 qryTime3 = 0
@@ -308,6 +308,123 @@ def getWorth3(nameList):
     # totalWorthdf3.to_pickle('%s/%s/%s1.pkl' % (worthDir, 'static', "totalWorthdf" ) )
 
     conn.close()
+
+####v5.0#real#Mysql####################################################################
+
+
+amtDict5 = {'similarity':200} #单批下单金额  ,'Pyemd2':10000,'Panel_mom2':10000
+debugList5 = ['factorcheck' ] # 调试运行的策略
+
+totalWorthdf5 = pd.DataFrame()
+csvdf5 = pd.DataFrame()
+qryTime5 = 0
+
+def getWorth5():
+    global totalWorthdf5, csvdf5, qryTime5
+
+    if time.time() - qryTime5 < 300:
+        return
+    else:
+        qryTime5 = time.time()
+
+    amtSingle = 1000000
+
+    csvdf5 = pd.DataFrame(columns=['name', 'sid', 'starttime', 'curtime', 'runtime', 'amtSingle', 'quota', 'worth', 'profitRate', 'tradeCount', 'profitRateYear', 'note'])
+
+    totalWorthdf5 = pd.DataFrame()
+
+    # conn = pymysql.connect(host="127.0.0.1", port=3306, user="root", password="reaL2022", database="FIL_realrisk",charset='utf8')  #warning
+
+    engine = create_engine('mysql+pymysql://root:reaL2022@localhost:3306/FIL_realrisk',encoding='utf-8')
+    conn = engine.connect()
+
+    infodf = pd.read_sql(f"select * from info" , con=conn)
+    mainaccdf = pd.read_sql(f"select * from mainaccount" , con=conn)
+    subaccdf = pd.read_sql(f"select * from subaccount" , con=conn)
+
+    # print(f'{infodf=}')
+
+    for index, rows in infodf.iterrows():
+        if rows['state'] == 1 or rows['name'] in debugList5 : # or rows['name'] == 'modifiedmom':
+            continue
+
+        mainID = rows['mainID']
+        subID = rows['subID']
+        strategyID = rows['strategyID']
+        name = rows['name']
+        sid = subID
+
+        mainname = mainaccdf.loc[ mainaccdf.loc[mainaccdf['accountid']==mainID].index[0], 'name']
+        subname = subaccdf.loc[ subaccdf.loc[(subaccdf['accountid']==subID) & (subaccdf['mainAccountID']==mainID) ].index[0], 'name']
+        strategyname = name
+
+        worthdf = pd.read_sql(f"select * from worth where {mainID=} and {subID=} and {strategyID=}", con=conn)
+        worthdf['totalworth'] = worthdf['cashworth'].astype(float) + worthdf['usdtcontractworth'].astype(float) + worthdf['tokencontractworth'].astype(float)
+        
+        i = 0 
+        x = worthdf['totalworth'][i] 
+        while x == 0:
+            del worthdf['totalworth'][i]
+            i +=1
+            x = worthdf['totalworth'][i]
+        worthdf = worthdf[i:]
+        worthdf.reset_index(drop=True,inplace=True)
+
+        worthdf['name'] = name
+        worthdf['sid'] = strategyID
+
+        worthdf['dateTime'] = worthdf['time'].apply(lambda x: datetime.fromtimestamp(x/1000).strftime('%Y-%m-%d %H:%M:%S')) # '%Y-%m-%d %H:%M:%S'
+        worthdf['date'] = worthdf['time'].apply(lambda x: datetime.fromtimestamp(x/1000).strftime('%Y%m%d')) # '%Y-%m-%d %H:%M:%S'
+
+        # print(f'{worthdf=}')
+
+        timeSec = infodf.loc[ infodf.loc[infodf['name']==name].index[0] , 'time'] #1655134268142
+        starttime = str(datetime.fromtimestamp(timeSec/1000))[:10] #2022-06-14 09:21:43.233000
+        curtime = time.strftime("%Y-%m-%d")  #2022-06-16  %Y-%m-%d %H:%M:%S
+        difftime = datetime.strptime(curtime, "%Y-%m-%d") - datetime.strptime(starttime, "%Y-%m-%d")
+        runtime = difftime.days
+        amtSingle = amtSingle  if name not in amtDict5 else amtDict5[name]
+
+        worth = worthdf.loc[worthdf.index[-1], 'totalworth']
+
+        transferdf = pd.read_sql(f"select * from transferlog where {mainname=} and {subname=} and {strategyname=} and asset='USDT' and type=16", con=conn)
+        transferdf2 = pd.read_sql(f"select * from transferlog where {mainname=} and {subname=} and {strategyname=} and asset='USDT' and type=17", con=conn)
+        quota = transferdf['amount'].astype(float).sum() - transferdf2['amount'].astype(float).sum()
+        profitRate = "%.2f" % ((worth-quota)/quota *100) if quota > 0 else 0  #amtSingle
+
+        profitRateYear = "%.2f" % (float(profitRate)/runtime *365) if runtime != 0 else 0
+        note = '--'
+
+        tradeCountdf = pd.read_sql(f"select count(*) from trades where {mainID=} and {subID=} and {strategyID=} ", conn)
+        tradeCount = tradeCountdf.iloc[0,0]
+
+        name = name if name != 'testStrategy' else 'similarity2'
+
+        fig = plt.figure(figsize=(13, 4) )
+        ax1 = plt.subplot2grid((1, 50), (0, 0), colspan=19, rowspan=1)
+        ax2 = plt.subplot2grid((1, 50), (0, 25), colspan=24, rowspan=1)
+
+        worthdf['totalworth'].plot( title=f'{name}-worth-5min', ax=ax2) #20,8 , figsize=(7,3)
+        # plt.savefig('%s/%s/%s_5min.jpg' % (worthDir,'static', name), transparent=True, bbox_inches='tight') #png jpg
+
+        worthdf.groupby('date').last().plot( y='totalworth', title=f'{name}-worth-day', label=None, rot=60, ax=ax1)  #, figsize=(5,3)
+        plt.savefig('%s/%s/%s.jpg' % (worthDir,'static', name), transparent=True, bbox_inches='tight') #png jpg
+        plt.cla()
+        plt.close("all")
+
+        if 'test' not in name:
+            csvdf5.loc[len(csvdf5.index)] = [name, strategyID, starttime, curtime, runtime, amtSingle, quota, worth, profitRate, tradeCount, profitRateYear, note]
+
+        totalWorthdf5 = pd.concat([totalWorthdf5,worthdf],ignore_index=True)
+
+    conn.close()
+
+    csvdf5.columns = ['策略名称', '策略ID', '启动时间', '截止时间', '运行时间(日)', '单批下单金额', '期初额', '当前净值', '收益率%', '交易次数', '年化收益率%', '备注']
+
+    # print(f'{csvdf=}')
+
+    csvdf5.to_csv('%s/%s/worth_%s2.csv' % (worthDir , 'static', time.strftime("%Y%m%d") ), index=None)
+    totalWorthdf5.to_pickle('%s/%s/%s2.pkl' % (worthDir , 'static', "totalWorthdf" ) )
 
 
 ###############################################################################
@@ -422,13 +539,22 @@ html_string3 = '''
         <link rel="stylesheet" type="text/css" href="static/worth.css"/>
     </head>
     <body>
-        <h1 >一. V1.0版策略净值(实盘版): </h1>
+        <h1 >一. V1版策略净值(实盘版): </h1>
         <div style="max-width:1000px; text-align:right;"> 更新时间: {updateTimeEle3}</div>
         <h2 >1. 策略净值表: </h2>
         {tableEle3}
         <br/>
         <h2 >2. 净值曲线图: </h2>
         {plotEle3}
+
+        <br/><br/>
+        
+        <h1 >二. V5版策略净值(实盘版): </h1>
+        <h2 >1. 策略净值表: </h2>
+        {tableEle5}
+        <br/>
+        <h2 >2. 净值曲线图: </h2>
+        {plotEle5}
 
         <br/><br/><br/><br/><br/><br/>
 
@@ -511,11 +637,20 @@ def setworthpt3html():
         imgStr = '<h3 >2.{index} {name}策略(实盘版): </h3> <img src="data:image/jpg;base64,{imgStream}" ><br/>'.format(index=index+1, name=rows['策略名称'], imgStream=imgStream)
         plotEleList3.append(imgStr)
 
+    print(f'--setworthpt3html--2--')
+    getWorth5()
+    plotEleList5 = []
+    for index, rows in csvdf5.iterrows():
+        imgStream = getImgStream('%s/%s/%s.jpg' % (worthDir,'static', rows['策略名称']))
+        imgStr = '<h3 >2.{index} {name}策略: </h3> <img src="data:image/jpg;base64,{imgStream}" ><br/>'.format(name=rows['策略名称'], index=index+1, imgStream=imgStream)
+        plotEleList5.append(imgStr)
+
+
     updatetime = time.strftime("%Y-%m-%d %H:%M:%S")
 
     print(f'--setworthpt3html--3--')
     with open('templates/worth.html', 'w') as f:
-        f.write(html_string3.format(tableEle3=csvdf3.to_html(classes='worth'), plotEle3=''.join(plotEleList3),  updateTimeEle3=updatetime  ) )
+        f.write(html_string3.format(tableEle3=csvdf3.to_html(classes='worth'), plotEle3=''.join(plotEleList3), tableEle5=csvdf5.to_html(classes='worth'), plotEle5=''.join(plotEleList5),  updateTimeEle3=updatetime  ) )
 
     print(f'--setworthpt3html--4--')
     return render_template('worth.html')
@@ -524,6 +659,7 @@ def setworthpt3html():
 # getWorth1(nameList1)
 # getWorth2()
 getWorth3(nameList3)
+getWorth5()
 
 if __name__ == '__main__':
 
