@@ -1,864 +1,654 @@
-# -*- coding: UTF-8 -*-
-import time
-import getopt
-import sys
-import math
-from datetime import datetime, timedelta
-import os
+# encoding: utf-8
+
 import sqlite3
+from datetime import datetime,timedelta
+import time
+import os
 
-# from matplotlib.pyplot import xlabel
-# from PyEMD import EMD, Visualisation
-# from numpy import corrcoef
-
-import pandas as pd 
+from pandas.core.frame import DataFrame
+import pandas as pd
 import numpy as np
+import matplotlib.pyplot as plt
 
-import warnings
-from scipy import stats
-# from math import sqrt
-from tqdm import tqdm
-from sklearn import preprocessing
-from matplotlib import pyplot as plt
-from itertools import product as product
+from flask import Flask, request, jsonify, render_template, session, redirect, send_from_directory, url_for
+from gevent import pywsgi
 
-from sklearn.linear_model import LogisticRegression
+import requests
+import json
+import time
+import base64
 
-from FIL_lib.my_logger import make_logger, logging
-from FIL_lib.client import FILClient, Handler
-from FIL_lib.core_types import *
+import pymysql
+import sqlalchemy
+from sqlalchemy import create_engine
 
-warnings.filterwarnings('ignore')
 
-# =============== 配置策略参数
+version = '1.0.1'
 
-gateway = "binance"
-name = "testrisk1"
-symbol = "BTCUSDT"
-interval = "3m" #period #1m, 3m, 5m, 15m, 30m, 1h, 2h, 4h, 6h, 8h, 12h, 1d, 3d, 1w, 1M
-intervalCoef = {'m':60, 'h':60*60, 'd': 60*60*24, 'w':60*60*24*7, 'M':60*60*24*30}
-intervalSec = int(interval[0:-1]) * intervalCoef[interval[-1] ]
-tradeType = "usdt"
+worthDir = '.'
+# dbfile = '%s/%s' % ('/root/FIL_test/trace', 'trace.db')
+dbfile = f"{worthDir}/worth.db"
 
-total = 1000 # 
-totalAdjRate = -1e-1 # -1e-3  -3e-3  -1e-1
-histDays = 2  # 30 10 84 120 60 2 
-limit = 998 # 1500  499 998
-wid = 40  #  42 108 83 
-thd = 0.55  # 阈值0  0.6 
+####v1.0#simulation#sqlite3#####################################################
 
+nameList1 = ['similarity','Panel_mom2']  #策略名称 , 'Panel_mom', 'Pyemd2', 'similarity'
+amtDict1 = {'similarity':10000,'Pyemd2':10000,'Panel_mom2':10000} #单笔下单金额
+sidDict1 = {}
+totalWorthdf1 = pd.DataFrame()
+csvdf1 = pd.DataFrame()
+qryTime1 = 0
 
-ukdf = pd.DataFrame()
-df_panel = pd.DataFrame()
+def getWorth1(nameList):
 
-version = '5.4.2'
+    global totalWorthdf1, csvdf1, qryTime1
 
-print('\n--init--: ', f'{version=}, {gateway=}, {name=}, {symbol=}, {interval=}, {intervalCoef=}, {intervalSec=}, {tradeType=}, {total=}, {histDays=}, {wid=},{limit=}', '\n')
-
-# ===============
-
-curDate = time.strftime("%Y%m%d")
-# logger = make_logger(name, log_level=logging.DEBUG, log_file= name + "_"+ str(curDate)+".log")
-logger = ''
-
-
-class StrategyHandler(Handler):
-    def __init__(self, name, symbol, total):
-        # super().__init__(name)
-        self.name = name
-        self.total = total
-        self.symbol = symbol
-
-        self.flagDict = {'side':"", 'positionside':2, 'posBuy':0, 'posSell':0,'isNewDay':False, 'isOpenBuy':False, 'isOpenSell':False, 'isCloseBuy':False, 'isCloseSell':False, 'isOpen':False, 'isClose':False,'isTrig':False } 
-
-        self.count = self.tradeCount = 0
-        self.curDate = time.strftime("%Y%m%d")
-        self.tradeDate = self.openTime = self.closeTime = self.closeSec = self.openSec = self.open = self.close = self.clientorderid = ''
-        self.sign = 1
-        self.uPrice = self.markPrice = 0
-        self.iniTime = datetime.now()
-        self.curTimeSec = int(time.time())
-
-        self.df_order = pd.DataFrame()
-        self.df_filltrades = pd.DataFrame()
-        self.df_assets = pd.DataFrame()
-        self.df_position = pd.DataFrame()        
-        self.df_uprice = pd.DataFrame() 
-        self.df_umarkprice = pd.DataFrame()        
-
-    def handleKline(self, data:KlineType):
-        # logger.debug(f"handleKline: data={data}")
-        global ukdf
-        global intervalSec
-        global interval
-        global version
-        global curDate
-        global logger
-        global wid
-        global histDays
-        global df_panel
-        global thd
-
-        if data.symbol != self.symbol:
-            return
-
-        self.tradeDate = time.strftime("%Y%m%d", time.localtime(data.closetime/1000) )
-        self.openTime = time.strftime("%H%M%S", time.localtime(data.opentime/1000) )
-        self.closeTime = time.strftime("%H%M%S", time.localtime(data.closetime/1000) )
-        self.closeSec = data.closetime//1000
-        self.open = float(data.openprice)
-        self.close = float(data.closeprice)
-        self.high = float(data.highprice)
-        self.low = float(data.lowprice)
-        self.vol = float(data.volume)
-        self.amt = float(data.totalamount)
-
-        self.openSec = data.opentime//1000
-
-        print('--handleKline--: ', f"{version=}, {self.name=}, {self.symbol=}, {interval=}, {intervalSec=}, {wid=}, {thd=}, {self.sign=}, {self.total=}, {self.flagDict['side']=}, {self.tradeCount=}, {self.count=}")
-        print(f'{self.closeSec=}, {self.tradeDate=}, {self.openTime=}, {self.closeTime=}, {self.symbol=}, {self.open=}, {self.close=}, {self.high=}, {self.low=}, {self.vol=}, {self.amt=} ' )
-
-        self.count += 1
-        if self.curDate != self.tradeDate:
-            self.curDate = self.tradeDate
-            self.flagDict['isNewDay'] = True
-
-            self.CleanOverukdf(self.closeSec)
-            # logger = make_logger(name, log_level=logging.DEBUG, log_file= name +"_" + str(self.curDate)+".log")
-
-        if len(ukdf) != 0 and self.closeSec == int(ukdf.closeSec.iloc[-1]):
-            ukdf.iloc[-1, ukdf.columns.get_loc('close')] = self.close
-            ukdf.iloc[-1, ukdf.columns.get_loc('high')] = self.high
-            ukdf.iloc[-1, ukdf.columns.get_loc('low')] = self.low
-            ukdf.iloc[-1, ukdf.columns.get_loc('vol')] = self.vol
-            ukdf.iloc[-1, ukdf.columns.get_loc('amt')] = self.amt
-            ukdf.iloc[-1, ukdf.columns.get_loc('pct')] = self.close/ukdf.iloc[-2, ukdf.columns.get_loc('close')]   -1
-
-        # if len(ukdf) != 0 and self.closeSec >= int(ukdf.closeSec.iloc[-1]) + intervalSec and self.openSec < int(ukdf.closeSec.iloc[-1]) + 60:            
-        else:
-            closePct = round(self.close/ukdf['close'].iloc[-1] -1 , 6)
-            ukdf.loc[len(ukdf.index)] = [self.tradeDate,self.openTime,self.closeTime,self.closeSec,self.open,self.close,self.high,self.low,self.vol,self.amt,closePct ]
-            # ukdf.reset_index(drop=True,inplace=True)
-
-        logger.info(f'{self.closeSec=}, {self.tradeDate=}, {self.openTime=}, {self.closeTime=},{self.symbol=},{self.open=}, {self.close=}, {self.high=}, {self.low=}, {self.vol=}, {self.amt=} ' )
-        logger.info(f"ukdf.iloc[-5:,:] :\n{ukdf.iloc[-5:,:]}" )
-        # logger.info(f"{self.flagDict=}")
-        
-        # self.getModel()
-        self.queryPositions()
-        
-        # curSign = int(df_panel['sign'].iloc[-1])
-
-        if self.count >= 5:
-            return
-
-        # if len( ukdf.loc[ukdf.tradeDate == self.tradeDate] ) == wid:  #
-        if self.count % 3 == 1 :  # and self.count <= 2
-            self.queryContractAssets()
-            self.handlebackTrade()
-            
-            # self.client.closeAllPosition()
-            # self.clearance() 
-            
-            self.insertFactor()
-        
-        # if self.sign != curSign:
-        #     self.sign = curSign
-        #     self.handlebackTrade()
-        #     self.insertFactor()
-
-    def getModel(self):
-        global ukdf
-        global df_panel
-
-    def insertFactor(self):
-        curDateTime = int(time.strftime("%m%d%H%M")) #"%Y%m%d%H%M%S" %y%m%d%H%M
-        
-        factor = f"name:{self.name}, symbol:{self.symbol}, tradeDate:{self.tradeDate}, closeTime:{self.closeTime}, close:{self.close}, sign:{self.sign}, total:{self.total}, count:{self.count}, side:{self.flagDict['side']}, uPrice:{self.uPrice}, markPrice:{self.markPrice} "
-
-        self.client.insertFactor(curDateTime, factor )
-
-        logger.info(f"curDateTime:{curDateTime}, {factor} " )
-
-    def queryContractAssets(self):
-
-        global tradeType
-
-        # assets = self.client.queryContractAssets(tradeType) # no leverage 
-        # logger.info(f"queryContractAssets: {assets=}")
-
-        assets = self.client.queryTradeContractAssets(tradeType, self.symbol) # leverage  x2
-        logger.info(f"queryTradeContractAssets: {assets=}")
-
-        if assets.result:
-            for item in assets.result:
-                if item.asset.upper() == tradeType.upper() and float(item.free) > 0:
-                    self.total = float(item.free)
-
-                    rt_df = pd.DataFrame([{'asset': item.asset, 'free': item.free, 'total': item.total, 'margin': item.margin, 'unreal': item.unreal, 'lock': item.lock, 'syslock': item.syslock, 'longfree': item.longfree, 'shortfree': item.shortfree, 'type': item.type, 'update': time.strftime('%Y%m%d %H:%M:%S')}])
-                    self.savePickle(rt_df, self.df_assets, 'assets')
-                else:
-                    self.total = 0
-
-    def queryPositions(self):
-
-        positions = self.client.queryPositions(self.symbol,'long')
-        print((f"queryPositions_long: {self.symbol=}, {positions=}"))
-
-        positions_short = self.client.queryPositions(self.symbol,'short')
-        print((f"queryPositions_short: {self.symbol=}, {positions=}"))
-
-        result = positions.result if positions.result else positions_short.result
-
-        if result:        
-            for item in result:
-                self.flagDict['isOpen'] = True
-                self.sign = -1 if item.positionside == 'short' else 1
-
-                rt_df = pd.DataFrame([{'symbol': item.symbol, 'positionAmount': item.positionAmount, 'enterprice': item.enterprice, 'countrevence': item.countrevence, 'unrealprofit': item.unrealprofit, 'marginmodel': item.marginmodel, 'isolatedmargin': item.isolatedmargin, 'positionside': item.positionside, 'markprice': item.markprice, 'update': time.strftime('%Y%m%d %H:%M:%S')}])  
-                self.savePickle(rt_df, self.df_position, 'position') 
-
-        return result
-
-    def queryBinanceUPremiumIndex(self):
-        ret = self.client.queryBinanceUPremiumIndex(self.symbol)
-        print((f"queryBinanceUPremiumIndex: {self.symbol=}, {ret=}"))
-
-        self.markPrice = ret.result[0].markPrice 
-
-        rt_df = pd.DataFrame([{'symbol': item.symbol, 'markPrice': item.markPrice, 'indexPrice': item.indexPrice, 'estimatedSettlePrice': item.estimatedSettlePrice, 'lastFundingRate': item.lastFundingRate, 'nextFundingTime': item.nextFundingTime, 'interestRate': item.interestRate, 'time': item.time, 'update': time.strftime('%Y%m%d %H:%M:%S')}  for item in ret.result ])  
-        self.savePickle(rt_df, self.df_umarkprice, 'umarkprice') 
-
-    def queryUPrice(self):
-        global gateway
-        ret = self.client.queryUPrice(gateway, self.symbol)
-        print((f"queryUPrice: {gateway=}, {self.symbol=}, {ret=}"))
-
-        self.uPrice = ret.result 
-
-        rt_df = pd.DataFrame([{'symbol': self.symbol, 'uPrice': ret.result, 'update': time.strftime('%Y%m%d %H:%M:%S')}  ])  
-        self.savePickle(rt_df, self.df_uprice, 'uprice')     
-
-    def deleteAllOrder(self):
-        ret = self.client.deleteAllOrder()
-        print((f"deleteAllOrder: {ret=}"))        
-
-    def deleteAllUOrder(self):
-
-        starttime = int( (datetime.now()- timedelta(days=30) ).strftime("%s000") )
-        orders = self.client.queryLimitOrder(starttime)
-
-        print((f"deleteAllUOrder > queryLimitOrder: {starttime=}, {orders=}"))   
-
-        if orders.result:
-            for item in orders.result:
-                self.deleteUOrder(item.clientorderid)
-                print((f"deleteAllUOrder > deleteUOrder: {item.clientorderid=}, {item.status=}"))
-
-    def queryLimitOrder(self):
-        starttime = int( (datetime.now()- timedelta(days=30) ).strftime("%s000") )
-        ret = self.client.queryLimitOrder(starttime)
-
-        self.clientorderid = ret.result[0].clientorderid
-        print((f"queryLimitOrder: {starttime=}, {ret=}")) 
-
-    def queryAccPx(self):
-        self.queryContractAssets() #
-        self.queryPositions()  #        
-        self.queryBinanceUPremiumIndex()
-        self.queryUPrice()
-
-    def savePickle(self, src_df, dest_df, flag):
-
-        pklFile = f"{os.getcwd()}/pkl/{flag}7.pkl"
-
-        if dest_df.empty:
-            if os.path.exists(pklFile):
-                dest_df = pd.read_pickle(pklFile)
-
-        dest_df = pd.concat([dest_df, src_df], ignore_index=True)
-        dest_df.to_pickle(pklFile)
-
-
-    def handlebackTrade(self):
-        global gateway
-
-        result = self.queryPositions()
-        if result:
-            for posi in result:
-
-                # self.flagDict['side'] = "buy" if posi.positionside == 'short' else "sell"             
-                # positionAmount = float( posi.positionAmount)  # handback
-
-                # if (self.sign == 1 and self.flagDict['side'] == "buy") or  (self.sign == -1 and self.flagDict['side'] == "sell"):
-                #     ret = self.client.insertMarketUOrder(gateway, posi.symbol, positionAmount, self.flagDict['side'], self.flagDict['positionside'])
-
-                #     # debug.info(f"{self.flagDict=}")
-                #     logger.info(f"ret = self.client.insertMarketUOrder('{gateway}',  '{posi.symbol}', '{positionAmount}', '{self.flagDict['side']}' , {self.flagDict['positionside']}), {ret=}")
-                #     self.tradeCount += 1
-                
-                self.client.closeAllPosition()
-                time.sleep(5)
-                self.queryContractAssets()
-                if posi.positionside == 'short':
-                    self.openBuy(self.close)
-                elif posi.positionside == 'long':
-                    self.openSell(self.close)
-                    
-                self.tradeCount += 1
-            
-        else:
-            self.flagDict['side'] = "buy" if self.sign == 1 else ("sell" if self.sign == -1 else "")
-
-            quantity = float(self.total*(1 + totalAdjRate) )/float(self.close)
-            qtyStr = str(quantity).split('.')[0] + '.' + str(quantity).split('.')[1][:3]
-
-            ret = self.client.insertMarketUOrder(gateway, self.symbol, float(qtyStr), self.flagDict['side'], self.flagDict['positionside'])
-
-            # logger.debug(f"{self.flagDict=}")
-            logger.info(f"ret = self.client.insertMarketUOrder('{gateway}',  '{self.symbol}', '{qtyStr}', '{self.flagDict['side']}' , {self.flagDict['positionside']} ), {ret=}")   
-            self.tradeCount += 1         
-
-    def openBuy(self, price):
-        global gateway
-        self.flagDict['isOpen'] = True
-        self.flagDict['isClose'] = False
-        self.flagDict['isOpenBuy'] = True
-        self.flagDict['isCloseBuy'] = False
-        self.flagDict['side'] = "buy"
-
-        quantity = float(self.total*(1 + totalAdjRate) )/float(price)
-        qtyStr = str(quantity).split('.')[0] + '.' + str(quantity).split('.')[1][:3]
-
-        logger.debug(f"--{self.flagDict['isOpen']=}--{self.total=}--{qtyStr=}--{price=}--")
-
-        ret = self.client.insertMarketUOrder(gateway, self.symbol, float(qtyStr), "buy", self.flagDict['positionside'])
-
-        logger.debug(f"{self.flagDict=}")
-        logger.info( f"(ret = self.client.insertMarketUOrder('{gateway}', '{self.symbol}', {qtyStr}, 'buy', {self.flagDict['positionside']} ), {ret=}") 
-
-    def openSell(self, price):
-        global gateway
-        self.flagDict['isOpen'] = True
-        self.flagDict['isClose'] = False
-        self.flagDict['isOpenSell'] = True
-        self.flagDict['isCloseBuy'] = False
-        self.flagDict['side'] = "sell"
-
-        quantity = float(self.total*(1 + totalAdjRate) )/float(price)
-        qtyStr = str(quantity).split('.')[0] + '.' + str(quantity).split('.')[1][:3]
-
-        logger.debug(f"--{self.flagDict['isOpen']=}--{self.total=}--{qtyStr=}--{price=}--")
-        
-        ret = self.client.insertMarketUOrder(gateway,  self.symbol, float(qtyStr), "sell", self.flagDict['positionside'])
-
-        logger.info(f"ret = self.client.insertMarketUOrder('{gateway}', '{self.symbol}', {qtyStr}, 'sell', {self.flagDict['positionside']}), {ret=}")
-
-    def closeBuy(self):
-        global gateway
-        self.flagDict['isOpen'] = False
-        self.flagDict['isClose'] = True
-        self.flagDict['isOpenBuy'] = False
-        self.flagDict['isCloseBuy'] = True
-        self.flagDict['side'] = "sell"
-
-        result = self.queryPositions()
-        if result:
-            for posi in result:
-
-                side = "buy" if posi.positionside == 'short' else "sell"
-
-                ret = self.client.insertMarketUOrder(gateway,  posi.symbol, posi.positionAmount, side, self.flagDict['positionside'])
-
-                logger.debug(f"{self.flagDict=}")
-                logger.info(f'ret = self.client.insertMarketUOrder("{gateway}",  {posi.symbol}, {posi.positionAmount}, {side}, {self.flagDict["positionside"]} ), {ret=}')
-
-    def closeSell(self):
-        global gateway
-        self.flagDict['isOpen'] = False
-        self.flagDict['isClose'] = True
-        self.flagDict['isOpenSell'] = False
-        self.flagDict['isCloseBuy'] = True
-        self.flagDict['side'] = "buy"
-
-        result = self.queryPositions()
-        if result:
-            for posi in result:
-
-                side = "buy" if posi.positionside == 'short' else "sell"
-
-                ret = self.client.insertMarketUOrder(gateway,  posi.symbol, posi.positionAmount, side, self.flagDict['positionside'])
-
-                logger.debug(f"{self.flagDict=}")
-                logger.info(f'ret = self.client.insertMarketUOrder("{gateway}",  {posi.symbol}, {posi.positionAmount}, {side}, {self.flagDict["positionside"]}  ), {ret=}')
-
-    def clearance(self):
-        global gateway
-        self.flagDict['isOpen'] = False
-        self.flagDict['isClose'] = True
-
-        result = self.queryPositions()
-        if result:
-            for posi in result:
-
-                side = "buy" if posi.positionside == 'short' else "sell"
-
-                ret = self.client.insertMarketUOrder(gateway, posi.symbol, posi.positionAmount, side, self.flagDict['positionside'])
-
-                logger.debug(f"{self.flagDict=}")
-                logger.info(f'ret = self.client.insertMarketUOrder(gateway,  {posi.symbol}, {posi.positionAmount}, {side}, {self.flagDict["positionside"]} ), {ret=}')
-
-    def openLimitTrade(self, Side, price, qtyStr):
-        global gateway
-        self.flagDict['side'] = Side
-
-        if Side == 'buy':
-
-            self.flagDict['isOpen'] = True
-            self.flagDict['isClose'] = False
-            self.flagDict['isOpenBuy'] = True
-            self.flagDict['isCloseBuy'] = False
-
-        elif Side == 'sell':
-            self.flagDict['isOpen'] = True
-            self.flagDict['isClose'] = False
-            self.flagDict['isOpenSell'] = True
-            self.flagDict['isCloseBuy'] = False
-
-
-        # quantity = float(self.total*(1 + totalAdjRate) )/float(price)
-        # qtyStr = str(quantity).split('.')[0] + '.' + str(quantity).split('.')[1][:3]
-
-        logger.debug(f"--{self.flagDict['isOpen']=}--{self.total=}--{Side=}--{qtyStr=}--{price=}--")
-
-        ret = self.client.insertLimitUOrder(gateway, self.symbol, float(qtyStr), float(price),  Side, self.flagDict['positionside'])
-
-        logger.debug(f"{self.flagDict=}")
-        logger.info( f"(ret = self.client.insertLimitUOrder('{gateway}', '{self.symbol}', {qtyStr}, {price}, {Side},  {self.flagDict['positionside']} ), {ret=}") 
-
-    def deleteUOrder(self, clientorderid):
-
-        global gateway
-
-        if clientorderid:
-
-            ret = self.client.deleteUOrder(gateway, self.symbol, clientorderid)
-
-            logger.info( f"(ret = self.client.deleteUOrder('{gateway}', '{self.symbol}', {clientorderid} ), {ret=}")
-        else:
-            logger.debug( f"(empty : self.client.deleteUOrder('{gateway}', '{self.symbol}', {clientorderid} )")            
-
-    def CleanOverukdf(self, closeSec:int):
-
-        global ukdf
-        global histDays
-
-        overDate = time.strftime("%Y%m%d", time.localtime(closeSec-60*60*24*histDays ) )
-        ukdf.drop(ukdf.index[(ukdf['tradeDate'] < overDate)], inplace=True)
-        ukdf.reset_index(drop=True, inplace=True)
-
-        print(f'\n--ukdf-hist--: {overDate=} \n', ukdf.iloc[0:5,:] ,'\n' , ukdf.iloc[-5:,:],'\n' )
-
-    def handleOrderNew(self, item: OrderType): #处理新订单 data 
-        logger.info(f"handleOrderNew: {item=}")
-
-        self.clientorderid = item.clientorderid
-
-        rt_df = pd.DataFrame([{'symbol': item.symbol, 'clientorderid': item.clientorderid, 'gatewayorderid': item.gatewayorderid, 'quantity': item.quantity, 'price': item.price, 'stopprice': item.stopprice, 'ordertype': item.ordertype, 'side': item.side, 'status': item.status, 'positionside': item.positionside, 'createtime': item.createtime, 'updatetime': item.updatetime, 'tradetype': item.tradetype, 'selfid': item.selfid, 'gatetype': item.gatetype, 'handletime': item.handletime, 'update': time.strftime('%Y%m%d %H:%M:%S')} ])  
-        self.savePickle(rt_df, self.df_order, 'order') 
-
-
-    def handleOrderFilled(self, data: OrderType):  #处理订单完成
-        logger.info(f"handleOrderFilled: {data=}")
-
-        if data.filltrades:
-            self.total = float(data.filltrades[0].quantity)*float(data.filltrades[0].price) -float(data.filltrades[0].commission) 
-
-            rt_df = pd.DataFrame([{'symbol': item.symbol, 'tradeid': item.tradeid, 'clientorderid': item.clientorderid, 'side': data.side, 'price': item.price, 'quantity': item.quantity, 'commission': item.commission, 'commissionasset': item.commissionasset, 'tradetime': item.tradetime,  'tradetype': item.tradetype, 'gatetype': item.gatetype, 'handletime': item.handletime, 'update': time.strftime('%Y%m%d %H:%M:%S')}  for item in data.filltrades ])  
-            self.savePickle(rt_df, self.df_filltrades, 'filltrades')
-            
-        self.queryContractAssets() 
-        self.queryPositions()  
-
-    def handleOrderCanceled(self, data: OrderType):  #处理订单取消
-        logger.error(f"handleOrderCanceled: {data=}")
-        
-        self.queryContractAssets() 
-        self.queryPositions()       
-        
-    def handleOrderRejected(self, data: OrderType):  #处理订单取消拒绝
-        logger.error(f"handleOrderRejected: {data=}")
-
-        self.queryContractAssets() 
-        self.queryPositions()        
-        
-    def handleOrderExpired(self, data: OrderType):  #处理订单被撤销
-        logger.error(f"handleOrderExpired: {data=}")
-
-        self.queryContractAssets() 
-        self.queryPositions()       
-        
-    def handleError(self, data): #处理错误
-        
-        logger.error(f"handleError: {data=}")
-        self.queryContractAssets() 
-        self.queryPositions()       
-
-    def handleRiskLimit(self, data): #风控
-        
-        logger.error(f"handleRiskLimit: {data=}")
-        self.queryContractAssets() 
-        self.queryPositions()    
-
-    def handleTick(self, data:SubTickType):
-        logger.info(f"tick opentime:{data.tick.opentime // 1000} closeprice:{data.tick.closeprice}")
-
-    def handleTimer(self, data:TimeridType):
-        global gateway
-        self.count += 1 
-        hhmm = int(datetime.now().strftime("%H%M"))
-        nowTime = datetime.now()
-        diffTime = (nowTime - self.iniTime).seconds
-
-        logger.info(f"handleTimer: {self.count=} : {self.curTimeSec=} : {hhmm=} : {diffTime=} : {data=}")
-
-        if int(time.time()) - self.curTimeSec < 60:
-            return
-        else:
-            self.curTimeSec = int(time.time())
-
-        if hhmm == -1630 and not self.flagDict['isOpen']:
-            self.queryAccPx()
-            price = max(float(self.uPrice), float(self.markPrice))
-
-            logger.info(f"--{hhmm=}--{self.flagDict['isOpen']=}--{price=}--")
-
-            self.openBuy(price)
-            time.sleep(5)
-            self.queryAccPx()
-
-        elif hhmm == -1640 and not self.flagDict['isClose']:
-            self.queryAccPx()
-            logger.info(f"--{hhmm=}--{self.flagDict['isClose']=}--")
-            self.clearance()
-            time.sleep(5)
-            self.queryAccPx()
-
-    def handleTimer2(self, data:TimeridType):
-        global gateway 
-        self.count += 1 
-        logger.info(f"handleTimer: {self.count=} : {data=}")
-
-        if self.count >= 41: 
-            return 
-        
-        qtyStr =  "0.001" 
-        if self.count % 10 == 5:  # and self.count <= 2
-            # self.handlebackTrade()   
-            
-            self.queryAccPx() #  queryContractAssets  queryPositions queryBinanceUPremiumIndex queryUPrice 
-
-            side = "buy"  
-
-            print(f"self.client.insertMarketUOrder({gateway}, {self.symbol}, {float(qtyStr)}, {side}, 2)")
-            ret = self.client.insertMarketUOrder(gateway, self.symbol, float(qtyStr), side, 2) # positionside 单向持仓 2:NONE
-            logger.info(f"self.client.insertMarketUOrder({gateway}, {self.symbol}, {float(qtyStr)}, {side}, 2), {ret =} ")
-            self.insertFactor() 
-
-            self.queryAccPx() #  queryContractAssets  queryPositions queryBinanceUPremiumIndex queryUPrice    
-
-        elif self.count % 10 == 0:  
-            self.queryAccPx() #  queryContractAssets  queryPositions queryBinanceUPremiumIndex queryUPrice    
-
-            side = "sell"  
-
-            print(f"self.client.insertMarketUOrder({gateway}, {self.symbol}, {float(qtyStr)}, {side}, 2)")
-            ret = self.client.insertMarketUOrder(gateway, self.symbol, float(qtyStr), side, 2) # positionside 单向持仓 2:NONE
-            logger.info(f"self.client.insertMarketUOrder({gateway}, {self.symbol}, {float(qtyStr)}, {side}, 2), {ret =} ")
-            self.insertFactor()   
-
-            self.queryAccPx() # handler queryContractAssets  queryPositions queryBinanceUPremiumIndex queryUPrice    
-
-def getuklines(cli):
-    global ukdf
-    global interval
-    global intervalSec
-    global limit
-    global histDays
-    global logger
-    global symbol
-    global gateway
-    
-    curSec = int(time.time())
-    histSec = int(time.mktime(time.strptime(time.strftime("%Y%m%d", time.localtime(time.time()-60*60*24*histDays ) ), '%Y%m%d'))) -1
-    
-    interval_pre = interval
-    if interval_pre == '10m':
-        interval = '5m'
-        intervalSec = intervalSec//2
-
-    totalCount = math.ceil( (curSec - histSec )/intervalSec )
-    logger.info(f'{interval=}, {histSec=}, {curSec=}, {intervalSec=}, {limit=}, {intervalSec*limit=}, {totalCount=}, {histDays=}')
-
-    ukdfHist = pd.DataFrame(columns=['tradeDate', 'openTime', 'closeTime', 'closeSec', 'open', 'close',  'high',  'low','vol','amt' ])
-
-    count = 1
-    for Sec in range(histSec, curSec, intervalSec*limit):
-
-        print(f'{count=}:', f"cli.uklines({gateway},", f'{symbol=}', ',', f'{interval=}', ',', f'{limit=}', ',', f'{Sec*1000+999=}', ', end=', f'{(Sec+intervalSec*limit-1)*1000+999}' , ' )')
-
-        ukRet = cli.uklines(gateway, symbol=symbol, interval=interval, limit=limit, start=Sec*1000+999, end=(Sec+intervalSec*limit-1)*1000+999 )
-
-        # print('\n--ukRet--: ', ukRet)
-
-        kdf = pd.DataFrame([{'tradeDate': time.strftime("%Y%m%d", time.localtime(rs.closetime/1000) ), 'openTime': time.strftime("%H%M%S", time.localtime(rs.opentime/1000) ), 'closeTime': time.strftime("%H%M%S", time.localtime(rs.closetime/1000) ), 'closeSec': rs.closetime//1000, 'open': rs.openprice, 'close': rs.closeprice, 'high': rs.highprice, 'low': rs.lowprice, 'vol': float(rs.volume), 'amt': float(rs.totalamount)} for rs in ukRet.result])
-
-        # ukdfHist.append(kdf)
-        ukdfHist = pd.concat([ukdfHist,kdf],ignore_index=True)
-        del kdf
-
-        count += 1
-        time.sleep(3)
-
-    logger.debug(f'ukdfHist.iloc[:5,:] :\n{ukdfHist.iloc[:5,:]}')
-    logger.debug(f'ukdfHist.iloc[-5:,:] :\n{ukdfHist.iloc[-5:,:]}')
-
-    if interval_pre == '10m':
-        interval = interval_pre
-        intervalSec = int(intervalSec*2)
-        rePeriod = '10T'
-
-        ukdfHistCp = ukdfHist.copy()
-        ukdfHistCp['dateTime'] = ukdfHistCp['closeSec'].apply(lambda x: datetime.fromtimestamp(x))
-        ukdfHistCp = ukdfHistCp.set_index(keys=['dateTime'], drop=True)
-        # ukdfHistCp = ukdfHistCp.reindex(ukdfHistCp['dateTime'].sort_values(ascending=True).index)
-
-        logger.debug(f'ukdfHistCp.iloc[:5,:] :\n{ukdfHistCp.iloc[:5,:]}')
-
-        if not ukdfHistCp.empty:
-            openSr = ukdfHistCp['open'].resample(rePeriod, label='right').first()  
-            openTimeSr = ukdfHistCp['openTime'].resample(rePeriod, label='right').first()  
-            closeSr = ukdfHistCp['close'].resample(rePeriod, label='right').last()  #last first max min
-            closeTimeSr = ukdfHistCp['closeTime'].resample(rePeriod, label='right').last()  
-            closeSecSr = ukdfHistCp['closeSec'].resample(rePeriod, label='right').last()  
-            tradeDateSr = ukdfHistCp['tradeDate'].resample(rePeriod, label='right').last()  
-            highSr = ukdfHistCp['high'].resample(rePeriod, label='right').max()  
-            lowSr = ukdfHistCp['low'].resample(rePeriod, label='right').min()  
-            volSr = ukdfHistCp['vol'].resample(rePeriod, label='right').sum()  
-            amtSr = ukdfHistCp['amt'].resample(rePeriod, label='right').sum()  
-
-            ukdf = pd.concat([tradeDateSr, openTimeSr, closeTimeSr, closeSecSr,openSr, closeSr, highSr, lowSr,  volSr, amtSr], axis=1) 
-            
-        ukdf.columns = ['tradeDate', 'openTime', 'closeTime', 'closeSec', 'open', 'close', 'high', 'low', 'vol', 'amt']
-        ukdf.reset_index(drop=True,inplace=True)
-
-        if ukdf.iloc[-1]['closeSec'] - ukdf.iloc[-2]['closeSec'] < intervalSec:
-            ukdf.drop([len(ukdf)-1],inplace=True)
-
-        # ukdf = ukdfHistCp.copy()
-        # logger.info(f'{ukdf.iloc[:5,:]=}')
-        
-        del ukdfHistCp
-
+    if time.time() - qryTime1 < 300:
+        return
     else:
-        ukdf = ukdfHist.copy()
+        qryTime1 = time.time()
 
-    del ukdfHist
+    conn = sqlite3.connect(dbfile)
+    infodf = pd.read_sql(' select name, sid, time from info ', conn)
 
-    ukdf['open'] = ukdf['open'].astype(float)
-    ukdf['close'] = ukdf['close'].astype(float)
-    ukdf['high'] = ukdf['high'].astype(float)
-    ukdf['low'] = ukdf['low'].astype(float)
-    ukdf['vol'] = ukdf['vol'].astype(float)
-    ukdf['amt'] = ukdf['amt'].astype(float)
-    ukdf['pct'] = ukdf['close']/ukdf['close'].shift(1)-1  #涨跌幅
-    ukdf.fillna(0, inplace=True)
+    #print(f'{infodf=}')
 
-    logger.info(f'ukdf.iloc[:5,:] :\n{ukdf.iloc[:5,:]}')
-    logger.info(f'ukdf.iloc[-5:,:] :\n{ukdf.iloc[-5:,:]}')
+    csvdf1 = pd.DataFrame(columns=['name', 'sid', 'starttime', 'curtime', 'runtime', 'amtSingle', 'quota', 'worth', 'profitRate', 'tradeCount', 'profitRateYear', 'note'])
 
-def run(argv):
-    global ukdf
-    global interval
-    global intervalSec
-    global limit
-    global histDays
-    global total
-    global curDate
-    global name
-    global logger
-    global wid
-    global thd
-    global symbol
-    global df_panel
-    global gateway
+    totalWorthdf1 = pd.DataFrame()
 
-    input_pro = '-n <name> -s <serverPort> -c <clientPort> -X <symbol> -p <period> -w <wid> -d <day>  -T <thd> -t <total>'
-    try:
-        # 优先级i>d>args
-        opts, args = getopt.getopt(argv, "n:s:c:X:p:w:I:d:T:t:",
-                        ["name",'serverPort','clientPort',"symbol","period","wid","day","thd","total"])
-        print(f'{opts=}')
-    except getopt.GetoptError:
-        print('--input_pro--: ', input_pro)
-        sys.exit(2)
-    for opt, arg in opts:
-        if opt in ("-t", '--total'):
-            total = float(arg)
-        elif opt in ("-n", '--name'):
-            name = arg
-        elif opt in ("-X", '--symbol'):
-            symbol = arg
-        elif opt in ("-p", '--period'):
-            interval = arg
-            intervalSec = int(interval[0:-1]) * intervalCoef[interval[-1] ]
-        elif opt in ("-w", '--wid'):
-            wid = int(arg)
-        elif opt in ("-d", '--day'):
-            histDays = int(arg)
-        elif opt in ("-T", '--thd'):
-            thd = float(arg)
-            
-        elif opt in ("-s", '--serverPort'):
-            serverPort = int(arg)
-        elif opt in ("-c", '--clientPort'):
-            clientPort = int(arg)
+    for name in nameList:
+        #print(f'{name=}')
+        sid = infodf.loc[ infodf.loc[infodf['name']==name].index[0] , 'sid'] #5
+        sidDict1[name] = sid
 
-    handler = StrategyHandler(name, symbol, total)
-    cli = FILClient(handler, timeout=(3, 5), server_url="http://127.0.0.1:%d/strategy" % serverPort, listen_port=clientPort)
-    cli.start()
+        timeSec = infodf.loc[ infodf.loc[infodf['name']==name].index[0] , 'time'] #1655134268142
+        starttime = str(datetime.fromtimestamp(timeSec/1000))[:10] #2022-06-14 09:21:43.233000
+        curtime = time.strftime("%Y-%m-%d")  #2022-06-16  %Y-%m-%d %H:%M:%S
+        difftime = datetime.strptime(curtime, "%Y-%m-%d") - datetime.strptime(starttime, "%Y-%m-%d")
+        runtime = difftime.days
+        amtSingle = amtDict1[name]
 
-    #cli.cancelAllSubKlines()
-    curDate = time.strftime("%Y%m%d")
-    logger = make_logger(name, log_level=logging.DEBUG, log_file= name +"_" + str(curDate)+".log")
+        # quotadf = pd.read_sql(f" select * from worth where {sid=} and time in ( select min(time) from worth where {sid=} ) ", conn)
+        # print(f'{quotadf=}')
+        # quota = quotadf.loc[0, 'cashworth']
 
-    logger.info(f'--cli.start()--{version}--{curDate}--{gateway}--')
+        # worthdf = pd.read_sql(f" select * from worth where {sid=} and time in ( select max(time) from worth where {sid=} ) ", conn)
+        worthdf = pd.read_sql(f" select * from worth where {sid=} ", conn)
+        worthdf['totalworth'] = worthdf['cashworth'] + worthdf['usdtcontractworth'] + worthdf['tokencontractworth']
+        worthdf['name'] = name
+        worthdf['sid'] = sid
 
-    # getuklines(cli)
-    # handler.getModel()
+        worthdf['dateTime'] = worthdf['time'].apply(lambda x: datetime.fromtimestamp(x/1000).strftime('%Y-%m-%d %H:%M:%S')) # '%Y-%m-%d %H:%M:%S'
+        worthdf['date'] = worthdf['time'].apply(lambda x: datetime.fromtimestamp(x/1000).strftime('%Y%m%d')) # '%Y-%m-%d %H:%M:%S'
 
-    handler.queryAccPx() # queryContractAssets  queryPositions queryBinanceUPremiumIndex queryUPrice
+        worthdf['totalworth'].plot( figsize=(20,8))
 
-    # cli.cancelSubKline(gateway, tradeType, symbol, '30m')
-    #cli.cancelAllSubKlines()
-    # cli.subKline(gateway, tradeType, symbol, interval)
-    
-    # cli.subKline(gateway, "usdt", "BTCUSDT", "30m")
-    
-    cli.subOrderReport(gateway) # # cli.subOrderReport(gateway, 0)
+        quota = worthdf.loc[0, 'totalworth']
+        worth = worthdf.loc[worthdf.index[-1], 'totalworth']
+        # worth = float(worthdf.loc[worthdf.index[-1], 'cashworth']) + float(worthdf.loc[worthdf.index[-1], 'usdtcontractworth']) + float(worthdf.loc[worthdf.index[-1], 'tokencontractworth'])
 
-    #cli.cancelAllSubTicks()
-    # cli.subTick(gateway, "usdt", "BTCUSDT")
-    
-    # qtyStr = "0.001" 
-    # side = "sell"
-    # price = "26000"  
-    # ret = cli.insertLimitUOrder(gateway, symbol, float(qtyStr), float(price), side, 2) # positionside 单向持仓 2:NONE
-    # logger.info(f"2. cli.insertLimitUOrder({gateway}, {symbol}, {float(qtyStr)}, {float(price)}, {side}, 2), {ret =} ")
+        profitRate = "%.2f" % ((worth-quota)/quota *100) #amtSingle
+
+        tradeCountdf = pd.read_sql(f" select count(*) from trades where {sid=} ", conn)
+        tradeCount = tradeCountdf.iloc[0,0]
+
+        profitRateYear = "%.2f" % (float(profitRate)/runtime *365)
+        note = '--'
+
+        csvdf1.loc[len(csvdf1.index)] = [name, sid, starttime, curtime, runtime, amtSingle, quota, worth, profitRate, tradeCount, profitRateYear, note]
+
+        totalWorthdf1 = pd.concat([totalWorthdf1,worthdf],ignore_index=True)
+
+        fig = plt.figure(figsize=(13, 4) )
+        ax1 = plt.subplot2grid((1, 50), (0, 0), colspan=19, rowspan=1)
+        ax2 = plt.subplot2grid((1, 50), (0, 25), colspan=24, rowspan=1)
+
+        worthdf['totalworth'].plot( title=f'{name}-worth-5min', ax=ax2) #20,8 , figsize=(7,3)
+        # plt.savefig('%s/%s/%s_5min.jpg' % (worthDir,'static', name), transparent=True, bbox_inches='tight') #png jpg
+
+        worthdf.groupby('date').last().plot( y='totalworth', title=f'{name}-worth-day', label=None, rot=60, ax=ax1)  #, figsize=(5,3)
+        plt.savefig('%s/%s/%s.jpg' % (worthDir,'static', name), transparent=True, bbox_inches='tight') #png jpg
+        plt.cla()
+        plt.close("all")
 
 
-    # qtyStr = "0.001" 
-    # side = "buy" 
-    # ret = cli.insertMarketUOrder(gateway, symbol, float(qtyStr), side, 2) # positionside 单向持仓 2:NONE
-    # logger.info(f"1. cli.insertMarketUOrder({gateway}, {symbol}, {float(qtyStr)}, {side}, 2), {ret =} ")
+    csvdf1.columns = ['策略名称', '策略ID', '启动时间', '截止时间', '运行时间(日)', '单笔下单金额', '期初额', '当前净值', '收益率%', '交易次数', '年化收益率%', '备注']
+
+    # print(f'{csvdf}')
+
+    #csvdf.to_csv('%s/worth_%s1.csv' % (os.getcwd() , time.strftime("%Y%m%d") ), index=None)
+    csvdf1.to_csv('%s/%s/worth_%s1.csv' % (worthDir, 'static',time.strftime("%Y%m%d") ), index=None) #
+    totalWorthdf1.to_pickle('%s/%s/%s1.pkl' % (worthDir, 'static', "totalWorthdf" ) )
+
+    conn.close()
 
 
-    # handler.queryLimitOrder()
-    # handler.deleteAllOrder()
-    # handler.queryLimitOrder()
+####v2.4#simulation#mysql####################################################
 
 
-    # cli.cancelSubTimer(1*1000*60) 
-    cli.subTimer(1*1000*60)
+amtDict2 = {'similarity2':1000000} #单批下单金额  ,'Pyemd2':10000,'Panel_mom2':10000
+debugList2 = ['Panel_mom2', 'Panel_mom3', 'factorcheck' ] # 调试运行的策略
 
-    timeCount = 0
-    while True:
-        # time.sleep(60*60)
-        time.sleep(1*60)
-        timeCount += 1
+totalWorthdf2 = pd.DataFrame()
+csvdf2 = pd.DataFrame()
+qryTime2 = 0
 
-        nowTime = datetime.now()
-        hhmm = int(nowTime.strftime("%H%M"))
-        diffTime = (nowTime - handler.iniTime).seconds
+def getWorth2():
+    global totalWorthdf2, csvdf2, qryTime2
 
-        logger.info(f"handleTimer: {handler.curTimeSec=} : {hhmm=} : {diffTime=} ")
+    if time.time() - qryTime2 < 300:
+        return
+    else:
+        qryTime2 = time.time()
 
-        # if int(time.time()) - handler.curTimeSec < 60:
-        #     return
-        # else:
-        #     handler.curTimeSec = int(time.time())
+    amtSingle = 1000000
 
-        if timeCount == 1  : #  and not handler.flagDict['isOpen'] , timeCount % 3 == -1 and timeCount <= 30
+    csvdf2 = pd.DataFrame(columns=['name', 'sid', 'starttime', 'curtime', 'runtime', 'amtSingle', 'quota', 'worth', 'profitRate', 'tradeCount', 'profitRateYear', 'note'])
 
-            for i in range(1):  # UFRLimit 30 , GTCLimit 30 ,DRLimit 20  , 1
+    totalWorthdf2 = pd.DataFrame()
 
-                handler.queryAccPx()
-                price = max(float(handler.uPrice), float(handler.markPrice))
+    # conn = pymysql.connect(host="127.0.0.1", port=3300, user="root", password="fil2022", database="Trace_testtrace",charset='utf8')  #warning
 
-                # logger.info(f"--{timeCount=}--openBuy--insertMarketUOrder--{handler.flagDict['isOpen']=}--{price=}--")
-                # handler.openBuy(price)
+    engine = create_engine('mysql+pymysql://root:fil2022@localhost:3300/Trace_testtrace',encoding='utf-8')
+    conn = engine.connect()
 
-                logger.info(f"--{timeCount=}--openSell--insertMarketUOrder--{handler.flagDict['isOpen']=}--{price=}--")
-                handler.openSell(price)                
+    infodf = pd.read_sql(f"select * from info" , con=conn)
+    mainaccdf = pd.read_sql(f"select * from mainaccount" , con=conn)
+    subaccdf = pd.read_sql(f"select * from subaccount" , con=conn)
 
-                # logger.info(f"--{timeCount=}--openLimitTrade--{handler.flagDict['isOpen']=}--{price=}--")
-                # handler.openLimitTrade('buy', '20100', '0.001')
+    # print(f'{infodf=}')
 
-                # time.sleep(1)
-                # handler.deleteUOrder(handler.clientorderid) # 撤单 GTCLimit
+    for index, rows in infodf.iterrows():
+        if rows['state'] == 1 or rows['name'] in debugList2 : # or rows['name'] == 'modifiedmom':
+            continue
 
-                time.sleep(10)
-                handler.queryAccPx()             
+        mainID = rows['mainID']
+        subID = rows['subID']
+        strategyID = rows['strategyID']
+        name = rows['name']
+        sid = subID
 
-        elif hhmm == -1630 and not handler.flagDict['isOpen']: # and not handler.flagDict['isClose'] 
+        mainname = mainaccdf.loc[ mainaccdf.loc[mainaccdf['accountid']==mainID].index[0], 'name']
+        subname = subaccdf.loc[ subaccdf.loc[(subaccdf['accountid']==subID) & (subaccdf['mainAccountID']==mainID) ].index[0], 'name']
+        strategyname = name
 
-            handler.queryAccPx()
+        worthdf = pd.read_sql(f"select * from worth where {mainID=} and {subID=} and {strategyID=}", con=conn)
+        worthdf['totalworth'] = worthdf['cashworth'].astype(float) + worthdf['usdtcontractworth'].astype(float) + worthdf['tokencontractworth'].astype(float)
+        worthdf['name'] = name
+        worthdf['sid'] = strategyID
 
-        elif timeCount == 10:   # 
-            handler.queryAccPx()
+        worthdf['dateTime'] = worthdf['time'].apply(lambda x: datetime.fromtimestamp(x/1000).strftime('%Y-%m-%d %H:%M:%S')) # '%Y-%m-%d %H:%M:%S'
+        worthdf['date'] = worthdf['time'].apply(lambda x: datetime.fromtimestamp(x/1000).strftime('%Y%m%d')) # '%Y-%m-%d %H:%M:%S'
 
-        elif timeCount == -1:   # 撤单 
+        # print(f'{worthdf=}')
 
-            handler.queryAccPx()
+        timeSec = infodf.loc[ infodf.loc[infodf['name']==name].index[0] , 'time'] #1655134268142
+        starttime = str(datetime.fromtimestamp(timeSec/1000))[:10] #2022-06-14 09:21:43.233000
+        curtime = time.strftime("%Y-%m-%d")  #2022-06-16  %Y-%m-%d %H:%M:%S
+        difftime = datetime.strptime(curtime, "%Y-%m-%d") - datetime.strptime(starttime, "%Y-%m-%d")
+        runtime = difftime.days
+        amtSingle = amtSingle  if name not in amtDict2 else amtDict2[name]
 
-            logger.info(f"--{timeCount=}--deleteAllUOrder--{handler.clientorderid=}--")
-            
-            # handler.queryLimitOrder()
-            # handler.deleteAllOrder()
-            handler.deleteAllUOrder()
-            handler.queryLimitOrder()
+        worth = worthdf.loc[worthdf.index[-1], 'totalworth']
 
-            # handler.deleteUOrder(handler.clientorderid)
-            time.sleep(5)
-            handler.queryAccPx() 
+        transferdf = pd.read_sql(f"select * from transferlog where {mainname=} and {subname=} and {strategyname=} and asset='USDT' ", con=conn)
+        quota = transferdf['amount'].astype(float).sum()
+        profitRate = "%.2f" % ((worth-quota)/quota *100) if quota > 0 else 0  #amtSingle
 
-        elif timeCount == -5  and not handler.flagDict['isClose']:   # 平仓
-            handler.queryAccPx()
-            # logger.info(f"--{timeCount=}--clearance--{handler.flagDict['isClose']=}--")
-            # handler.clearance()
+        profitRateYear = "%.2f" % (float(profitRate)/runtime *365) if runtime != 0 else 0
+        note = '--'
 
-            logger.info(f"--{timeCount=}--closeAllPosition--{handler.flagDict['isClose']=}--")
-            handler.client.closeAllPosition()
+        tradeCountdf = pd.read_sql(f"select count(*) from trades where {mainID=} and {subID=} and {strategyID=} ", conn)
+        tradeCount = tradeCountdf.iloc[0,0]
 
-            time.sleep(5)
-            handler.queryAccPx() 
+        name = name if name != 'testStrategy' else 'similarity2'
 
-        # time.sleep(10*60)
+        fig = plt.figure(figsize=(13, 4) )
+        ax1 = plt.subplot2grid((1, 50), (0, 0), colspan=19, rowspan=1)
+        ax2 = plt.subplot2grid((1, 50), (0, 25), colspan=24, rowspan=1)
 
-def main(argv):
-    run(argv)
+        worthdf['totalworth'].plot( title=f'{name}-worth-5min', ax=ax2) #20,8 , figsize=(7,3)
+        # plt.savefig('%s/%s/%s_5min.jpg' % (worthDir,'static', name), transparent=True, bbox_inches='tight') #png jpg
+
+        worthdf.groupby('date').last().plot( y='totalworth', title=f'{name}-worth-day', label=None, rot=60, ax=ax1)  #, figsize=(5,3)
+        plt.savefig('%s/%s/%s.jpg' % (worthDir,'static', name), transparent=True, bbox_inches='tight') #png jpg
+        plt.cla()
+        plt.close("all")
+
+        if 'test' not in name:
+            csvdf2.loc[len(csvdf2.index)] = [name, strategyID, starttime, curtime, runtime, amtSingle, quota, worth, profitRate, tradeCount, profitRateYear, note]
+
+        totalWorthdf2 = pd.concat([totalWorthdf2,worthdf],ignore_index=True)
+
+    conn.close()
+
+    csvdf2.columns = ['策略名称', '策略ID', '启动时间', '截止时间', '运行时间(日)', '单批下单金额', '期初额', '当前净值', '收益率%', '交易次数', '年化收益率%', '备注']
+
+    # print(f'{csvdf=}')
+
+    csvdf2.to_csv('%s/%s/worth_%s2.csv' % (worthDir , 'static', time.strftime("%Y%m%d") ), index=None)
+    totalWorthdf2.to_pickle('%s/%s/%s2.pkl' % (worthDir , 'static', "totalWorthdf" ) )
+
+
+####v3.0#real#sqlite3###############################################################
+
+
+nameList3 = ['similarity_big',]  #策略名称 , 'Panel_mom', 'Pyemd2', 'similarity', 'similarity_big'
+totalWorthdf3= pd.DataFrame()
+csvdf3 = pd.DataFrame()
+qryTime3 = 0
+
+def getWorth3(nameList):
+
+    global totalWorthdf3, csvdf3, qryTime3
+
+    if time.time() - qryTime3 < 300:
+        return
+    else:
+        qryTime3 = time.time()
+
+    conn = sqlite3.connect('./worth.db')
+    # conn = sqlite3.connect('../pkl/binance.db')
+    balancedf = pd.read_sql(' select * from balance  ', conn)
+    balancedf.sort_values(by=['updateTime'], inplace=True)
+
+    csvdf3 = pd.DataFrame(columns=['name', 'sid', 'starttime', 'curtime', 'runtime', 'amtSingle', 'quota', 'worth', 'profitRate', 'tradeCount', 'profitRateYear', 'note'])
+
+    for name in nameList:
+        worthdf = balancedf[ (balancedf['access']==name) & (balancedf['asset']=='USDT') ]
+        worthdf.reset_index(drop=True, inplace=True)
+        sid = worthdf['accountAlias'][0]
+
+        timeSec = worthdf['updateTime'][0] # 1655134268142
+        starttime = str(datetime.fromtimestamp(timeSec/1000))[:10] #2022-06-14 09:21:43.233000
+        curtime = time.strftime("%Y-%m-%d")  #2022-06-16  %Y-%m-%d %H:%M:%S
+        difftime = datetime.strptime(curtime, "%Y-%m-%d") - datetime.strptime(starttime, "%Y-%m-%d")
+        runtime = difftime.days
+        amtSingle = worthdf['balance'][0]
+        worthdf['totalworth'] = worthdf['balance']
+        worthdf['name'] = name
+
+        worthdf['date'] = worthdf['updateTime'].apply(lambda x: datetime.fromtimestamp(x/1000).strftime('%Y%m%d')) # '%Y-%m-%d %H:%M:%S'
+        worthdf['totalworth'].plot( figsize=(20,8))
+        quota = worthdf.loc[0, 'totalworth']
+        worth = worthdf.loc[worthdf.index[-1], 'totalworth']
+        profitRate = "%.2f" % ((worth-quota)/quota *100) #amtSingle
+
+        conn2 = sqlite3.connect('../pkl/binance.db')
+        factor_df = pd.read_sql(f" select count(*) from factor where {name=} ", conn2)
+        conn2.close()
+        tradeCount = factor_df.iloc[0,0]
+
+        profitRateYear = "%.2f" % (float(profitRate)/runtime *365)
+        note = '--'
+
+        csvdf3.loc[len(csvdf3.index)] = [name, sid, starttime, curtime, runtime, amtSingle, quota, worth, profitRate, tradeCount, profitRateYear, note]
+
+        # totalWorthdf3 = pd.concat([totalWorthdf3,worthdf],ignore_index=True)
+
+        fig = plt.figure(figsize=(13, 4) )
+        # plt.xticks(rotation=60)
+        ax1 = plt.subplot2grid((1, 50), (0, 0), colspan=19, rowspan=1)
+        ax2 = plt.subplot2grid((1, 50), (0, 25), colspan=24, rowspan=1)
+        worthdf['totalworth'].plot( title=f'{name}-worth-5min', ax=ax2) #20,8 , figsize=(7,3)
+        # ax1.set_xticklabels(rotation=60)
+
+        worthdf.groupby('date').last().plot( y='totalworth', title=f'{name}-worth-day', label=None, rot=60, ax=ax1)  #, figsize=(5,3)
+        plt.savefig('%s/%s/%s.jpg' % (worthDir,'static', name), transparent=True, bbox_inches='tight') #png jpg
+        plt.cla()
+        plt.close("all")
+
+
+    csvdf3.columns = ['策略名称', 'ID', '启动时间', '截止时间', '运行时间(日)', '单笔下单金额', '期初额', '当前净值', '收益率%', '交易次数', '年化收益率%', '备注']
+
+    print(f'{csvdf3}')
+
+    #csvdf.to_csv('%s/worth_%s1.csv' % (os.getcwd() , time.strftime("%Y%m%d") ), index=None)
+    csvdf3.to_csv('%s/%s/worth_%s1.csv' % (worthDir, 'static',time.strftime("%Y%m%d") ), index=None) #
+    # totalWorthdf3.to_pickle('%s/%s/%s1.pkl' % (worthDir, 'static', "totalWorthdf" ) )
+
+    conn.close()
+
+####v5.0#real#Mysql####################################################################
+
+
+amtDict2 = {'similarity2':1000000} #单批下单金额  ,'Pyemd2':10000,'Panel_mom2':10000
+debugList2 = ['Panel_mom2', 'Panel_mom3', 'factorcheck' ] # 调试运行的策略
+
+totalWorthdf2 = pd.DataFrame()
+csvdf2 = pd.DataFrame()
+qryTime2 = 0
+
+def getWorth2():
+    global totalWorthdf2, csvdf2, qryTime2
+
+    if time.time() - qryTime2 < 300:
+        return
+    else:
+        qryTime2 = time.time()
+
+    amtSingle = 1000000
+
+    csvdf2 = pd.DataFrame(columns=['name', 'sid', 'starttime', 'curtime', 'runtime', 'amtSingle', 'quota', 'worth', 'profitRate', 'tradeCount', 'profitRateYear', 'note'])
+
+    totalWorthdf2 = pd.DataFrame()
+
+    # conn = pymysql.connect(host="127.0.0.1", port=3300, user="root", password="fil2022", database="Trace_testtrace",charset='utf8')  #warning
+
+    engine = create_engine('mysql+pymysql://root:fil2022@localhost:3300/Trace_testtrace',encoding='utf-8')
+    conn = engine.connect()
+
+    infodf = pd.read_sql(f"select * from info" , con=conn)
+    mainaccdf = pd.read_sql(f"select * from mainaccount" , con=conn)
+    subaccdf = pd.read_sql(f"select * from subaccount" , con=conn)
+
+    # print(f'{infodf=}')
+
+    for index, rows in infodf.iterrows():
+        if rows['state'] == 1 or rows['name'] in debugList2 : # or rows['name'] == 'modifiedmom':
+            continue
+
+        mainID = rows['mainID']
+        subID = rows['subID']
+        strategyID = rows['strategyID']
+        name = rows['name']
+        sid = subID
+
+        mainname = mainaccdf.loc[ mainaccdf.loc[mainaccdf['accountid']==mainID].index[0], 'name']
+        subname = subaccdf.loc[ subaccdf.loc[(subaccdf['accountid']==subID) & (subaccdf['mainAccountID']==mainID) ].index[0], 'name']
+        strategyname = name
+
+        worthdf = pd.read_sql(f"select * from worth where {mainID=} and {subID=} and {strategyID=}", con=conn)
+        worthdf['totalworth'] = worthdf['cashworth'].astype(float) + worthdf['usdtcontractworth'].astype(float) + worthdf['tokencontractworth'].astype(float)
+        worthdf['name'] = name
+        worthdf['sid'] = strategyID
+
+        worthdf['dateTime'] = worthdf['time'].apply(lambda x: datetime.fromtimestamp(x/1000).strftime('%Y-%m-%d %H:%M:%S')) # '%Y-%m-%d %H:%M:%S'
+        worthdf['date'] = worthdf['time'].apply(lambda x: datetime.fromtimestamp(x/1000).strftime('%Y%m%d')) # '%Y-%m-%d %H:%M:%S'
+
+        # print(f'{worthdf=}')
+
+        timeSec = infodf.loc[ infodf.loc[infodf['name']==name].index[0] , 'time'] #1655134268142
+        starttime = str(datetime.fromtimestamp(timeSec/1000))[:10] #2022-06-14 09:21:43.233000
+        curtime = time.strftime("%Y-%m-%d")  #2022-06-16  %Y-%m-%d %H:%M:%S
+        difftime = datetime.strptime(curtime, "%Y-%m-%d") - datetime.strptime(starttime, "%Y-%m-%d")
+        runtime = difftime.days
+        amtSingle = amtSingle  if name not in amtDict2 else amtDict2[name]
+
+        worth = worthdf.loc[worthdf.index[-1], 'totalworth']
+
+        transferdf = pd.read_sql(f"select * from transferlog where {mainname=} and {subname=} and {strategyname=} and asset='USDT' ", con=conn)
+        quota = transferdf['amount'].astype(float).sum()
+        profitRate = "%.2f" % ((worth-quota)/quota *100) if quota > 0 else 0  #amtSingle
+
+        profitRateYear = "%.2f" % (float(profitRate)/runtime *365) if runtime != 0 else 0
+        note = '--'
+
+        tradeCountdf = pd.read_sql(f"select count(*) from trades where {mainID=} and {subID=} and {strategyID=} ", conn)
+        tradeCount = tradeCountdf.iloc[0,0]
+
+        name = name if name != 'testStrategy' else 'similarity2'
+
+        fig = plt.figure(figsize=(13, 4) )
+        ax1 = plt.subplot2grid((1, 50), (0, 0), colspan=19, rowspan=1)
+        ax2 = plt.subplot2grid((1, 50), (0, 25), colspan=24, rowspan=1)
+
+        worthdf['totalworth'].plot( title=f'{name}-worth-5min', ax=ax2) #20,8 , figsize=(7,3)
+        # plt.savefig('%s/%s/%s_5min.jpg' % (worthDir,'static', name), transparent=True, bbox_inches='tight') #png jpg
+
+        worthdf.groupby('date').last().plot( y='totalworth', title=f'{name}-worth-day', label=None, rot=60, ax=ax1)  #, figsize=(5,3)
+        plt.savefig('%s/%s/%s.jpg' % (worthDir,'static', name), transparent=True, bbox_inches='tight') #png jpg
+        plt.cla()
+        plt.close("all")
+
+        if 'test' not in name:
+            csvdf2.loc[len(csvdf2.index)] = [name, strategyID, starttime, curtime, runtime, amtSingle, quota, worth, profitRate, tradeCount, profitRateYear, note]
+
+        totalWorthdf2 = pd.concat([totalWorthdf2,worthdf],ignore_index=True)
+
+    conn.close()
+
+    csvdf2.columns = ['策略名称', '策略ID', '启动时间', '截止时间', '运行时间(日)', '单批下单金额', '期初额', '当前净值', '收益率%', '交易次数', '年化收益率%', '备注']
+
+    # print(f'{csvdf=}')
+
+    csvdf2.to_csv('%s/%s/worth_%s2.csv' % (worthDir , 'static', time.strftime("%Y%m%d") ), index=None)
+    totalWorthdf2.to_pickle('%s/%s/%s2.pkl' % (worthDir , 'static', "totalWorthdf" ) )
+
+
+###############################################################################
+
+
+html_string = '''
+    <html>
+    <head>
+        <meta charset="utf-8">
+        <title>Worth Curve</title>
+
+        <style type="text/css">
+            .worth {{
+                border-collapse: collapse;
+                text-align: center;
+            }}
+            .worth td, th {{
+                border: 1px solid #cad9ea;
+                color: #666;
+                height: 30px;
+                padding: 5px;
+                font-family:verdana,arial,sans-serif;
+                font-size: 10pt;
+            }}
+            .worth thead th {{
+                background-color: #CCE8EB;
+                width:auto ;
+                min-width: 30px;
+                overflow:hidden;
+                white-space:nowrap;
+                text-overflow:ellipsis;
+            }}
+            .worth tr:nth-child(odd) {{
+                background: #fff;
+            }}
+            .worth tr:nth-child(even) {{
+                background: #F5FAFA;
+            }}
+            .worth tr:hover {{
+                background: #eee;
+                cursor: pointer;
+            }}
+        </style>
+        <link rel="stylesheet" type="text/css" href="static/worth.css"/>
+    </head>
+    <body>
+        <h1 >一. V2.4版策略净值(新版本): </h1>
+        <div style="max-width:1000px; text-align:right;"> 更新时间: {updateTimeEle}</div>
+        <h2 >1. 策略净值表: </h2>
+        {tableEle2}
+        <br/>
+        <h2 >2. 净值曲线图: </h2>
+        {plotEle2}
+
+        <br/><br/>
+
+        <h1 >二. V1版策略净值(旧版本): </h1>
+        <h2 >1. 策略净值表: </h2>
+        {tableEle1}
+        <br/>
+        <h2 >2. 净值曲线图: </h2>
+        {plotEle1}
+
+        <br/><br/><br/><br/>
+
+    </body>
+    </html>
+'''
+
+
+###############################################################################
+
+
+html_string3 = '''
+    <html>
+    <head>
+        <meta charset="utf-8">
+        <title>Worth Curve</title>
+
+        <style type="text/css">
+            .worth {{
+                border-collapse: collapse;
+                text-align: center;
+            }}
+            .worth td, th {{
+                border: 1px solid #cad9ea;
+                color: #666;
+                height: 30px;
+                padding: 5px;
+                font-family:verdana,arial,sans-serif;
+                font-size: 10pt;
+            }}
+            .worth thead th {{
+                background-color: #CCE8EB;
+                width:auto ;
+                min-width: 30px;
+                overflow:hidden;
+                white-space:nowrap;
+                text-overflow:ellipsis;
+            }}
+            .worth tr:nth-child(odd) {{
+                background: #fff;
+            }}
+            .worth tr:nth-child(even) {{
+                background: #F5FAFA;
+            }}
+            .worth tr:hover {{
+                background: #eee;
+                cursor: pointer;
+            }}
+        </style>
+        <link rel="stylesheet" type="text/css" href="static/worth.css"/>
+    </head>
+    <body>
+        <h1 >一. V1.0版策略净值(实盘版): </h1>
+        <div style="max-width:1000px; text-align:right;"> 更新时间: {updateTimeEle3}</div>
+        <h2 >1. 策略净值表: </h2>
+        {tableEle3}
+        <br/>
+        <h2 >2. 净值曲线图: </h2>
+        {plotEle3}
+
+        <br/><br/><br/><br/><br/><br/>
+
+    </body>
+    </html>
+'''
+
+
+###############################################################################
+
+
+
+app = Flask(__name__)
+
+@app.route('/worth', methods=("POST", "GET"))
+def setworthhtml():
+
+    getWorth1(nameList1)
+    plotEleList1 = []
+    for index, rows in csvdf1.iterrows():
+        imgStr = '<h3 >2.{index} {name}策略: </h3> <img src="static/{name}.jpg" ><br/>'.format(name=rows['策略名称'], index=index+1)
+        plotEleList1.append(imgStr)
+
+    getWorth2()
+    plotEleList2 = []
+    for index, rows in csvdf2.iterrows():
+        imgStr = '<h3 >2.{index} {name}策略: </h3> <img src="static/{name}.jpg" ><br/>'.format(name=rows['策略名称'], index=index+1)
+        plotEleList2.append(imgStr)
+
+    updatetime = time.strftime("%Y-%m-%d %H:%M:%S")
+
+    with open('templates/worth.html', 'w') as f:
+        f.write(html_string.format( tableEle1=csvdf1.to_html(classes='worth'), plotEle1=''.join(plotEleList1), tableEle2=csvdf2.to_html(classes='worth'), plotEle2=''.join(plotEleList2), updateTimeEle=updatetime ) )
+
+    return render_template('worth.html')
+
+def getImgStream(imgPath):
+    imgStream = ''
+    with open(imgPath, 'rb') as f:
+        img_byte = f.read()
+    imgStream = base64.b64encode( img_byte ).decode('ascii')  #'utf8' 'ascii'
+    return imgStream
+
+@app.route('/worthpt', methods=("POST", "GET"))
+def setworthpthtml():
+
+    print(f'--setworthpthtml--1--')
+    getWorth1(nameList1)
+    plotEleList1 = []
+    for index, rows in csvdf1.iterrows():
+        imgStream = getImgStream('%s/%s/%s.jpg' % (worthDir,'static', rows['策略名称']))
+        imgStr = '<h3 >2.{index} {name}策略: </h3> <img src="data:image/jpg;base64,{imgStream}" ><br/>'.format(index=index+1, name=rows['策略名称'], imgStream=imgStream)
+        plotEleList1.append(imgStr)
+
+    print(f'--setworthpthtml--2--')
+    getWorth2()
+    plotEleList2 = []
+    for index, rows in csvdf2.iterrows():
+        imgStream = getImgStream('%s/%s/%s.jpg' % (worthDir,'static', rows['策略名称']))
+        imgStr = '<h3 >2.{index} {name}策略: </h3> <img src="data:image/jpg;base64,{imgStream}" ><br/>'.format(name=rows['策略名称'], index=index+1, imgStream=imgStream)
+        plotEleList2.append(imgStr)
+
+    updatetime = time.strftime("%Y-%m-%d %H:%M:%S")
+
+    print(f'--setworthpthtml--3--')
+    with open('templates/worth.html', 'w') as f:
+        f.write(html_string.format(tableEle1=csvdf1.to_html(classes='worth'), plotEle1=''.join(plotEleList1), tableEle2=csvdf2.to_html(classes='worth'), plotEle2=''.join(plotEleList2), updateTimeEle=updatetime  ) )
+
+    print(f'--setworthpthtml--4--')
+    return render_template('worth.html')
+
+@app.route('/worthpt3', methods=("POST", "GET"))
+def setworthpt3html():
+
+    print(f'--setworthpt3html--1--')
+    getWorth3(nameList1)
+    plotEleList3 = []
+    for index, rows in csvdf3.iterrows():
+        imgStream = getImgStream('%s/%s/%s.jpg' % (worthDir,'static', rows['策略名称']))
+        imgStr = '<h3 >2.{index} {name}策略(实盘版): </h3> <img src="data:image/jpg;base64,{imgStream}" ><br/>'.format(index=index+1, name=rows['策略名称'], imgStream=imgStream)
+        plotEleList3.append(imgStr)
+
+    updatetime = time.strftime("%Y-%m-%d %H:%M:%S")
+
+    print(f'--setworthpt3html--3--')
+    with open('templates/worth.html', 'w') as f:
+        f.write(html_string3.format(tableEle3=csvdf3.to_html(classes='worth'), plotEle3=''.join(plotEleList3),  updateTimeEle3=updatetime  ) )
+
+    print(f'--setworthpt3html--4--')
+    return render_template('worth.html')
+
+
+# getWorth1(nameList1)
+# getWorth2()
+getWorth3(nameList3)
 
 if __name__ == '__main__':
-    print('__main__: ', sys.argv)
-    main(sys.argv[1:])
 
-# nohup python3 -u main_kline7.py -n testrisk7 -s 8889 -c 39094 -X BTCUSDT -p 10m -w 40 -d 2 -T 0.5 -t 1000 >> log.txt 2>&1 & 
+    # app.run(debug=True,host='127.0.0.1', port=8088)
+    # app.run(debug=True)
+    # app.config['DEBUG'] = True
 
-# python3 -u main_trade.py -n testtrade1 -s 8889 -c 39090 -X BTCUSDT -p 10m -w 40 -d 2 -T 0.5 -t 1000
+    app.jinja_env.auto_reload = True
+    app.config['TEMPLATES_AUTO_RELOAD'] = True
+    app.config['SEND_FILE_MAX_AGE_DEFAULT'] = timedelta(seconds=10)
+    # app.config['FLASK_ENV'] = 'development'
 
-# nohup python3 -u main_kline7.py -n testrisk7 -s 8889 -c 39094 -X BTCUSDT -p 3m -w 40 -d 3 -T 0.5 -t 10000  >> log_kline7.log 2>&1 &
+    # app.run() # warning
+    server = pywsgi.WSGIServer(('0.0.0.0',5000), app)
+    server.serve_forever()
 
-# nohup python3 -u main_risk1.py -n testrisk1 -s 8889 -c 39191 -X BTCUSDT -p 3m -w 40 -d 3 -T 0.5 -t 7500  >> log_risk1.log 2>&1 &
 
-# nohup python3 -u main_risk1.py -n testrisk1 -s 8889 -c 39291 -X BTCUSDT -p 3m -w 40 -d 3 -T 0.5 -t 15000  >> log_risk1.log 2>&1 &
-
+# nohup python3 -u  -m flask run >> log.txt 2>&1  &
+# python -m flask run -p 8088 -h 127.0.0.2     # FLASK_APP=hello
+# export FLASK_ENV=development #development开发 production生产
+# export FLASK_DEBUG=1 #调试器 1为开启，0为关闭。
+# curl http://localhost:5000/worthpt3
