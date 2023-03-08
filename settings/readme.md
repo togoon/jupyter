@@ -368,7 +368,7 @@ sudo apt-get remove mysql-common # 删除mysql的软件包
 
 docker ps # 当前正在运行的容器
 docker exec -it (mysql的名字,或id) bash # 进入mysql容器
-mysql -u root  -p # 登录mysql,输入账号密码登录; 连接远程 -h 110.110.110.110 -P 3306 或 --port
+mysql -u root -p # 登录mysql,输入账号密码登录; 连接远程 mysql -h 8.219.68.31 -P 3306 -u root -p  或 --port
 show databases; # 显示库名列表
 use FIL_realrisk; # 设置当前库
 show tables ; # 显示表名 like "%<tb_name>%"
