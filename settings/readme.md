@@ -368,7 +368,7 @@ sudo apt-get remove mysql-common # 删除mysql的软件包
 
 docker ps # 当前正在运行的容器
 docker exec -it (mysql的名字,或id) bash # 进入mysql容器
-mysql -u root  -p # 登录mysql,输入账号密码登录 (abcd)
+mysql -u root  -p # 登录mysql,输入账号密码登录; 连接远程 -h 110.110.110.110 -P 3306 或 --port
 show databases; # 显示库名列表
 use FIL_realrisk; # 设置当前库
 show tables ; # 显示表名
@@ -376,7 +376,11 @@ describe my_table; # 显示表的结构
 drop table num_01; #  删除名称为num_01表
 drop database num_01_mysql;  # 删除数据库 num_01_mysql
 mysqldump -u 用户名 -p 数据库名 > 导出的文件名 # 导出整个数据库 mysql\bin目录
-mysqladmin -u用户名 -p旧密码 password 新密码 #修改密码
+mysqldump -u 用户名 -p 数据库名 表名> 导出的文件名 # 导出表
+mysqldump -u user_name -p -d –add-drop-table database_name > outfile_name.sql; # 导出数据库结构
+mysqladmin -u用户名 -p旧密码 password 新密码 # 修改密码
+ROLLBACK #  回滚 
+COMMIT # 提交
 select version(); # 版本 
 select now(); # 当前时间
 select user(); # 查询数据库当前使用者
