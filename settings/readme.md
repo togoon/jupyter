@@ -372,9 +372,13 @@ mysql -u root  -p # 登录mysql,输入账号密码登录 (abcd)
 show databases; # 显示库名列表
 use FIL_realrisk; # 设置当前库
 show tables ; # 显示表名
+describe my_table; # 显示表的结构
+drop table num_01; #  删除名称为num_01表
+
 mysqladmin -u用户名 -p旧密码 password 新密码 #修改密码
 select version(); # 版本 
 select now(); # 当前时间
+select user(); # 查询数据库当前使用者
 SELECT DAYOFMONTH(CURRENT_DATE);  # 显示年月日
 SELECT "welecome to my blog!";  # 显示字符串
 
