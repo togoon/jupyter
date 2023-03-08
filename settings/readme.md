@@ -371,8 +371,9 @@ docker exec -it (mysql的名字,或id) bash # 进入mysql容器
 mysql -u root  -p # 登录mysql,输入账号密码登录; 连接远程 -h 110.110.110.110 -P 3306 或 --port
 show databases; # 显示库名列表
 use FIL_realrisk; # 设置当前库
-show tables ; # 显示表名
-describe my_table; # 显示表的结构
+show tables ; # 显示表名 like "%<tb_name>%"
+show create table tablename # 查看建表语句
+describe my_table; # 显示表的结构 desc tab
 drop table num_01; #  删除名称为num_01表
 drop database num_01_mysql;  # 删除数据库 num_01_mysql
 mysqldump -u 用户名 -p 数据库名 > 导出的文件名 # 导出整个数据库 mysql\bin目录
@@ -381,7 +382,7 @@ mysqldump -u user_name -p -d –add-drop-table database_name > outfile_name.sql;
 mysqladmin -u用户名 -p旧密码 password 新密码 # 修改密码
 ROLLBACK #  回滚 
 COMMIT # 提交
-select version(); # 版本 
+select version(); # 版本  status;
 select now(); # 当前时间
 select user(); # 查询数据库当前使用者
 SELECT DAYOFMONTH(CURRENT_DATE);  # 显示年月日
@@ -392,9 +393,11 @@ create table <表名> ( <字段名1> <类型1> [,..<字段名n> <类型n>]); # �
 rename table 原表名 to 新表名; # 修改表名
 insert into <表名> [( <字段名1>[,..<字段名n > ])] values ( 值1 )[, ( 值n )]; # 表插入数据
 delete from 表名 where 表达式; # 删除表中数据
-update 表名 set 字段=新值,… where 条件 # 修改表中数据
+truncate [tablename]; # 清空表内容
+update 表名 set 字段=新值,…  where 条件 # 修改表中数据
 alter table 表名 add字段 类型 其他; # 增加字段
 ALTER TABLE table_name DROP field_name; # 删除字段
+alter table [tablename] change [columnname] [newcolumnname] [type]; # 重命名列
 ALTER TABLE table_name CHANGE old_field_name new_field_name field_type; # 修改原字段名称及类型
 alter table 表名 add index 索引名 (字段名1[，字段名2 …]); # 加索引
 
