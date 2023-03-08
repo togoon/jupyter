@@ -369,8 +369,9 @@ sudo apt-get remove mysql-common # 删除mysql的软件包
 docker ps # 当前正在运行的容器
 docker exec -it (mysql的名字,或id) bash # 进入mysql容器
 mysql -u root  -p # 登录mysql,输入账号密码登录 (abcd)
-show databases; # 显示库列表
+show databases; # 显示库名列表
 use FIL_realrisk; # 设置当前库
+show tables ; # 显示表名
 mysqladmin -u用户名 -p旧密码 password 新密码 #修改密码
 select version(); # 版本 
 select now(); # 当前时间
