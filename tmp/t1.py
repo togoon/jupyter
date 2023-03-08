@@ -312,30 +312,30 @@ def getWorth3(nameList):
 ####v5.0#real#Mysql####################################################################
 
 
-amtDict2 = {'similarity2':1000000} #单批下单金额  ,'Pyemd2':10000,'Panel_mom2':10000
-debugList2 = ['Panel_mom2', 'Panel_mom3', 'factorcheck' ] # 调试运行的策略
+amtDict5 = {'similarity':200} #单批下单金额  ,'Pyemd2':10000,'Panel_mom2':10000
+debugList5 = ['factorcheck' ] # 调试运行的策略
 
-totalWorthdf2 = pd.DataFrame()
-csvdf2 = pd.DataFrame()
-qryTime2 = 0
+totalWorthdf5 = pd.DataFrame()
+csvdf5 = pd.DataFrame()
+qryTime5 = 0
 
-def getWorth2():
-    global totalWorthdf2, csvdf2, qryTime2
+def getWorth5():
+    global totalWorthdf5, csvdf5, qryTime5
 
-    if time.time() - qryTime2 < 300:
+    if time.time() - qryTime5 < 300:
         return
     else:
-        qryTime2 = time.time()
+        qryTime5 = time.time()
 
     amtSingle = 1000000
 
-    csvdf2 = pd.DataFrame(columns=['name', 'sid', 'starttime', 'curtime', 'runtime', 'amtSingle', 'quota', 'worth', 'profitRate', 'tradeCount', 'profitRateYear', 'note'])
+    csvdf5 = pd.DataFrame(columns=['name', 'sid', 'starttime', 'curtime', 'runtime', 'amtSingle', 'quota', 'worth', 'profitRate', 'tradeCount', 'profitRateYear', 'note'])
 
-    totalWorthdf2 = pd.DataFrame()
+    totalWorthdf5 = pd.DataFrame()
 
-    # conn = pymysql.connect(host="127.0.0.1", port=3300, user="root", password="fil2022", database="Trace_testtrace",charset='utf8')  #warning
+    # conn = pymysql.connect(host="127.0.0.1", port=3306, user="root", password="reaL2022", database="realrisk",charset='utf8')  #warning
 
-    engine = create_engine('mysql+pymysql://root:fil2022@localhost:3300/Trace_testtrace',encoding='utf-8')
+    engine = create_engine('mysql+pymysql://root:reaL2022@localhost:3306/realrisk',encoding='utf-8')
     conn = engine.connect()
 
     infodf = pd.read_sql(f"select * from info" , con=conn)
@@ -345,7 +345,7 @@ def getWorth2():
     # print(f'{infodf=}')
 
     for index, rows in infodf.iterrows():
-        if rows['state'] == 1 or rows['name'] in debugList2 : # or rows['name'] == 'modifiedmom':
+        if rows['state'] == 1 or rows['name'] in debugList5 : # or rows['name'] == 'modifiedmom':
             continue
 
         mainID = rows['mainID']
@@ -373,7 +373,7 @@ def getWorth2():
         curtime = time.strftime("%Y-%m-%d")  #2022-06-16  %Y-%m-%d %H:%M:%S
         difftime = datetime.strptime(curtime, "%Y-%m-%d") - datetime.strptime(starttime, "%Y-%m-%d")
         runtime = difftime.days
-        amtSingle = amtSingle  if name not in amtDict2 else amtDict2[name]
+        amtSingle = amtSingle  if name not in amtDict5 else amtDict5[name]
 
         worth = worthdf.loc[worthdf.index[-1], 'totalworth']
 
@@ -402,18 +402,18 @@ def getWorth2():
         plt.close("all")
 
         if 'test' not in name:
-            csvdf2.loc[len(csvdf2.index)] = [name, strategyID, starttime, curtime, runtime, amtSingle, quota, worth, profitRate, tradeCount, profitRateYear, note]
+            csvdf5.loc[len(csvdf5.index)] = [name, strategyID, starttime, curtime, runtime, amtSingle, quota, worth, profitRate, tradeCount, profitRateYear, note]
 
-        totalWorthdf2 = pd.concat([totalWorthdf2,worthdf],ignore_index=True)
+        totalWorthdf5 = pd.concat([totalWorthdf5,worthdf],ignore_index=True)
 
     conn.close()
 
-    csvdf2.columns = ['策略名称', '策略ID', '启动时间', '截止时间', '运行时间(日)', '单批下单金额', '期初额', '当前净值', '收益率%', '交易次数', '年化收益率%', '备注']
+    csvdf5.columns = ['策略名称', '策略ID', '启动时间', '截止时间', '运行时间(日)', '单批下单金额', '期初额', '当前净值', '收益率%', '交易次数', '年化收益率%', '备注']
 
     # print(f'{csvdf=}')
 
-    csvdf2.to_csv('%s/%s/worth_%s2.csv' % (worthDir , 'static', time.strftime("%Y%m%d") ), index=None)
-    totalWorthdf2.to_pickle('%s/%s/%s2.pkl' % (worthDir , 'static', "totalWorthdf" ) )
+    csvdf5.to_csv('%s/%s/worth_%s2.csv' % (worthDir , 'static', time.strftime("%Y%m%d") ), index=None)
+    totalWorthdf5.to_pickle('%s/%s/%s2.pkl' % (worthDir , 'static', "totalWorthdf" ) )
 
 
 ###############################################################################
@@ -528,13 +528,22 @@ html_string3 = '''
         <link rel="stylesheet" type="text/css" href="static/worth.css"/>
     </head>
     <body>
-        <h1 >一. V1.0版策略净值(实盘版): </h1>
+        <h1 >一. V1版策略净值(实盘版): </h1>
         <div style="max-width:1000px; text-align:right;"> 更新时间: {updateTimeEle3}</div>
         <h2 >1. 策略净值表: </h2>
         {tableEle3}
         <br/>
         <h2 >2. 净值曲线图: </h2>
         {plotEle3}
+
+        <br/><br/>
+        
+        <h1 >二. V5版策略净值(实盘版): </h1>
+        <h2 >1. 策略净值表: </h2>
+        {tableEle5}
+        <br/>
+        <h2 >2. 净值曲线图: </h2>
+        {plotEle5}
 
         <br/><br/><br/><br/><br/><br/>
 
@@ -617,11 +626,20 @@ def setworthpt3html():
         imgStr = '<h3 >2.{index} {name}策略(实盘版): </h3> <img src="data:image/jpg;base64,{imgStream}" ><br/>'.format(index=index+1, name=rows['策略名称'], imgStream=imgStream)
         plotEleList3.append(imgStr)
 
+    print(f'--setworthpt3html--2--')
+    getWorth5()
+    plotEleList5 = []
+    for index, rows in csvdf5.iterrows():
+        imgStream = getImgStream('%s/%s/%s.jpg' % (worthDir,'static', rows['策略名称']))
+        imgStr = '<h3 >2.{index} {name}策略: </h3> <img src="data:image/jpg;base64,{imgStream}" ><br/>'.format(name=rows['策略名称'], index=index+1, imgStream=imgStream)
+        plotEleList5.append(imgStr)
+
+
     updatetime = time.strftime("%Y-%m-%d %H:%M:%S")
 
     print(f'--setworthpt3html--3--')
     with open('templates/worth.html', 'w') as f:
-        f.write(html_string3.format(tableEle3=csvdf3.to_html(classes='worth'), plotEle3=''.join(plotEleList3),  updateTimeEle3=updatetime  ) )
+        f.write(html_string3.format(tableEle3=csvdf3.to_html(classes='worth'), plotEle3=''.join(plotEleList3), tableEle5=csvdf5.to_html(classes='worth'), plotEle5=''.join(plotEleList5),  updateTimeEle3=updatetime  ) )
 
     print(f'--setworthpt3html--4--')
     return render_template('worth.html')
@@ -630,6 +648,7 @@ def setworthpt3html():
 # getWorth1(nameList1)
 # getWorth2()
 getWorth3(nameList3)
+getWorth5()
 
 if __name__ == '__main__':
 
