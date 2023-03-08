@@ -378,6 +378,8 @@ select now(); # 当前时间
 SELECT DAYOFMONTH(CURRENT_DATE);  # 显示年月日
 SELECT "welecome to my blog!";  # 显示字符串
 
+SELECT * FROM worth where id >= 4000 order by id DESC LIMIT 0,5 ;
+
 SELECT selfid, symbol, side, type, clientorderid, price, quantity, status, from_unixtime(floor(createtime / 1000)) as orderdatetime from FIL_testfil.orders where selfid >= 500
 
 select id, mainID, subID, strategyID, symbol, tradeid, clientorderid, price, quantity, commission, commissionasset, tradetime, from_unixtime(floor(tradetime / 1000)) as tradedatetime, tradetype, handletime, gatetype from Trace_testtrace.trades where strategyID = 2
