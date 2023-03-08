@@ -374,13 +374,17 @@ use FIL_realrisk; # 设置当前库
 show tables ; # 显示表名
 describe my_table; # 显示表的结构
 drop table num_01; #  删除名称为num_01表
-
+drop database num_01_mysql;  # 删除数据库 num_01_mysql
 mysqladmin -u用户名 -p旧密码 password 新密码 #修改密码
 select version(); # 版本 
 select now(); # 当前时间
 select user(); # 查询数据库当前使用者
 SELECT DAYOFMONTH(CURRENT_DATE);  # 显示年月日
 SELECT "welecome to my blog!";  # 显示字符串
+
+create database <数据库名>; # 创建数据库 
+create table <表名> ( <字段名1> <类型1> [,..<字段名n> <类型n>]); # 创建数据表
+insert into <表名> [( <字段名1>[,..<字段名n > ])] values ( 值1 )[, ( 值n )]; # 表插入数据
 
 SELECT * FROM worth where id >= 4000 order by id DESC LIMIT 0,5 ;
 
@@ -397,6 +401,9 @@ select id, mainID, subID, strategyID, symbol, price, quantity, from_unixtime(flo
 SELECT id, type, `interval`,mainID, isSub, subID, threshold, value, from_unixtime(floor(time )) as datetime from FIL_risk3.riskwarnlog  where id >= 15000  order by id DESC
 
 SELECT selfid, symbol, side, type, clientorderid, price, quantity, status, from_unixtime(floor(createtime / 1000)) as orderdatetime from FIL_risk3.orders where selfid >= 1
+
+
+
 
 
 
