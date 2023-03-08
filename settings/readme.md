@@ -204,7 +204,7 @@ Reload privilege tables : Y
 
 
 mysql -u root -p # 无密码root帐号登陆 -h 180.76.XXX.XX  127.0.0.1
-use mysql; # 设置当前库
+use mysql; 
 select host, user, authentication_string, plugin from user; # 查看MySQL远程访问权限配置
 GRANT ALL PRIVILEGES ON *.* TO 'root'@'%'; # 授权 root 用户的所有权限并设置远程访问
 # update user set host='%' where user='root';  # 远程登录
@@ -369,8 +369,13 @@ sudo apt-get remove mysql-common # 删除mysql的软件包
 docker ps # 当前正在运行的容器
 docker exec -it (mysql的名字,或id) bash # 进入mysql容器
 mysql -u root  -p # 登录mysql,输入账号密码登录 (abcd)
-
-
+show databases; # 显示库列表
+use FIL_realrisk; # 设置当前库
+mysqladmin -u用户名 -p旧密码 password 新密码 #修改密码
+select version(); # 版本 
+select now(); # 当前时间
+SELECT DAYOFMONTH(CURRENT_DATE);  # 显示年月日
+SELECT "welecome to my blog!";  # 显示字符串
 
 SELECT selfid, symbol, side, type, clientorderid, price, quantity, status, from_unixtime(floor(createtime / 1000)) as orderdatetime from FIL_testfil.orders where selfid >= 500
 
