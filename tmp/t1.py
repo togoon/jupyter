@@ -377,8 +377,9 @@ def getWorth5():
 
         worth = worthdf.loc[worthdf.index[-1], 'totalworth']
 
-        transferdf = pd.read_sql(f"select * from transferlog where {mainname=} and {subname=} and {strategyname=} and asset='USDT' ", con=conn)
-        quota = transferdf['amount'].astype(float).sum()
+        transferdf = pd.read_sql(f"select * from transferlog where {mainname=} and {subname=} and {strategyname=} and asset='USDT' and type=16", con=conn)
+        transferdf2 = pd.read_sql(f"select * from transferlog where {mainname=} and {subname=} and {strategyname=} and asset='USDT' and type=17", con=conn)
+        quota = transferdf['amount'].astype(float).sum() - transferdf2['amount'].astype(float).sum() 
         profitRate = "%.2f" % ((worth-quota)/quota *100) if quota > 0 else 0  #amtSingle
 
         profitRateYear = "%.2f" % (float(profitRate)/runtime *365) if runtime != 0 else 0
