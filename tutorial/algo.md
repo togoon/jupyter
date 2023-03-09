@@ -67,7 +67,7 @@ Out-place:占用额外内存
 比较-选择 选择排序 Selection 数组x 链表v     O(n²)	     O(n²)      O(n²)	   不稳定x	 O(1)	   In-place  n较小时好
 比较-选择 堆排序   Heap	     数组x           O(nlogn)    O(nlogn)   O(nlogn)   不稳定x	 O(1)	   In-place  n较大时好
 比较-插入 插入排序 Insertion 数组v 链表v      O(n²)	     O(n)       O(n²)	    稳定v	 O(1)	   In-place  大部分已有序时好
-比较-插入 希尔排序 Shell	 数组x           O(nlogn)               O(ns)(1<s<2)不稳定x	 O(1)	s是所选分组
+比较-插入 希尔排序 Shell	 数组x           O(nlogn)    O(nlog²n)  O(n^s)(1<s<2)不稳定x	 O(1)	s是所选分组
 比较类--  归并排序 Bubble		数组v 链表v      O(nlogn)               O(nlogn)	稳定v	 O(1)	n较大时好
 
 非比较类- 计数排序 Bubble		数组v 链表v      O(n+k)	                O(n+k)	    稳定v	 O(k)	
