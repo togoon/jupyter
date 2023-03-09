@@ -445,11 +445,6 @@ DELIMITER ;
 CALL ordersinsert();    # 调用存储过程
 
 
-
-
-
-
-
 ```
 
 
@@ -538,6 +533,9 @@ scp .vimrc root@47.241.99.13:/root/
 uname -a # 系统版本 lscpu , free -m , lsblk -p , cat /proc/version, lsb_release -a , lshw
 sed -n '6,7p' a.txt # 查看文件a.txt的第6、7行  # sed -n '6p;260,400p;' a.txt  #  输出第6行 和 260到400行
 cat a.txt | head -n 200 | tail -n +50 # 查看文件a.txt，显示第50行到第200行  或 cat a.txt | tail -n +50 | head -n 150
+
+ps aux | grep notebook | grep -v grep  > /dev/null # 检测进程是否存在
+
 
 #win cmd vscode  
 ssh-keygen  # cmd命令行中输入ssh-keygen，回车三次
