@@ -61,18 +61,18 @@ Out-place:占用额外内存
 在T(n)=4n²-2n+2中, 就有f(n)=n², 使得T(n)/f(n)的极限值为4, 那么O(f(n)), 也就是时间复杂度为O(n²)
 对于不是只有常数的时间复杂度忽略时间频度的系数, 低次项常数
 
-         排序算法  数据对象/稳定性  平均时间     最佳        最差时间	 稳定性	  空间复杂度	备注
-比较-交换 冒泡排序	数组v            O(n²)	                (n²)	   稳定v	O(1)	n较小时好
-比较-交换 快速排序	数组x            O(nlogn)               O(n²)	   不稳定x	O(logn)	n较大时好
-比较-选择 选择排序	数组x 链表v      O(n²)	                O(n²)	   不稳定x	 O(1)	n较小时好
-比较-选择 堆排序	数组x            O(nlogn)               O(nlogn)    不稳定x	 O(1)	n较大时好
-比较-插入 插入排序	数组v 链表v      O(n²)	                O(n²)	    稳定v	 O(1)	大部分已有序时好
-比较-插入 希尔排序	数组x            O(nlogn)               O(ns)(1<s<2)不稳定x	 O(1)	s是所选分组
-比较类--  归并排序	数组v 链表v      O(nlogn)               O(nlogn)	稳定v	 O(1)	n较大时好
+         排序算法           数据对象/稳定性  平均时间     最佳       最差时间	 稳定性	  空间复杂度  排序方式   备注
+比较-交换 冒泡排序 Bubble	 数组v           O(n²)	     O(n)       (n²)	   稳定v	O(1)	   In-place  n较小时好
+比较-交换 快速排序 Quick	 数组x           O(nlogn)    O(nlogn)   O(n²)	   不稳定x	O(logn)	   In-place  n较大时好
+比较-选择 选择排序 Selection 数组x 链表v     O(n²)	     O(n²)      O(n²)	   不稳定x	 O(1)	   In-place  n较小时好
+比较-选择 堆排序   Heap	     数组x          O(nlogn)               O(nlogn)    不稳定x	 O(1)	n较大时好
+比较-插入 插入排序 Bubble		数组v 链表v      O(n²)	                O(n²)	    稳定v	 O(1)	大部分已有序时好
+比较-插入 希尔排序 Bubble		数组x            O(nlogn)               O(ns)(1<s<2)不稳定x	 O(1)	s是所选分组
+比较类--  归并排序 Bubble		数组v 链表v      O(nlogn)               O(nlogn)	稳定v	 O(1)	n较大时好
 
-非比较类- 计数排序	数组v 链表v      O(n+k)	                O(n+k)	    稳定v	 O(k)	
-非比较类- 桶排序	数组v 链表v      O(n+k)	                O(n²)	    稳定v	 O(n+k)	
-非比较类- 基数排序	数组v 链表v      O(n*k)	                O(n*k)	    稳定v	 O(n+k)	二维数组(桶) 一维数组(桶中首元素的位置)
+非比较类- 计数排序 Bubble		数组v 链表v      O(n+k)	                O(n+k)	    稳定v	 O(k)	
+非比较类- 桶排序 Bubble		数组v 链表v      O(n+k)	                O(n²)	    稳定v	 O(n+k)	
+非比较类- 基数排序 Bubble		数组v 链表v      O(n*k)	                O(n*k)	    稳定v	 O(n+k)	二维数组(桶) 一维数组(桶中首元素的位置)
 
         交换排序	               O(n²)	                O(n²)	  不稳定	O(1)	n较小时好
 
