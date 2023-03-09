@@ -104,7 +104,7 @@
 >> SQl Server Client(mssql/sqlite/MySQL/MariaDB/Redis, ssh)  
 >> Chinese, Bookmarks, c/c++, py/Jupyter/pylance, IntelliCode,  
 >> Rest Client, Thunder Client, Code Runner,   
->> indent-rainbow, Error Lens, JavaScript Debugger,  
+>> indent-rainbow, Error Lens, JavaScript Debugger, ppz.ppz   
 >> C:/Users/at/AppData/Roaming/Code/User/settings.json   
 >> 'Code.exe' --extensions-dir '/home/xxx/.vscode/extensions'   
 >> 右下角> 单击 编码GBK> 通过编码保存 >UTF-8 : csv  
