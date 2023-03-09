@@ -608,8 +608,7 @@ conda install jupyter notebook
 conda install -c conda-forge xeus-cling  # 在jupyter中配置c++内核 jupyter notebook c++
 jupyter kernelspec list
 jupyter notebook
-jupyter notebook --generate-config # 
-vim .jupyter/jupyter_notebook_config.py # c.NotebookApp.token = '271828'
+jupyter notebook --generate-config # vim .jupyter/jupyter_notebook_config.py # c.NotebookApp.token = '271828'
 nohup jupyter notebook --no-browser --port 8888 --ip=xx.xx.xx.xx &
 nohup jupyter notebook --allow-root >/dev/null  2>&1 &
 ps aux | grep notebook | grep -v grep | awk '{print $2}'| xargs kill -9
