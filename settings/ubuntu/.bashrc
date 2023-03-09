@@ -145,3 +145,14 @@ sudo -S service cron start << EOF
 EOF
 
 . "$HOME/.cargo/env"
+
+conda deactivate
+conda activate clang
+
+if ps -elf | grep -w notebook | grep -v grep > /dev/null  # 检测进程是否存在 $? 1存在 0不存在
+then
+    echo "notebook has been started "
+else
+    nohup jupyter notebook --allow-root 2>&1 &
+fi
+
