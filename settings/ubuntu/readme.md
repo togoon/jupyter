@@ -611,7 +611,8 @@ jupyter notebook
 jupyter notebook --generate-config # 
 vim .jupyter/jupyter_notebook_config.py # c.NotebookApp.token = '271828'
 nohup jupyter notebook --no-browser --port 8888 --ip=xx.xx.xx.xx &
-nohup jupyter notebook --allow-root  2>&1 &
+nohup jupyter notebook --allow-root >/dev/null  2>&1 &
+ps aux | grep notebook | grep -v grep | awk '{print $2}'| xargs kill -9
 
 pip install pandas numpy matplotlib seaborn scipy tqdm  pymysql sqlalchemy  flask pandas_datareader  pymssql EMD-signal websocket-client ccxt statsmodels   requests_toolbelt sshtunnel  pycryptodome  werkzeug  ipywidgets aligo jwt gevent pyts sympy mplfinance akshare yfinance tushare pyecharts scikit-learn torch jupyter-c-kernel -i https://pypi.mirrors.ustc.edu.cn/simple/ --trusted-host pypi.mirrors.ustc.edu.cn  --upgrade
 

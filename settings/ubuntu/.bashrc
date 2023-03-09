@@ -151,8 +151,9 @@ conda activate clang
 
 if ps -elf | grep -w notebook | grep -v grep > /dev/null  # 检测进程是否存在 $? 1存在 0不存在
 then
-    echo "notebook has been started "
+    echo "notebook has been started! "
 else
-    nohup jupyter notebook --allow-root 2>&1 &
+    nohup jupyter notebook --allow-root >/dev/null 2>&1 &
+    echo "notebook is starting ...  "
 fi
 
