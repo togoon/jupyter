@@ -244,13 +244,13 @@ void SplitString(const string &s, vector<string>&v, const string &c)
 
 }
 
-int WriteMD5File(const)
+int WriteMD5File(const char* outDirPath, const map<string,string>mRFROut)
+{
+    FILE *fp;
+    map<string, string> mRFRTemp = mRFROut;
 
-
-
-
-
-
-
-
-
+    for (map<string, string>::iterator itor = mRFRTemp.begin(); itor != mRFRTemp.end(); itor++)
+    {
+        
+    }
+}
