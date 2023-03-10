@@ -289,6 +289,14 @@ int WriteMD5File(const char* outDirPath, const map<string,string>mRFROut)
                 strBuf += buffer;
         }
 
-        pclose(pipe);
+        _pclose(pipe);
+
+        vector<string> vBuf;
+        SplitString(strBuf, vBuf, "\n");
+        string strMD5 = vBuf[1];
+
+        fprintf(fp, "%s\t%s\n", strMD5.c_str(), strFileName.c_str());
+        printf("%s MD5 Done: %s\n", strFileName.c_str(), strMD5.c_str());
+        fclose(fp);
     }
 }
