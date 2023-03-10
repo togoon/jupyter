@@ -136,8 +136,11 @@ int main(int argc, char ** argv)
             else
             {
                 oss << "DATE" << AsOfDate.Month << "/" << AsOfDate.Day << "/" << AsOfDate.Year << endl;
-                
             }
+
+            oss << "ID" << CurveID5 << endl; // curList->Char.Id.ID
+            // oss << curList->Char.Ccy.Name << " " << curList->char.Index.Name << " " << MCType << endl;
+            
         }
     }
 }
