@@ -191,5 +191,12 @@ int main(int argc, char ** argv)
     {
         printf("Error: Abnormal read termination, cancel read. Please Check it!\n");
         sLogMessage("Abnormal read termination, cancel read.", sLOG_ERROR, 0);
+        sEntityDBRead(curEnt, curList, "CANCEL", 00);
+        FreeMemory(curEnt, curList);
+        exit(sERROR);
     }
+
+    FreeMemory(curEnt, curList);
+    sFreeGlobal();
+    exit(sSUCCESS);
 }
