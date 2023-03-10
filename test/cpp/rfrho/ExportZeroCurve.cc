@@ -27,6 +27,19 @@ int WriteMD5File(const char *outDirPath, const map<string, string> mRFROut);
 //const char* RFRDESK[3] = {"RFRHO", "RFRHK", "RFRFTZ"}
 const char *MD5 = "RFRMD5";
 
+int main(int argc, char ** argv)
+{
+    int err;
+    sENTITY *curEnt;
+    sERRMSGLIST messages;
+    sCURVELIST *curList;
 
+    string cfgFilePath;
+    char sql[sTEST100_LEN] = {0};
+    vector<string> vRFRDESK;
 
-
+    map<string, map<string, string>> mmRFRCfg;
+    map<string, string> mFRFOut;
+    
+    if(ParseParameters(argc,argv,sql, outDirPath, cfgFilePath,v))
+}
