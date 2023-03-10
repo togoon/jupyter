@@ -156,6 +156,22 @@ int main(int argc, char ** argv)
                     oss << Date.Month << "/" << Date.Day << "/" << Date.Year << " " << curve->Rate * 100 << endl;
                 }
             }
+
+            oss << endl; //空行mktimp 仅读取最后一段
+            string strFRF = oss.str();
+
+            // for(int i=0; i<sizeof(RFRDESK)/sizeof(RFRDESK[0]); i++)
+            for (unsigned int i = 0; i < vRFRDESK.size(); ++i) //RFRDESK
+            {
+                if(mRFROut.count(CurveID6) > 0)
+                {
+                    mRFROut[CurveID6] += strRFR;
+                }
+                else
+                {
+                    mRFROut[CurveID6] = strRFR;
+                }
+            }
         }
     }
 }
