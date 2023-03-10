@@ -86,5 +86,12 @@ int main(int argc, char ** argv)
         // char srcValue[32];
         // strcpy(srcValue, sICEnum("sTERM", curList->Char.MCType, sMCTYPE_short)); // sLONG_ENUM sSHORT_ENUM
         // sEditString(srcValue, sICEnum("sTERM", curList->Char.MCType, sSHORT_ENUM), sNO_LEADING_SPACES | sNO_TRAILING_SPACES );
+        // printf("MCType %s\n", srcValue);
+
+        size_t lPos = MCType.find_first_not_of(' ');
+        size_t rPos = MCType.find_last_not_of(' ');
+        MCType = MCType.substr(lPos, rPos - lPos + 1);
+
+        for (map<string, map<string, string>>::iteraor it = mmRFRCfg.begin(); it != mmRFRCfg.end(); it++)
     }
 }
