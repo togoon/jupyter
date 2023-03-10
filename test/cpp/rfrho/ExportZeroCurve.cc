@@ -131,7 +131,12 @@ int main(int argc, char ** argv)
 
             if(CurveID6.compare("RFRHK")==0) //RFRDESK
             {
-                oss << "DATE" << AsOfDate.Day << "/" << AsOfDate.Month << "/" << AsOfDate.
+                oss << "DATE" << AsOfDate.Day << "/" << AsOfDate.Month << "/" << AsOfDate.Year << endl;
+            }
+            else
+            {
+                oss << "DATE" << AsOfDate.Month << "/" << AsOfDate.Day << "/" << AsOfDate.Year << endl;
+                
             }
         }
     }
