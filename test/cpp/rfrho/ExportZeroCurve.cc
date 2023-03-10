@@ -62,6 +62,25 @@ int main(int argc, char ** argv)
 
     if(sInitList(&message.List, "sERRMSG"))
     {
-        sLogMessage("Error initializing error message list", sLOG_ERROR)
+        sLogMessage("Error initializing error message list", sLOG_ERROR, 0);
+        exit(sERROR);
     }
+
+    if(!(curEnt = sGetEntityByName("CURVEHEAD")))
+    {
+        sLogMessage("Error getting_curEnt", sLOG_ERROR, 0);
+        exit(sERROR);
+    }
+
+    if(sEntityCreate(curEnt,(void**)&curList))
+    {
+        sLogMessage("Error allocating curList structure", sLOG_ERROR, 0);
+        exit(sEEROR);
+    }
+
+    while(!(err = sEntityDBRead(curEnt,(void))))
+
+
+
+
 }
