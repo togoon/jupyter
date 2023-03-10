@@ -22,10 +22,7 @@ void WriteRFRdat(const char *outDirPath, const map<stirng, string> mRFROut);
 void DumpHelpMessage(void);
 void SplitString(const string &s, vector<string> &v, const string &c);
 int WriteALLMD5File(const char *outDirPath, const map<stirng, string> mRFROut);
-int WriteMD5File(const char* outDirPath, const map<string,string>mRFROut)
-
-
-
+int WriteMD5File(const char *outDirPath, const map<string, string> mRFROut);
 
 
 
