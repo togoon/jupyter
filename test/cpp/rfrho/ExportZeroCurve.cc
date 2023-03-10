@@ -182,18 +182,22 @@ int main(int argc, char ** argv)
                 string strFRF = oss.str();
 
                 // for(int i=0; i<sizeof(RFRDESK)/sizeof(RFRDESK[0]); i++)
-                for (unsigned int i = 0; i < vRFRDESK.size(); ++i) //RFRDESK
+                for (unsigned int i = 0; i < vRFRDESK.size(); ++i) 
                 {
-                    if(mRFROut.count(CurveID6) > 0)
+                    if(CurveID6.compare(vRFRDESK[i] )==0) // RFRDESK
                     {
-                        mRFROut[CurveID6] += strRFR;
-                    }
-                    else
-                    {
-                        mRFROut[CurveID6] = strRFR;
+                        if(mRFROut.count(CurveID6) > 0)
+                        {
+                            mRFROut[CurveID6] += strRFR;
+                        }
+                        else
+                        {
+                            mRFROut[CurveID6] = strRFR;
+                        }
                     }
                 }
             }
+        }
     }
 
     WriteRFRdat(outDirPath, mRFROut);
@@ -221,3 +225,6 @@ int main(int argc, char ** argv)
     sFreeGlobal();
     exit(sSUCCESS);
 }
+
+
+
