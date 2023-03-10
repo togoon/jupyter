@@ -119,5 +119,20 @@ int main(int argc, char ** argv)
                 isIndexExist = true;
             }
         }
+
+        if(isCcyExist && isCurveIDExist && isIndexExist)
+        {
+            ostringstream oss;
+            oss.prcision(12);
+            oss.setf(ios::fixed);
+
+            oss << "CCY" << Ccy5 << endl; // curList->Char.Ccy.Name  Ccy5
+            oss << "INDEX" << Index5 << endl; // curList->Char.Index.Name Index5
+
+            if(CurveID6.compare("RFRHK")==0) //RFRDESK
+            {
+                oss << "DATE" << AsOfDate.Day << "/" << AsOfDate.Month << "/" << AsOfDate.
+            }
+        }
     }
 }
