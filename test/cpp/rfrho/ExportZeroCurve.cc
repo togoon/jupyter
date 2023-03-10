@@ -47,5 +47,21 @@ int main(int argc, char ** argv)
         exit(sERROR);
     }
 
-    
+    if(ReadExportRFRCfg(mmRFRCfg, cfgFilePath))
+    {
+        sLogMessage("Error Read ExportZeroCurveCfg", sLOG_ERROR, 0);
+        exit(sERROR);
+    }
+
+    if(err = sStandardInit(argc,argv, DumpHelpMessage, 01)) //DumnHelpMessage NULL
+    {
+        if(err != HELP_PEQUEST)
+            sLogMessage("sStandardInit failed", sLOG_ERROR, 0);
+        exit(err);
+    }
+
+    if(sInitList(&message.List, "sERRMSG"))
+    {
+        sLogMessage("Error initializing error message list", sLOG_ERROR)
+    }
 }
