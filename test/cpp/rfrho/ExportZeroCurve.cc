@@ -41,5 +41,11 @@ int main(int argc, char ** argv)
     map<string, map<string, string>> mmRFRCfg;
     map<string, string> mFRFOut;
     
-    if(ParseParameters(argc,argv,sql, outDirPath, cfgFilePath,v))
+    if(ParseParameters(argc,argv,sql, outDirPath, cfgFilePath,vRFRDESK))
+    {
+        sLogMessage("Error parsing paramters", sLOG_ERROR, 0);
+        exit(sERROR);
+    }
+
+    
 }
