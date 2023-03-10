@@ -175,6 +175,21 @@ int main(int argc, char ** argv)
         }
     }
 
+    WriteRFRdat(outDirPath, mRFROut);
 
-    
+    if(WriteMD5File(outDirPath,mRFROut))
+    {
+        sLogMessage("Error WriteMD5File", sLOG_ERROR, 0);
+        exit(sERROR);
+    }
+    else
+    {
+        sLogMessage("ExportZeroCurve -> WriteMD5File : Done. ", sLOG_INFO, 0);
+    }
+
+    if(err && (err != sDB_FAIL))
+    {
+        printf("Error: Abnormal read termination, cancel read. Please Check it!\n");
+        sLogMessage("Abnormal read termination, cancel read.", sLOG_ERROR, 0);
+    }
 }
