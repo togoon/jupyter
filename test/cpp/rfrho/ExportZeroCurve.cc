@@ -251,6 +251,8 @@ int WriteMD5File(const char* outDirPath, const map<string,string>mRFROut)
 
     for (map<string, string>::iterator itor = mRFRTemp.begin(); itor != mRFRTemp.end(); itor++)
     {
+        string strMD5FilePath = "";
+        strMD5FilePath = strMD5FilePath + outDirPath + "/" + itor->first + ".md5"; // +"_md5" +".dat";
         
     }
 }
