@@ -84,6 +84,7 @@ int main(int argc, char ** argv)
         string MCType(sMCTYPE_short[curList->Char.MCType]);
 
         // char srcValue[32];
-        // strcpy(srcValue, sICEnum("sTERM", curList->Char.MCType))
+        // strcpy(srcValue, sICEnum("sTERM", curList->Char.MCType, sMCTYPE_short)); // sLONG_ENUM sSHORT_ENUM
+        // sEditString(srcValue, sICEnum("sTERM", curList->Char.MCType, sSHORT_ENUM), sNO_LEADING_SPACES | sNO_TRAILING_SPACES );
     }
 }
