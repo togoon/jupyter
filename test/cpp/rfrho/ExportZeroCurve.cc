@@ -140,7 +140,22 @@ int main(int argc, char ** argv)
 
             oss << "ID" << CurveID5 << endl; // curList->Char.Id.ID
             // oss << curList->Char.Ccy.Name << " " << curList->char.Index.Name << " " << MCType << endl;
-            
+            oss << Ccy5 << " " << Index5 << " " << IRCD5 << endl;
+
+            for (int i = 0; i < curList->List.ItemsUsed; i++)
+            {
+                sCURVE *curve = (sCURVE *)sGetListItem(&curList->List, i);
+                sSDATE Date = sISDate(curve->Date);
+
+                if(CurveID6.compare("RFRHK") == 0) //RFRDESK
+                {
+                    oss << Date.Day << "/" << Date.Month << "/" << Date.Year << " " << curve->Rate * 100 << endl;
+                }
+                else
+                {
+                    oss << Date.Month << "/" << Date.Day << "/" << Date.Year << " " << curve->Rate * 100 << endl;
+                }
+            }
         }
     }
 }
