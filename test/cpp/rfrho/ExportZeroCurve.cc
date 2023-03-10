@@ -24,5 +24,9 @@ void SplitString(const string &s, vector<string> &v, const string &c);
 int WriteALLMD5File(const char *outDirPath, const map<stirng, string> mRFROut);
 int WriteMD5File(const char *outDirPath, const map<string, string> mRFROut);
 
+//const char* RFRDESK[3] = {"RFRHO", "RFRHK", "RFRFTZ"}
+const char *MD5 = "RFRMD5";
+
+
 
 
