@@ -109,80 +109,91 @@ int main(int argc, char ** argv)
                     Ccy5 = ito->second;
                 }
 
-            if(strcmp(ito->first.c_str(),"Index5") ==0)
-            {
-                Index5 = ito->second;
-            }
-
-            if(strcmp(ito->first.c_str(),"IRCD5") ==0)
-            {
-                IRCD5 = ito->second;
-            }
-
-            if(strcmp(ito->first.c_str(), "CurveID5") ==0)
-            {
-                CurveID5 = ito->second;
-            }
-
-            if(strcmp(curList->Char.Index.Name, ito->second.c_src()) == 0 && strcmp(ito->first.c_str(), "Index6") ==0)
-            {
-                isIndexExist = true;
-            }
-        }
-
-        if(isCcyExist && isCurveIDExist && isIndexExist)
-        {
-            ostringstream oss;
-            oss.prcision(12);
-            oss.setf(ios::fixed);
-
-            oss << "CCY" << Ccy5 << endl; // curList->Char.Ccy.Name  Ccy5
-            oss << "INDEX" << Index5 << endl; // curList->Char.Index.Name Index5
-
-            if(CurveID6.compare("RFRHK")==0) //RFRDESK
-            {
-                oss << "DATE" << AsOfDate.Day << "/" << AsOfDate.Month << "/" << AsOfDate.Year << endl;
-            }
-            else
-            {
-                oss << "DATE" << AsOfDate.Month << "/" << AsOfDate.Day << "/" << AsOfDate.Year << endl;
-            }
-
-            oss << "ID" << CurveID5 << endl; // curList->Char.Id.ID
-            // oss << curList->Char.Ccy.Name << " " << curList->char.Index.Name << " " << MCType << endl;
-            oss << Ccy5 << " " << Index5 << " " << IRCD5 << endl;
-
-            for (int i = 0; i < curList->List.ItemsUsed; i++)
-            {
-                sCURVE *curve = (sCURVE *)sGetListItem(&curList->List, i);
-                sSDATE Date = sISDate(curve->Date);
-
-                if(CurveID6.compare("RFRHK") == 0) //RFRDESK
+                if(strcmp(ito->first.c_str(),"Index5") ==0)
                 {
-                    oss << Date.Day << "/" << Date.Month << "/" << Date.Year << " " << curve->Rate * 100 << endl;
+                    Index5 = ito->second;
+                }
+
+                if(strcmp(ito->first.c_str(),"IRCD5") ==0)
+                {
+                    IRCD5 = ito->second;
+                }
+
+                if(strcmp(ito->first.c_str(), "CurveID5") ==0)
+                {
+                    CurveID5 = ito->second;
+                }
+
+                if(strcmp(curList->Char.Ccy.Name, ito->second.c_src()) == 0 && strcmp(ito->first.c_str(), "Ccy6") ==0)
+                {
+                    isCcyExist = true;
+                }
+
+                if(strcmp((char *)curList->Char.Id.ID, ito->second.c_src()) == 0 && strcmp(ito->first.c_str(), "CurveID6") ==0)
+                {
+                    iCurveIDExist = true;
+                    CurveID6 = ito->second;
+                }
+
+                if(strcmp(curList->Char.Index.Name, ito->second.c_src()) == 0 && strcmp(ito->first.c_str(), "Index6") ==0)
+                {
+                    isIndexExist = true;
+                }
+            }
+
+            if(isCcyExist && isCurveIDExist && isIndexExist)
+            {
+                ostringstream oss;
+                oss.prcision(12);
+                oss.setf(ios::fixed);
+
+                oss << "CCY" << Ccy5 << endl; // curList->Char.Ccy.Name  Ccy5
+                oss << "INDEX" << Index5 << endl; // curList->Char.Index.Name Index5
+
+                if(CurveID6.compare("RFRHK")==0) //RFRDESK
+                {
+                    oss << "DATE" << AsOfDate.Day << "/" << AsOfDate.Month << "/" << AsOfDate.Year << endl;
                 }
                 else
                 {
-                    oss << Date.Month << "/" << Date.Day << "/" << Date.Year << " " << curve->Rate * 100 << endl;
+                    oss << "DATE" << AsOfDate.Month << "/" << AsOfDate.Day << "/" << AsOfDate.Year << endl;
+                }
+
+                oss << "ID" << CurveID5 << endl; // curList->Char.Id.ID
+                // oss << curList->Char.Ccy.Name << " " << curList->char.Index.Name << " " << MCType << endl;
+                oss << Ccy5 << " " << Index5 << " " << IRCD5 << endl;
+
+                for(int i = 0; i < curList->List.ItemsUsed; i++)
+                {
+                    sCURVE *curve = (sCURVE *)sGetListItem(&curList->List, i);
+                    sSDATE Date = sISDate(curve->Date);
+
+                    if(CurveID6.compare("RFRHK") == 0) //RFRDESK
+                    {
+                        oss << Date.Day << "/" << Date.Month << "/" << Date.Year << " " << curve->Rate * 100 << endl;
+                    }
+                    else
+                    {
+                        oss << Date.Month << "/" << Date.Day << "/" << Date.Year << " " << curve->Rate * 100 << endl;
+                    }
+                }
+
+                oss << endl; //空行mktimp 仅读取最后一段
+                string strFRF = oss.str();
+
+                // for(int i=0; i<sizeof(RFRDESK)/sizeof(RFRDESK[0]); i++)
+                for (unsigned int i = 0; i < vRFRDESK.size(); ++i) //RFRDESK
+                {
+                    if(mRFROut.count(CurveID6) > 0)
+                    {
+                        mRFROut[CurveID6] += strRFR;
+                    }
+                    else
+                    {
+                        mRFROut[CurveID6] = strRFR;
+                    }
                 }
             }
-
-            oss << endl; //空行mktimp 仅读取最后一段
-            string strFRF = oss.str();
-
-            // for(int i=0; i<sizeof(RFRDESK)/sizeof(RFRDESK[0]); i++)
-            for (unsigned int i = 0; i < vRFRDESK.size(); ++i) //RFRDESK
-            {
-                if(mRFROut.count(CurveID6) > 0)
-                {
-                    mRFROut[CurveID6] += strRFR;
-                }
-                else
-                {
-                    mRFROut[CurveID6] = strRFR;
-                }
-            }
-        }
     }
 
     WriteRFRdat(outDirPath, mRFROut);
