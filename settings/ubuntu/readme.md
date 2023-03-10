@@ -612,6 +612,11 @@ jupyter notebook
 jupyter notebook --generate-config # vim .jupyter/jupyter_notebook_config.py 
 #c.NotebookApp.token = '271828'
 #c.NotebookApp.notebook_dir = '/home/at/test/jupyter'
+#c.NotebookApp.ip='0.0.0.0'  #允许远程访问
+#c.NotebookApp.password = u'sha:ce...刚才复制的那个密文' # from notebook.auth import passwd # passwd()
+#c.NotebookApp.open_browser = False  #不打开浏览器
+#c.NotebookApp.port =8888           #可自行指定一个端口, 访问时使用该端口228行
+#c.NotebookApp.allow_origin = '*' # 允许跨域访问
 
 nohup jupyter notebook --no-browser --port 8888 --ip=xx.xx.xx.xx &
 nohup jupyter notebook --allow-root >/dev/null  2>&1 &
