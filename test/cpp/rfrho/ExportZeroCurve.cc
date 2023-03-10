@@ -93,5 +93,31 @@ int main(int argc, char ** argv)
         MCType = MCType.substr(lPos, rPos - lPos + 1);
 
         for (map<string, map<string, string>>::iteraor it = mmRFRCfg.begin(); it != mmRFRCfg.end(); it++)
+        {
+            if(strcmp(ito->first.c_str(),"Ccy5") == 0)
+            {
+                Ccy5 = ito->second;
+            }
+
+            if(strcmp(ito->first.c_str(),"Index5") ==0)
+            {
+                Index5 = ito->second;
+            }
+
+            if(strcmp(ito->first.c_str(),"IRCD5") ==0)
+            {
+                IRCD5 = ito->second;
+            }
+
+            if(strcmp(ito->first.c_str(), "CurveID5") ==0)
+            {
+                CurveID5 = ito->second;
+            }
+
+            if(strcmp(curList->Char.Index.Name, ito->second.c_src()) == 0 && strcmp(ito->first.c_str(), "Index6") ==0)
+            {
+                isIndexExist = true;
+            }
+        }
     }
 }
