@@ -80,11 +80,10 @@ int main(int argc, char ** argv)
 
     while(!(err = sEntityDBRead(curEnt,(void*)curList, sql,00))) //ALL sql
     {
-        
+        sSDATE AsOfDate = sISDate(curList->Char.AsOfDate);
+        string MCType(sMCTYPE_short[curList->Char.MCType]);
 
+        // char srcValue[32];
+        // strcpy(srcValue, sICEnum("sTERM", curList->Char.MCType))
     }
-
-
-
-
 }
