@@ -253,6 +253,42 @@ int WriteMD5File(const char* outDirPath, const map<string,string>mRFROut)
     {
         string strMD5FilePath = "";
         strMD5FilePath = strMD5FilePath + outDirPath + "/" + itor->first + ".md5"; // +"_md5" +".dat";
-        
+
+        if(fp = fopen(strMD5FilePath.c_str(),"r"))
+        {
+            fclose(fp);
+            remove(strMD5FilePath.c_str());
+        }
+
+        fp = fopen(strMD5FilePath.c_str(), "w");
+        if(fp == NULL)
+        {
+            printf("warning: RFRMD5.dat Empty! Please Check it! \n");
+            continue;
+            // return sERROR;
+        }
+
+        string strPathFile = outDirPath;
+        string strFileName = itor->first + ".dat";
+        strPathFile += "\\" + strFileName;
+
+        string strCMD = "certutil -hashfile \"";
+        strCMD += strPathFile + "\" MD5";
+        string strBuf;
+
+        FILE *pipe = _Popen(strCMD.c_str(), "r");
+
+        if(!pipe)
+            continue;
+
+        char buffer[80] = {0};
+
+        while(!feof(pipe))
+        {
+            if(fgets(buffer,128,pipe))
+                strBuf += buffer;
+        }
+
+        pclose(pipe);
     }
 }
