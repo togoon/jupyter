@@ -94,10 +94,20 @@ int main(int argc, char ** argv)
 
         for (map<string, map<string, string>>::iteraor it = mmRFRCfg.begin(); it != mmRFRCfg.end(); it++)
         {
-            if(strcmp(ito->first.c_str(),"Ccy5") == 0)
+
+            bool isCcyExist = false;
+            bool isCurveIDExist = false;
+            bool isIndexExist = false;
+            // bool isAsOfDateExist = false;
+            string CurveID6, Ccy5, Index5, IRCD5, CurveID5;
+
+            for (map<string, string>::iterator ito = it->second.begin(); ito != it->second.end(); ito++)
             {
-                Ccy5 = ito->second;
-            }
+
+                if (strcmp(ito->first.c_str(), "Ccy5") == 0)
+                {
+                    Ccy5 = ito->second;
+                }
 
             if(strcmp(ito->first.c_str(),"Index5") ==0)
             {
