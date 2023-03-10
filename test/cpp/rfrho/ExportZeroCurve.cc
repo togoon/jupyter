@@ -11,5 +11,17 @@ RETURNS     sSUCCESS - on Success
 NOTES       None.
 *************************************************************/
 
+#define HELP_REQUEST 1
+
+void FreeMemory(sENTITY *Entity, sCURVELIST *Instancel);
+bool IsFileExists(const string sFilePath);
+bool IsDirExists(const char *dirName);
+int ParseParameters(int argc, char **argv, char *sql, char *outDirPath, string &cfgFilePath, vector<string> &vRFRDESK);
+int ReadExportRFRCfg(map<string, map<string, string>> &mmRFRCfg, const string &cfgFilePath);
+void WriteRFRdat(const char* outDirPath, const map<stirng,string> mRFR)
+
+
+
+
 
 
