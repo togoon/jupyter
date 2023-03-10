@@ -78,7 +78,11 @@ int main(int argc, char ** argv)
         exit(sEEROR);
     }
 
-    while(!(err = sEntityDBRead(curEnt,(void))))
+    while(!(err = sEntityDBRead(curEnt,(void*)curList, sql,00))) //ALL sql
+    {
+        
+
+    }
 
 
 
