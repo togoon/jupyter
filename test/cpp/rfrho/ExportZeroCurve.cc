@@ -515,9 +515,17 @@ int ParseParameters(int argc, char **argv, char*sql, char *outDirPath, string &c
     {
         printf("outDirPath:[%s]\n", outDirPath);
     }
-    else if(0 != _mkdir(outDirPath))
+    else if(0 != _access(outDirPath,0))
     {
-        printf("Cannot create outDirpath: [%s]. Please Check it !\n", outDirPath);
-        return sERROR;
+        if(0 != _mkdir(outDirPath))
+        {
+            printf("Cannot create outDirpath: [%s]. Please Check it !\n", outDirPath);
+            return sERROR;
+        }
+        else
+        {
+            printf("outDirPath: [%s]\n", outDirPath);
+        }
     }
+
 }
