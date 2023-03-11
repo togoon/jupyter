@@ -360,6 +360,42 @@ int WriteAllMD5File(const char* outDirPath, const map<string,string>mRFROout)
 
 int ReadExportRFRCfg(map<string,map<string,string>> &mmRFRCfg,const string & cfgFilePath)
 {
-    
+    map<stirng, map<string, string>>::iterator it;
+    map<string,string> mTemp;
+    map<string, string>::iterator ito;
+
+    mTemp["0"] = "0";
+    mTemp.clear();
+
+    string sKey;
+    ifstream cfgFile;
+    cfgFile.open(cfgFilePath.c_str());
+    string strLine;
+
+    if(cfgFile.is_open())
+    {
+        while(!cfgFile.eof())
+        {
+            getline(cfgFile, strLine);
+            
+            if(strLine.find('#')==0)
+            {
+                contineue;
+            }
+            else if(strLine.find('[') == 0)
+            {
+                size_t n2 = strLine.find(']');
+                if(n2 != string::npos)
+                {
+                    sKey = strLine.substr(1, n2 - 1);
+                    it = mmRFRCfg.find(sKey);
+                    if(it -- mRFRCfg.end())
+                    {
+                        
+                    }
+                }
+            }
+        }
+    }
 }
 // todo z9 ReadExportRFRCfg
