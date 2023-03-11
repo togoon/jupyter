@@ -1,17 +1,23 @@
+
 #include "ExportZeroCurve.h"
 
 using namespace std;
 
 /***********************************************************
 FUNCTION    main
+
 PURPOSE     Export SOFR ZeroCurve data from v6.2 to v5.5
+
 SYNTAX      int main(int argc, char* argv[])
+
 RETURNS     sSUCCESS - on Success
             sERROR - on Failure
+
 NOTES       None.
 *************************************************************/
 
 #define HELP_REQUEST 1
+
 
 void FreeMemory(sENTITY *Entity, sCURVELIST *Instancel);
 bool IsFileExists(const string sFilePath);
@@ -24,8 +30,10 @@ void SplitString(const string &s, vector<string> &v, const string &c);
 int WriteALLMD5File(const char *outDirPath, const map<stirng, string> mRFROut);
 int WriteMD5File(const char *outDirPath, const map<string, string> mRFROut);
 
+
 //const char* RFRDESK[3] = {"RFRHO", "RFRHK", "RFRFTZ"}
 const char *MD5 = "RFRMD5";
+
 
 int main(int argc, char ** argv)
 {
@@ -35,7 +43,8 @@ int main(int argc, char ** argv)
     sCURVELIST *curList;
 
     string cfgFilePath;
-    char sql[sTEST100_LEN] = {0};
+    char sql[sTEXT100_LEN] = {0};
+    char outDirPath[sTEXT100_LEN] = {0};
     vector<string> vRFRDESK;
 
     map<string, map<string, string>> mmRFRCfg;
@@ -80,6 +89,7 @@ int main(int argc, char ** argv)
 
     while(!(err = sEntityDBRead(curEnt,(void*)curList, sql,00))) //ALL sql
     {
+        
         sSDATE AsOfDate = sISDate(curList->Char.AsOfDate);
         string MCType(sMCTYPE_short[curList->Char.MCType]);
 
