@@ -508,6 +508,16 @@ int ParseParameters(int argc, char **argv, char*sql, char *outDirPath, string &c
 
     if(sIsBlank(outDirPath))
     {
-        strcpy(outDirPath,)
+        strcpy(outDirPath, "D:/summit/ZeroCurve/OUT");
+    }
+
+    if(IsDirExists(outDirPath))
+    {
+        printf("outDirPath:[%s]\n", outDirPath);
+    }
+    else if(0 != _mkdir(outDirPath))
+    {
+        printf("Cannot create outDirpath: [%s]. Please Check it !\n", outDirPath);
+        return sERROR;
     }
 }
