@@ -302,5 +302,7 @@ int WriteMD5File(const char* outDirPath, const map<string,string>mRFROut)
     return sSUCCESS;
 }
 
+
+
 // todo z8 WriteAllMd5File
 // todo z9 ReadExportRFRCfg
