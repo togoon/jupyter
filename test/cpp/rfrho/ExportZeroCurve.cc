@@ -543,4 +543,52 @@ int ParseParameters(int argc, char **argv, char*sql, char *outDirPath, string &c
     {
         strcpy(company, "RFRHO,RFRHK,RFRFTZ");
     }
+
+    printf("company: [%s]\n", company);
+
+    string strCompany = "";
+    strCompany = strCompany + company;
+    SplitString(strCompany, vRFRDESK, ",");
+
+    return sSUCCESS;
+}
+
+void FreeMemory(sENTITY * Entity, sCURVELIST * Instance1)
+{
+    if(Instance1 && Entity)
+        sEntityFree(Entity, (void **)&Instancel, sYES);
+}
+
+bool IsFileExists(const string sFilePath)
+{
+    bool ret = false;
+    HANDLE nFindHandle;
+    WIN32_FIND_DATA findData;
+
+    nFindHandle = FindFirstFile(sFilePath.c_str(), &FindData);
+    if(nFindHandle != INVALID_HANDLE_VALUE)
+    {
+        ret = true;
+    }
+
+    findClose(nFindHandle);
+    return ret;
+}
+
+bool IsDirExists(const char * dirName)
+{
+    DWORD fileType = GetFileAttributesA(dirName);
+
+    if(fileType == INVALID_FILE_ATTRIBUTES)
+        return false;
+    if(fileType & FILE_ATTRIBUTE_DIRETORY)
+        return true;
+
+    return false;
+}
+
+void DumpHelpMessage(void)
+{
+    printf("\n");
+    
 }
