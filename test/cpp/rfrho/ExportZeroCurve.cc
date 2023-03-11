@@ -437,7 +437,7 @@ int ReadExportRFRCfg(map<string,map<string,string>> &mmRFRCfg,const string & cfg
     }
 
     cfgFile.close();
-    
+
     return sSUCCESS;
 }
 
@@ -500,11 +500,9 @@ int ParseParameters(int argc, char **argv, char*sql, char *outDirPath, string &c
         {
             cfgFilePath = argv[i + 1];
         }
-
         if((strcmp(_strlwr(argv[i]), "-com") ==0) )
         {
-            strcpy(cp
-            ompany, argv[i+1]);
+            strcpy(company, argv[i+1]);
         }
     }
 
@@ -515,9 +513,11 @@ int ParseParameters(int argc, char **argv, char*sql, char *outDirPath, string &c
     clientPath = getenv("CLIENTPATH");
     if(clientPath != NULL)
         printf("Summit Current CLIENTPATH Path: [%s]\n", clientPath);
+    
     summitHomePath = getenv("SUMMITHOME");
     if(summitHomePath != NULL)
         print("Summit Current SUMMITHOME Path: [%s]\n", summitHomePath);
+    
     if(cfgFilePath.empty())
     {
         cfgFile += clientPath;
