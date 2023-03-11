@@ -23,5 +23,15 @@ int cUpdateCust(SU_ValueList *pSrcVL, string &outXml, string &errorXml, const st
     char strSql[1024];
     memset(strSql, 0, sizeof(strSql));
     sprintf(strSql, "where AUDIT_CURRENT='Y' and id='%s'", strCustIDVal.c_str());
+
+    sENTITY *custEnt = sGetEntityByName("CUSTOMER");
+    if(custEnt == nullptr)
+    {
+        sLogMessage("Get CUSTOMER Entity failed!", sLOG_ERROR, 0);
+        errorXml = "Get CUSTOMER Entity failed!";
+        return sERROR;
+    }
+
+    sCUSTOMER *pCustomer = NULL;
     
 }
