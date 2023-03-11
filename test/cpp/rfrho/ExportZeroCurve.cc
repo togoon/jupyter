@@ -302,7 +302,31 @@ int WriteMD5File(const char* outDirPath, const map<string,string>mRFROut)
     return sSUCCESS;
 }
 
+int WriteAllMD5File(const char* outDirPath, const map<string,string>mRFROout)
+{
+    FILE *fp;
+    map<string, string> mRFRTemp = mRFROut;
 
+    string strMD5FilePath + outDirPath + "/" + MD5 + ".dat";
+
+    if(fp = fopen(strMD5FilePath.c_str(), "r"))
+    {
+        fclose(fp);
+        remove(strMD5FilePath.c_str());
+    }
+
+    fp = fopen(strMD5FilePath.c_str(), "w");
+    if(fp == NULL)
+    {
+        printf("warning: RFRMD5.dat Empty! Please Check it !\n");
+        return sERROR;
+    }
+
+    for (map<string, string>::itoerator itor = mRFRTemp.begin(); itor != mRFRTemp.end();itor++)
+    {
+        
+    }
+}
 
 // todo z8 WriteAllMd5File
 // todo z9 ReadExportRFRCfg
