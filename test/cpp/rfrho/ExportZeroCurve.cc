@@ -299,4 +299,8 @@ int WriteMD5File(const char* outDirPath, const map<string,string>mRFROut)
         printf("%s MD5 Done: %s\n", strFileName.c_str(), strMD5.c_str());
         fclose(fp);
     }
+    return sSUCCESS;
 }
+
+// todo z8 WriteAllMd5File
+// todo z9 ReadExportRFRCfg
