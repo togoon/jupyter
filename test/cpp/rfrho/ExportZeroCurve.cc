@@ -89,7 +89,7 @@ int main(int argc, char ** argv)
 
     while(!(err = sEntityDBRead(curEnt,(void*)curList, sql,00))) //ALL sql
     {
-        
+
         sSDATE AsOfDate = sISDate(curList->Char.AsOfDate);
         string MCType(sMCTYPE_short[curList->Char.MCType]);
 
@@ -113,7 +113,6 @@ int main(int argc, char ** argv)
 
             for (map<string, string>::iterator ito = it->second.begin(); ito != it->second.end(); ito++)
             {
-
                 if (strcmp(ito->first.c_str(), "Ccy5") == 0)
                 {
                     Ccy5 = ito->second;
@@ -136,19 +135,23 @@ int main(int argc, char ** argv)
 
                 if(strcmp(curList->Char.Ccy.Name, ito->second.c_src()) == 0 && strcmp(ito->first.c_str(), "Ccy6") ==0)
                 {
+
                     isCcyExist = true;
                 }
 
                 if(strcmp((char *)curList->Char.Id.ID, ito->second.c_src()) == 0 && strcmp(ito->first.c_str(), "CurveID6") ==0)
                 {
+
                     iCurveIDExist = true;
                     CurveID6 = ito->second;
                 }
 
                 if(strcmp(curList->Char.Index.Name, ito->second.c_src()) == 0 && strcmp(ito->first.c_str(), "Index6") ==0)
                 {
+
                     isIndexExist = true;
                 }
+
             }
 
             if(isCcyExist && isCurveIDExist && isIndexExist)
@@ -176,6 +179,7 @@ int main(int argc, char ** argv)
                 for(int i = 0; i < curList->List.ItemsUsed; i++)
                 {
                     sCURVE *curve = (sCURVE *)sGetListItem(&curList->List, i);
+                    
                     sSDATE Date = sISDate(curve->Date);
 
                     if(CurveID6.compare("RFRHK") == 0) //RFRDESK
@@ -206,7 +210,9 @@ int main(int argc, char ** argv)
                         }
                     }
                 }
+
             }
+
         }
     }
 
@@ -245,13 +251,13 @@ void SplitString(const string &s, vector<string>&v, const string &c)
     while(string::npos != pos2)
     {
         v.push_back(s.substr(pos1, pos2 - pos1));
+
         pos1 = pos2 + c.size();
         pos2 = s.find(c, pos1);
     }
 
     if(pos1 != s.length())
         v.push_back(s.substr(pos1));
-
 }
 
 int WriteMD5File(const char* outDirPath, const map<string,string>mRFROut)
@@ -261,6 +267,7 @@ int WriteMD5File(const char* outDirPath, const map<string,string>mRFROut)
 
     for (map<string, string>::iterator itor = mRFRTemp.begin(); itor != mRFRTemp.end(); itor++)
     {
+        
         string strMD5FilePath = "";
         strMD5FilePath = strMD5FilePath + outDirPath + "/" + itor->first + ".md5"; // +"_md5" +".dat";
 
