@@ -421,15 +421,27 @@ void WriteRFRdat(const char* outDirPath, const map<stirng,string> mRFROut)
 
     for (map<string, string>::iterator itor = mRFRTemp.begin(); itor != mRFRTemp.end();itor++)
     {
-        
-    }
-
+        stringPathFile = outDirPath;
         strPathFile += "\\" + itor->first +.".dat";
 
-    if(fp = fopen(strPathFile.c_str(),"r"))
-    {
-        fclose(fp);
-        remove(strPathFile.c_str());
+        if(fp = fopen(strPathFile.c_str(),"r"))
+        {
+            fclose(fp);
+            remove(strPathFile.c_str());
+        }
+
+        if(!itor->second.empty())
+        {
+            fp = fopen(strPathFile.c_str(), "w");
+            fprintf(fp, "%s", itor->second.c_str());
+            fclose(fp);
+
+            printf("%s.dat Data Done. \n", itor->first.c_str());
+        }
+        else
+        {
+            
+        }
     }
 
 }
