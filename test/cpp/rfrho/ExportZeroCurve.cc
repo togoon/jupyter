@@ -453,6 +453,32 @@ int ParseParameters(int argc, char **argv, char*sql, char *outDirPath, string &c
 
     for (int i = 1; i < argc; i++)
     {
-        if((strcmp(_strlwr(argv[i]), "-h") ==0) || (strcmp(_strlwr(argv[i]), "-h") ==0))
+        if((strcmp(_strlwr(argv[i]), "-h") ==0) || (strcmp(_strlwr(argv[i]), "-help") ==0))
+        {
+            DumpHelpMessage();
+        }
+
+        if((strcmp(_strlwr(argv[i]), "-d") ==0) || (strcmp(_strlwr(argv[i]), "-date") ==0))
+        {
+            strcpy(curDate, argv[i+1]);
+        }
+
+        if((strcmp(_strlwr(argv[i]), "-o") ==0) || (strcmp(_strlwr(argv[i]), "-out") ==0))
+        {
+            strcpy(curDirPath, argv[i+1]);
+        }
+
+        if((strcmp(_strlwr(argv[i]), "-c") ==0) || (strcmp(_strlwr(argv[i]), "-cfg") ==0))
+        {
+            cfgFilePath = argv[i + 1];
+        }
+
+        if((strcmp(_strlwr(argv[i]), "-com") ==0) )
+        {
+            strcpy(cp
+            ompany, argv[i+1]);
+        }
     }
+
+    
 }
