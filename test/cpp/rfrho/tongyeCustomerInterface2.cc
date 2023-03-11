@@ -12,5 +12,16 @@ int DelNameLabel(const string &strName, string &strNode);
 
 int cUpdateCust(SU_ValueList *pSrcVL, string &outXml, string &errorXml, const string &inXml)
 {
+    string strAct("cAction"), strActVal;
+    GetNameValue(inXml, strAct, strActVal);
 
+    stirng strCustID("Id"), strCustIDVal;
+    GetNameValue(inXml, strCustID, strCustIDVal);
+
+    LogMessage(inXml, strCustIDVal, "REQUEST-inXml", strActVal);
+
+    char strSql[1024];
+    memset(strSql, 0, sizeof(strSql));
+    sprintf(strSql, "where AUDIT_CURRENT='Y' and id='%s'", strCustIDVal.c_str());
+    
 }
