@@ -127,5 +127,17 @@ int cUpdateCust(SU_ValueList *pSrcVL, string &outXml, string &errorXml, const st
     {
             sLogMessage("Error read Gateway Data Mapping [ ECIFCountryMap1 ] , Source: %s ", sLOG_ERROR, 0,SummitCountry.c_str());
     }
+
+    strInXml.replace(0, 6, ""); //Length6
+
+    DelNameNode(strInXml, "?"); //<? ?>
+    DelNameLabel("request", strInXml);
+    DelNameNode(strInXml, "sysHeader");
+    DelNameNode(strInXml, "bizHeader");
+    DelNameLabel("bizBody", strInXml);
+    DelNameNode(strInXml, "cAction");
+
+    sCUSTOMER *pxmlCust;
+    sENTITY *xmlEnt = sXMLToEntity((char *)strInXml.c_str(), (void **)&pxmlCust, 00);
     
 }
