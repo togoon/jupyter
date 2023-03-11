@@ -492,6 +492,17 @@ int ParseParameters(int argc, char **argv, char*sql, char *outDirPath, string &c
         print("Summit Current SUMMITHOME Path: [%s]\n", summitHomePath);
     if(cfgFilePath.empty())
     {
-        
+        cfgFile += clientPath;
+        cfgFilePath += "\\etc\\ExportZeroCurve.cfg";
+    }
+
+    if(IsFileExists(cfgFilePath))
+    {
+        printf("cfgFilePath: [%s]\n", cfgFilePath.c_str());
+    }
+    else
+    {
+        printf("Cannot find [%s] file. Please Check it!\n", cfgFilePath.c_str())
+
     }
 }
