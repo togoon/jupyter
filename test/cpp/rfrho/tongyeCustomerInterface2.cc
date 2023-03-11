@@ -139,5 +139,17 @@ int cUpdateCust(SU_ValueList *pSrcVL, string &outXml, string &errorXml, const st
 
     sCUSTOMER *pxmlCust;
     sENTITY *xmlEnt = sXMLToEntity((char *)strInXml.c_str(), (void **)&pxmlCust, 00);
+
+    if(xmlEnt == NULL)
+    {
+        errorXml = "error sXMLToEntity, CUSTID: ";
+        errorXml += strCustIDVal;
+        sLogMessage("%s", sLOG_ERROR, 0, errorXml.c_str());
+        sEntityFree(custEnt, (void **)&pCustomer, sYes);
+        return sERROR;
+    }
+
+    int err;
+    bool bExist = false;
     
 }
