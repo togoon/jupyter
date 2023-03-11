@@ -590,5 +590,12 @@ bool IsDirExists(const char * dirName)
 void DumpHelpMessage(void)
 {
     printf("\n");
+    printf("+---------------------------------------------------+\n");
+    printf("|                  ExportZeroCurve V1.1                   |\n");
+    printf("| Flag  Arguments  Purpose                                                                 |\n");
+    printf("+---------------------------------------------------+\n");
     
+
+    printf("+---------------------------------------------------+\n");
+    printf("|                                                    |\n");
 }
