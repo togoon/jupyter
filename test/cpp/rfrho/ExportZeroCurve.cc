@@ -324,7 +324,27 @@ int WriteAllMD5File(const char* outDirPath, const map<string,string>mRFROout)
 
     for (map<string, string>::itoerator itor = mRFRTemp.begin(); itor != mRFRTemp.end();itor++)
     {
+        string strPathFile = outDirPath;
+        string strFileName = itor->first + ".dat";
+        strPathFile += "\\" + strFileName;
+
+        string strCMD = "certutil -hashfile \"";
+        strCMD += strPathFile + "\" MD5";
+        string strBuf;
+
+        FILE *pipe = _popen(strCMD.c_str(), "r");
+
+        if(!pipe)
+            continue;
         
+        char buffer[80] = {0}
+
+        while(!feof(pipe))
+        {
+            if(fgets(buffer,128,pipe))
+                strBuf += buffer;
+                
+        }
     }
 }
 
