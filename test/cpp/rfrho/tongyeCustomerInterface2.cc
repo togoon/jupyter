@@ -64,8 +64,35 @@ int cUpdateCust(SU_ValueList *pSrcVL, string &outXml, string &errorXml, const st
     iNum = strInXml.find("</CUSTCLAS>");
     if(iNum != string::npos)
     {
-        strInXml.replace(iNum-1, 0, "<ClassifList TYPE=\"EntList\" SINGLE=\"N\">");
+        strInXml.replace(iNum-1, 0, "</ClassifList>");
     }   
+
+    iNum = strInXml.find("<CUSTROLE>");
+    if(iNum != string::npos)
+    {
+        strInXml.replace(iNum-1, 0, "<CustRoleList TYPE=\"EntList\" SINGLE=\"N\">");
+    }   
+    iNum = strInXml.find("</CUSTROLE>");
+    if(iNum != string::npos)
+    {
+        strInXml.replace(iNum-1, 0, "</CustRoleList>");
+    }  
+
+    iNum = strInXml.find("<CUSBKCD>");
+    if(iNum != string::npos)
+    {
+        strInXml.replace(iNum-1, 0, "<BkCodeList TYPE=\"EntList\" SINGLE=\"N\">");
+    }   
+    iNum = strInXml.find("</CUSBKCD>");
+    if(iNum != string::npos)
+    {
+        strInXml.replace(iNum-1, 0, "</BkCodeList>");
+    }  
+
+
+
+
+
 
 
 
