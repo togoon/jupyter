@@ -33,5 +33,42 @@ int cUpdateCust(SU_ValueList *pSrcVL, string &outXml, string &errorXml, const st
     }
 
     sCUSTOMER *pCustomer = NULL;
-    
+    if(sSUCCESS != sEntiyCreate(custEnt, (void**)&pCustomer))
+    {
+        sLogMessage("Create customer structure failed!", sLOG_ERROR, 0);
+        errorXml = "Create customer structure failed!";
+        return sERROR;       
+    }
+
+    string strInXml("");
+
+    strInXml.append(inXml);
+    string::size_type iNum;
+    iNum = strInXml.find("</cAction>");
+    if(iNum != string::npos)
+    {
+        strInXml.replace(iNum+10, 0, "<ENTITYLIST><CUSTOMER>");
+    }
+
+    iNum = strInXml.find("</bizBody>");
+    if(iNum != string::npos)
+    {
+        strInXml.replace(iNum-1, 0, "</CUSTOMER></ENTITYLIST>");
+    }    
+
+    iNum = strInXml.find("<CUSTCLAS>");
+    if(iNum != string::npos)
+    {
+        strInXml.replace(iNum-1, 0, "<ClassifList TYPE=\"EntList\" SINGLE=\"N\">");
+    }   
+    iNum = strInXml.find("</CUSTCLAS>");
+    if(iNum != string::npos)
+    {
+        strInXml.replace(iNum-1, 0, "<ClassifList TYPE=\"EntList\" SINGLE=\"N\">");
+    }   
+
+
+
+
+
 }
