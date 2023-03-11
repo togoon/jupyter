@@ -590,13 +590,17 @@ bool IsDirExists(const char * dirName)
 void DumpHelpMessage(void)
 {
     printf("\n");
-    printf("+---------------------------------------------------+\n");
-    printf("|                  ExportZeroCurve V1.1                   |\n");
-    printf("| Flag  Arguments  Purpose                Default                                            |\n");
-    printf("+=====================================================|\n");
-    printf("| -H    help       help message            <OFF>                                                  |\n");
-    printf("| -CFG  config     config file name         <%clientpath%\etc\ExportZeroVurve.cfg                                                   |\n");
-    printf("| -OUT  outpath    output pathfold         <d:/summit/ZeroCurve/OUT>                                       |\n");
-    printf("|                                                    |\n");
-    printf("+---------------------------------------------------+\n");
+    printf("+---------------------------------------------------------------------------------+\n");
+    printf("|                  ExportZeroCurve V1.1                                           |\n");
+    printf("| Flag  Arguments  Purpose                Default                                 |\n");
+    printf("+=================================================================================|\n");
+    printf("| -H    help       help message            <OFF>                                  |\n");
+    printf("| -CFG  config     config file name        <%clientpath%/etc/ExportZeroVurve.cfg> |\n");
+    printf("| -OUT  outpath    output pathfold         <d:/summit/ZeroCurve/OUT>              |\n");
+    printf("| -DATE AsOfDate   AsOfDate as 20210604    <TODAY>                                |\n");
+    printf("| -COM  Company    Company as RFRHO,RFRHK  <RFRHO,RFRHK,RFRFTZ>                   |\n");
+    printf("+---------------------------------------------------------------------------------+\n");
+    printf("\n");
 }
+
+
