@@ -343,10 +343,23 @@ int WriteAllMD5File(const char* outDirPath, const map<string,string>mRFROout)
         {
             if(fgets(buffer,128,pipe))
                 strBuf += buffer;
-                
         }
+
+        _pclose(pipe);
+
+        vector<string> vBuf;
+        SplitString(strBuf, vBuf, "\n");
+        string strMD5 = vBuf[1];
+
+        fprintf(fp, "%s\t%s\n", strMD5.c_str(), strFileName.c_str());
+        print("%s MD5 Done: %s\n", strFileName.c_str(), strMD5.c_str());
     }
+    fclose(fp);
+    return sSUCCESS;
 }
 
-// todo z8 WriteAllMd5File
+int ReadExportRFRCfg(map<string,map<string,string>> &mmRFRCfg,const string & cfgFilePath)
+{
+    
+}
 // todo z9 ReadExportRFRCfg
