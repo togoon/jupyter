@@ -592,10 +592,11 @@ void DumpHelpMessage(void)
     printf("\n");
     printf("+---------------------------------------------------+\n");
     printf("|                  ExportZeroCurve V1.1                   |\n");
-    printf("| Flag  Arguments  Purpose                                                                 |\n");
-    printf("+---------------------------------------------------+\n");
-    
-
-    printf("+---------------------------------------------------+\n");
+    printf("| Flag  Arguments  Purpose                Default                                            |\n");
+    printf("+=====================================================|\n");
+    printf("| -H    help       help message            <OFF>                                                  |\n");
+    printf("| -CFG  config     config file name         <%clientpath%\etc\ExportZeroVurve.cfg                                                   |\n");
+    printf("| -OUT  outpath    output pathfold         <d:/summit/ZeroCurve/OUT>                                       |\n");
     printf("|                                                    |\n");
+    printf("+---------------------------------------------------+\n");
 }
