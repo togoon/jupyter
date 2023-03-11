@@ -528,4 +528,19 @@ int ParseParameters(int argc, char **argv, char*sql, char *outDirPath, string &c
         }
     }
 
+    if(sIsBlank(curDate))
+    {
+        time_t now = time(); //-86400
+        struct tm tstruct;
+        tstruct = *localtime(&now);
+        strftime(curDate, sizeof(curDate), "%Y%m%d", &tstruct);
+    }
+
+    printf("curDate: %s\n", curDate);
+    sprintf(sql, "where AsOfDate like \"%s%%\" ", curDate); //20220825
+
+    if(sIsBank(company))
+    {
+        strcpy(company, "RFRHO,RFRHK,RFRFTZ");
+    }
 }
