@@ -502,7 +502,12 @@ int ParseParameters(int argc, char **argv, char*sql, char *outDirPath, string &c
     }
     else
     {
-        printf("Cannot find [%s] file. Please Check it!\n", cfgFilePath.c_str())
+        printf("Cannot find [%s] file. Please Check it!\n", cfgFilePath.c_str());
+        return sERROR;
+    }
 
+    if(sIsBlank(outDirPath))
+    {
+        strcpy(outDirPath,)
     }
 }
