@@ -267,7 +267,7 @@ int WriteMD5File(const char* outDirPath, const map<string,string>mRFROut)
 
     for (map<string, string>::iterator itor = mRFRTemp.begin(); itor != mRFRTemp.end(); itor++)
     {
-        
+
         string strMD5FilePath = "";
         strMD5FilePath = strMD5FilePath + outDirPath + "/" + itor->first + ".md5"; // +"_md5" +".dat";
 
@@ -313,9 +313,12 @@ int WriteMD5File(const char* outDirPath, const map<string,string>mRFROut)
         string strMD5 = vBuf[1];
 
         fprintf(fp, "%s\t%s\n", strMD5.c_str(), strFileName.c_str());
+        
         printf("%s MD5 Done: %s\n", strFileName.c_str(), strMD5.c_str());
+        
         fclose(fp);
     }
+
     return sSUCCESS;
 }
 
@@ -324,6 +327,7 @@ int WriteAllMD5File(const char* outDirPath, const map<string,string>mRFROout)
     FILE *fp;
     map<string, string> mRFRTemp = mRFROut;
 
+    string strMD5FilePath = "";
     string strMD5FilePath + outDirPath + "/" + MD5 + ".dat";
 
     if(fp = fopen(strMD5FilePath.c_str(), "r"))
@@ -369,8 +373,10 @@ int WriteAllMD5File(const char* outDirPath, const map<string,string>mRFROout)
         string strMD5 = vBuf[1];
 
         fprintf(fp, "%s\t%s\n", strMD5.c_str(), strFileName.c_str());
+        
         print("%s MD5 Done: %s\n", strFileName.c_str(), strMD5.c_str());
     }
+
     fclose(fp);
     return sSUCCESS;
 }
@@ -385,6 +391,7 @@ int ReadExportRFRCfg(map<string,map<string,string>> &mmRFRCfg,const string & cfg
     mTemp.clear();
 
     string sKey;
+
     ifstream cfgFile;
     cfgFile.open(cfgFilePath.c_str());
     string strLine;
@@ -405,15 +412,18 @@ int ReadExportRFRCfg(map<string,map<string,string>> &mmRFRCfg,const string & cfg
                 if(n2 != string::npos)
                 {
                     sKey = strLine.substr(1, n2 - 1);
+
                     it = mmRFRCfg.find(sKey);
-                    if(it -- mRFRCfg.end())
+                    if(it == mRFRCfg.end())
                     {
                         mTemp.clear();
                         mmRFRCfg[sKey] = mTemp;
                     }
+
                 }
                 continue;
             }
+
             size_t pos = strLine.find('=');
             string strKey = strLinke.substr(0, pos);
             string strValue = strLine.substr(pos + 1);
@@ -427,6 +437,7 @@ int ReadExportRFRCfg(map<string,map<string,string>> &mmRFRCfg,const string & cfg
     }
 
     cfgFile.close();
+    
     return sSUCCESS;
 }
 
