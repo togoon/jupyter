@@ -324,6 +324,7 @@
     "terminal.integrated.defaultProfile.linux": "bash_l",
     "files.associations": {
         "ostream": "cpp",
-        "iostream": "cpp"
+        "iostream": "cpp",
+        "string": "cpp"
     }
 }
