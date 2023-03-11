@@ -440,8 +440,19 @@ void WriteRFRdat(const char* outDirPath, const map<stirng,string> mRFROut)
         }
         else
         {
-            
+            printf("warning: %s.dat Empty! Please Check it!\n", itor->first.c_str());
         }
     }
+}
 
+int ParseParameters(int argc, char **argv, char*sql, char *outDirPath, string &cfgFilePath, vector<string> &vRFRDESK)
+{
+    char *libvar, *clientPath, *summitHomePath;
+    char curDate[sTEXT20_LEN] = {0};
+    char company[sTEXT100_LEN] = {0};
+
+    for (int i = 1; i < argc; i++)
+    {
+        if((strcmp(_strlwr(argv[i]), "-h") ==0) || (strcmp(_strlwr(argv[i]), "-h") ==0))
+    }
 }
