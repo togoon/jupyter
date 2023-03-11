@@ -114,5 +114,18 @@ int cUpdateCust(SU_ValueList *pSrcVL, string &outXml, string &errorXml, const st
     {
         sLogMessage("Error read Gateway Data Mapping [ ECIFCountryMap1 ]", sLOG_ERROR, 0);
     }
+
+    GetNameValue(strInXml, "Country", SummitCountry);
+    try
+    {
+        dbMapping->sDataMapNN("ECIFCountryMap1", "ALL", SummitCountry.c_str(), TYCountry);
+        string strSMT("Country");
+        string strTYC(TYCountry);
+        SetNameValue(strInXml, strSMT, strTYC);
+    }
+    catch(...)
+    {
+            sLogMessage("Error read Gateway Data Mapping [ ECIFCountryMap1 ] , Source: %s ", sLOG_ERROR, 0,SummitCountry.c_str());
+    }
     
 }
