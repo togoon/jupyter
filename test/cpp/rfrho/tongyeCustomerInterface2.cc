@@ -89,13 +89,30 @@ int cUpdateCust(SU_ValueList *pSrcVL, string &outXml, string &errorXml, const st
         strInXml.replace(iNum-1, 0, "</BkCodeList>");
     }  
 
+    iNum = strInXml.find("<CSTEXTAPP>");
+    if(iNum != string::npos)
+    {
+        strInXml.replace(iNum-1, 0, "<ExtAppList TYPE=\"EntList\" SINGLE=\"N\">");
+    }  
 
+    iNum = strInXml.find("</CSTEXTAPP>");
+    if(iNum != string::npos)
+    {
+        strInXml.replace(iNum-1, 0, "</ExtAppList>");
+    }  
 
-
-
-
-
-
-
-
+    // Get Country Map
+    string SummitCountry;
+    char TYCountry[8];
+    memset(&TYCountry, 0x00, sizeof(TYCountry));
+    SU_DBMapping *dbMapping = SU_DBMapping::GetDBMapping();
+    try
+    {
+        dbMapping->AddMapDefinitions("ECIFCountryMap1", "ALL");
+    }
+    catch(...)
+    {
+        sLogMessage("Error read Gateway Data Mapping [ ECIFCountryMap1 ]", sLOG_ERROR, 0);
+    }
+    
 }
