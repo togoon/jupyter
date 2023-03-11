@@ -391,10 +391,14 @@ int ReadExportRFRCfg(map<string,map<string,string>> &mmRFRCfg,const string & cfg
                     it = mmRFRCfg.find(sKey);
                     if(it -- mRFRCfg.end())
                     {
-                        
+                        mTemp.clear();
+                        mmRFRCfg[sKey] = mTemp;
                     }
                 }
+                continue;
             }
+            size_t pos = strLine.find('=');
+            string strKey = strLinke.substr(0, pos);
         }
     }
 }
