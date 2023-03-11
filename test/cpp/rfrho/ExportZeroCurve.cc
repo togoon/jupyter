@@ -609,6 +609,7 @@ bool IsDirExists(const char * dirName)
 
     if(fileType == INVALID_FILE_ATTRIBUTES)
         return false;
+        
     if(fileType & FILE_ATTRIBUTE_DIRETORY)
         return true;
 
