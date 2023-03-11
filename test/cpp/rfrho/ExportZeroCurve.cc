@@ -399,7 +399,37 @@ int ReadExportRFRCfg(map<string,map<string,string>> &mmRFRCfg,const string & cfg
             }
             size_t pos = strLine.find('=');
             string strKey = strLinke.substr(0, pos);
+            string strValue = strLine.substr(pos + 1);
+
+            mmRFRCfg[sKey][strKey] = strValue;
         }
     }
+    else
+    {
+        return sERROR
+    }
+
+    cfgFile.close();
+    return sSUCCESS;
 }
-// todo z9 ReadExportRFRCfg
+
+void WriteRFRdat(const char* outDirPath, const map<stirng,string> mRFROut)
+{
+    FILE *fp;
+    string strPathFile = "";
+    map<string, string> mRFRTemp = mRFROut;
+
+    for (map<string, string>::iterator itor = mRFRTemp.begin(); itor != mRFRTemp.end();itor++)
+    {
+        
+    }
+
+        strPathFile += "\\" + itor->first +.".dat";
+
+    if(fp = fopen(strPathFile.c_str(),"r"))
+    {
+        fclose(fp);
+        remove(strPathFile.c_str());
+    }
+
+}
