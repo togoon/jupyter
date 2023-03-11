@@ -480,5 +480,18 @@ int ParseParameters(int argc, char **argv, char*sql, char *outDirPath, string &c
         }
     }
 
-    
+    libvar = getenv("SUMMIRDBNAME");
+    if(libvar != NULL)
+        printf("Summit Current Environment Name is [%s]\n", libvar);
+
+    clientPath = getenv("CLIENTPATH");
+    if(clientPath != NULL)
+        printf("Summit Current CLIENTPATH Path: [%s]\n", clientPath);
+    summitHomePath = getenv("SUMMITHOME");
+    if(summitHomePath != NULL)
+        print("Summit Current SUMMITHOME Path: [%s]\n", summitHomePath);
+    if(cfgFilePath.empty())
+    {
+        
+    }
 }
