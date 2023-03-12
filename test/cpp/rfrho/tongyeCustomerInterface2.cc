@@ -149,11 +149,15 @@ int cUpdateCust(SU_ValueList *pSrcVL, string &outXml, string &errorXml, const st
         return sERROR;
     }
 
+
     int err;
     bool bExist = false;
 
+    while(!(err=sEntityDBRead(custEnt, (void*)pCustomer, strSql,00)))
+    {
+        bExit = true;
+    }
 
 
-    
     
 }
