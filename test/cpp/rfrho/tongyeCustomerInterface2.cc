@@ -174,8 +174,10 @@ int cUpdateCust(SU_ValueList *pSrcVL, string &outXml, string &errorXml, const st
         memset(pCustomer->Address.FullName.Name, 0x00, sizeof(pCustomer->Address.FullName.Name));
         strcpy(pCustomer->Address.FullName.Name, pxmlCust->Address.FullName.Name);
 
-        memset(pCustomer->Parent.Name, 0x00, sizeof(pCustomer->Parent.Name));
-        strcpy(pCustomer->Parent.Name, pxmlCust->ShortName.Text);
+        pCustomer->Audit.EntityState = pxmlCust->Audit.EntityState;
+
+        memset(pCustomer->LegalName.Name, 0x00, sizeof(pCustomer->Parent.Name));
+        strcpy(pCustomer->LegalName.Name, pxmlCust->LegalName.Text);
 
         memset(pCustomer->Parent.Name, 0x00, sizeof(pCustomer->Parent.Name));
         strcpy(pCustomer->Parent.Name, pxmlCust->ShortName.Text);
