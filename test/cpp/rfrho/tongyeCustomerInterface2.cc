@@ -176,17 +176,17 @@ int cUpdateCust(SU_ValueList *pSrcVL, string &outXml, string &errorXml, const st
 
         pCustomer->Audit.EntityState = pxmlCust->Audit.EntityState;
 
-        memset(pCustomer->LegalName.Name, 0x00, sizeof(pCustomer->Parent.Name));
-        strcpy(pCustomer->LegalName.Name, pxmlCust->LegalName.Text);
+        memset(pCustomer->LegalName.Name, 0x00, sizeof(pCustomer->LegalName.Name));
+        strcpy(pCustomer->LegalName.Name, pxmlCust->LegalName.Name);
 
-        memset(pCustomer->Parent.Name, 0x00, sizeof(pCustomer->Parent.Name));
-        strcpy(pCustomer->Parent.Name, pxmlCust->ShortName.Text);
+        memset(pCustomer->ContactName.Name, 0x00, sizeof(pCustomer->ContactName.Name));
+        strcpy(pCustomer->ContactName.Name, pxmlCust->ContactName.Name);
 
-        memset(pCustomer->Parent.Name, 0x00, sizeof(pCustomer->Parent.Name));
-        strcpy(pCustomer->Parent.Name, pxmlCust->ShortName.Text);
+        memset(pCustomer->Address.Country.Name, 0x00, sizeof(pCustomer->Address.Country.Name));
+        strcpy(pCustomer->Address.Country.Name, pxmlCust->Address.Country.Name);
 
-        memset(pCustomer->Parent.Name, 0x00, sizeof(pCustomer->Parent.Name));
-        strcpy(pCustomer->Parent.Name, pxmlCust->ShortName.Text);
+        memset(pCustomer->City.Name, 0x00, sizeof(pCustomer->City.Name));
+        strcpy(pCustomer->City.Name, pxmlCust->City.Name);
 
         memset(pCustomer->Parent.Name, 0x00, sizeof(pCustomer->Parent.Name));
         strcpy(pCustomer->Parent.Name, pxmlCust->ShortName.Text);
