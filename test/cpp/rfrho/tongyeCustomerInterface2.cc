@@ -156,8 +156,43 @@ int cUpdateCust(SU_ValueList *pSrcVL, string &outXml, string &errorXml, const st
     while(!(err=sEntityDBRead(custEnt, (void*)pCustomer, strSql,00)))
     {
         bExit = true;
+
+        // update pCustomer, pxmlCust;
+
+        // memset(pCustomer->Id.Name, 0x00, sizeof(pCustomer->Id.Name));
+        // strcpy(pCustomer->Id.Name, pxmlCust->Id.Name);
+
+        pCustomer->ConfirmReq = sYES;
+        pCustomer->PaymentReq = sYES;
+
+        memset(pCustomer->Parent.Name, 0x00, sizeof(pCustomer->Parent.Name));
+        strcpy(pCustomer->Parent.Name, pxmlCust->Parent.Name);
+
+        memset(pCustomer->ShortName.Text, 0x00, sizeof->ShortName.Text));
+        strcpy(pCustomer->ShortName.Text, pxmlCust->ShortName.Text);
+
+        memset(pCustomer->Parent.Name, 0x00, sizeof(pCustomer->Parent.Name));
+        strcpy(pCustomer->Parent.Name, pxmlCust->ShortName.Text);
+
+        memset(pCustomer->Parent.Name, 0x00, sizeof(pCustomer->Parent.Name));
+        strcpy(pCustomer->Parent.Name, pxmlCust->ShortName.Text);
+
+        memset(pCustomer->Parent.Name, 0x00, sizeof(pCustomer->Parent.Name));
+        strcpy(pCustomer->Parent.Name, pxmlCust->ShortName.Text);
+
+        memset(pCustomer->Parent.Name, 0x00, sizeof(pCustomer->Parent.Name));
+        strcpy(pCustomer->Parent.Name, pxmlCust->ShortName.Text);
+
+        memset(pCustomer->Parent.Name, 0x00, sizeof(pCustomer->Parent.Name));
+        strcpy(pCustomer->Parent.Name, pxmlCust->ShortName.Text);
+
+        memset(pCustomer->Parent.Name, 0x00, sizeof(pCustomer->Parent.Name));
+        strcpy(pCustomer->Parent.Name, pxmlCust->ShortName.Text);
+
+
+
+
+
+
     }
-
-
-    
 }
