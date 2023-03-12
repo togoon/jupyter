@@ -171,8 +171,8 @@ int cUpdateCust(SU_ValueList *pSrcVL, string &outXml, string &errorXml, const st
         memset(pCustomer->ShortName.Text, 0x00, sizeof->ShortName.Text));
         strcpy(pCustomer->ShortName.Text, pxmlCust->ShortName.Text);
 
-        memset(pCustomer->Parent.Name, 0x00, sizeof(pCustomer->Parent.Name));
-        strcpy(pCustomer->Parent.Name, pxmlCust->ShortName.Text);
+        memset(pCustomer->Address.FullName.Name, 0x00, sizeof(pCustomer->Address.FullName.Name));
+        strcpy(pCustomer->Address.FullName.Name, pxmlCust->Address.FullName.Name);
 
         memset(pCustomer->Parent.Name, 0x00, sizeof(pCustomer->Parent.Name));
         strcpy(pCustomer->Parent.Name, pxmlCust->ShortName.Text);
