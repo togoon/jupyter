@@ -151,5 +151,9 @@ int cUpdateCust(SU_ValueList *pSrcVL, string &outXml, string &errorXml, const st
 
     int err;
     bool bExist = false;
+
+
+
+    
     
 }
