@@ -493,8 +493,9 @@ int handleResponse(const string& Response, sENTITY * Entity, void *Data)
     }
 
     string strAct("ReplyCd");
-
-
+    string strErr("ErrorMsg");
+    string strActVal(""), strErrVal("");
 
     
+
 }
