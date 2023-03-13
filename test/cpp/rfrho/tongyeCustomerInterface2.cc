@@ -438,5 +438,26 @@ int GetNameValue(const string& strNode, const string& strName, string& strVal)
     return sSUCCESS;
 }
 
-int SetNameValue(string& )
+int SetNameValue(string& strNode, string& strName, string& strVal)
+{
+    string strStartName, strEndName, strSingleName;
 
+    strStartName.append("<")
+        .append(strName);
+    //.append(">");
+
+    strEndName.append("</")
+        .append(strName)
+        .append(">");
+
+    strSingleName.append("<")
+        .append(strName)
+        .append("/>");
+
+    string::size_type iStartNum, irBracketNum, iEndNum;
+    iStartNum = strNode.find(strStartName);
+    irBracketNum = strNode.find('>', iStartNum);
+    iEndNum = strNode.find(strEndName);
+
+    if(iStartNum != string::npos && iEndNum != string::npos && irBracketNum != string::npos && iStartNum < )
+}
