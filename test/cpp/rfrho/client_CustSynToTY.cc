@@ -335,9 +335,12 @@ int HandleConnection(const string& message, string& reponse, sENTITY* Entity, vo
         springf(msg, "Cnnect error: [%s:%d], errno:%d", ip.c_str(), port, errno)
         
         SetCustComment(msg, Entity, Data);
-        sLogMessage(msg, sLOG_WAENING, 0);
+        sLogMessage("Cnnect error: [%s:%d], error:%s(errno:%d)", sLOG_WAENING, 0, ip.c_str(), port, strerror(errno), errno);
         close(socketfd);
         return sERROR;
     }
+
+    struct timeval timeOut = {60, 0}; //30
+    if(setsockopt(socketfd, SOL_SOCKET, SO_SNDTIMEO, &timeOut, sizeof(timeOut)) ==-1 || setsockopt() ==-1 )
 }
 
