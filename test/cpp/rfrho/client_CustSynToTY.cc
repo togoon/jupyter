@@ -312,6 +312,31 @@ int HandleConnection(const string& message, string& reponse, sENTITY* Entity, vo
     intsocketfd;
     if((socketfd = socket(AF_INET, SOCK_STREAM,0))<0)
     {
+        SetCustComment("Socket Initialization Failed", Entity, Data);
+        sLogMessage("Socket Initialization Failed", sLOG_WAENING, 0);
+        return sERROR;
+    }
+
+    struct sockaddr_in servAddr;
+    memset(&servAddr, 0, sizeof(servAddr));
+    servAddr.sin_family - AF_INET;
+    servAddr.sin_port = htons(port);
+    if(inet_pton(AF_INET, ip.c_str(), &servAddr.sin_addr)<=0)
+    {
+        SetCustComment("Socket inet_pton error", Entity, Data);
+        sLogMessage("Socket inet_pton error for [%s]", sLOG_WAENING, 0, ip.c_str());
+        return sERROR;       
+    }
+
+    // Connet
+    if(connet(socketfd, (struct sockaddr*)&servAddr, sizeof(servAddr))<0)
+    {
+        char msg[sTEXT50_LEN] = {0}
+        springf(msg, "Cnnect error: [%s:%d], errno:%d", ip.c_str(), port, errno)
         
+        SetCustComment(msg, Entity, Data);
+        sLogMessage(msg, sLOG_WAENING, 0);
+        close(socketfd);
+        return sERROR;
     }
 }
