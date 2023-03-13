@@ -29,5 +29,20 @@ SId; $
 
 using namespace std;
 
-int LogMessage(const string& message, const string& cust,const string& prefix, const string& action)
+int LogMessage(const string &message, const string &cust, const string &prefix, const string &action);
+int PrcessMessage(const string &message, sENTITY *Entity, void Data);
+int HandleConnection(const string &message, string &response, sENTITY *Entity, void Data);
+int HandleResponse(const string &HandleResponse, sENTITY *Entity, void *Data);
+int SetCustComment(const string &message, sENTITY *Entity, void *Data);
+int GetNameValue(const string &strNode, const string strName, string &strVal);
+int SetNameValue(string &strNode, string &strName, string &strVal);
+int setCominflNo(string &strFlwNo);
+int DelNameLabel(const string &strName, string &strNode);
+
+extern "c"{
+        mDLLEXPORT sINT cSyncToTY(sENTITY * Entity, void * Data, sSTD_TRANSITION * Transition, void * par)
+}
+
+
+
 
