@@ -206,18 +206,23 @@ int cUpdateCust(SU_ValueList *pSrcVL, string &outXml, string &errorXml, const st
         memset(pCustomer->Address.ZipCode.Name, 0x00, sizeof(pCustomer->Address.ZipCode.Name));
         strcpy(pCustomer->Address.ZipCode.Name, pxmlCust->Address.ZipCode.Name);
 
+        memset(pCustomer->FaxNo.Name, 0x00, sizeof(pCustomer->FaxNo.Name));
+        strcpy(pCustomer->FaxNo.Name, pxmlCust->FaxNo.Name);
 
-        memset(pCustomer->City.Name, 0x00, sizeof(pCustomer->City.Name));
-        strcpy(pCustomer->City.Name, pxmlCust->City.Name);
+        memset(pCustomer->TelexNumber.Name, 0x00, sizeof(pCustomer->TelexNumber.Name));
+        strcpy(pCustomer->TelexNumber.Name, pxmlCust->TelexNumber.Name);
 
-        memset(pCustomer->City.Name, 0x00, sizeof(pCustomer->City.Name));
-        strcpy(pCustomer->City.Name, pxmlCust->City.Name);
+        memset(pCustomer->TelexAnswerBack.Name, 0x00, sizeof(pCustomer->TelexAnswerBack.Name));
+        strcpy(pCustomer->TelexAnswerBack.Name, pxmlCust->TelexAnswerBack.Name);        
 
-        memset(pCustomer->City.Name, 0x00, sizeof(pCustomer->City.Name));
-        strcpy(pCustomer->City.Name, pxmlCust->City.Name);        
+        memset(pCustomer->PhoneNumber.Name, 0x00, sizeof(pCustomer->PhoneNumber.Name));
+        strcpy(pCustomer->PhoneNumber.Name, pxmlCust->PhoneNumber.Name);
 
-        memset(pCustomer->City.Name, 0x00, sizeof(pCustomer->City.Name));
-        strcpy(pCustomer->City.Name, pxmlCust->City.Name);
+        memset(pCustomer->Department.Name, 0x00, sizeof(pCustomer->Department.Name));
+        strcpy(pCustomer->Department.Name, pxmlCust->Department.Name);
+
+        memset(pCustomer->Email.Name, 0x00, sizeof(pCustomer->Email.Name));
+        strcpy(pCustomer->Email.Name, pxmlCust->Email.Name);
 
 
 
