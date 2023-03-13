@@ -496,6 +496,34 @@ int handleResponse(const string& Response, sENTITY * Entity, void *Data)
     string strErr("ErrorMsg");
     string strActVal(""), strErrVal("");
 
-    
+    // GetNameValue(Response, strAct, strActVal);
+    // GetNameValue(Response, strErr, strErrVal);
 
+    strActVal = Response.substr(108, 6); //6-102 -12
+    strErrval = Response.substr(120, 128);
+
+    if(strActVal.compare("000000")==0)
+    {
+        SetCustComment("Sucess_ty", Entity, Data);
+    }
+    else
+    {
+        char msg[sTEXT5_LEN] = {0};
+        springf(msg, "Error_ty: %s", strActVal.c_str());
+        SetCustComment(msg, Entity, Data);
+    }
+
+    string strRes("");
+    strRes.append(Response).append("@@@@ReplyCd:").append(strActVal).append("@@@@ReplyText:").append(strErrVal);
+    LogMessage(strRes, pCustomer->Id.Name, "RESPONSE", "ACK");
+    return sSUCCESS;
+}
+
+int ProcessMessage(const string& message, sENTITY* Entity, void*Data)
+{
+    string response;
+    if(sERROR == HandleConnection(message, response, Entity, Data))
+    {
+        sLogMessage("PleaSE be noted that current customer cannot be sync up with Tongye System bu ")
+    }
 }
