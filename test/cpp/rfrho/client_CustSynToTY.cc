@@ -524,11 +524,34 @@ int ProcessMessage(const string& message, sENTITY* Entity, void*Data)
     string response;
     if(sERROR == HandleConnection(message, response, Entity, Data))
     {
-        sLogMessage("PleaSE be noted that current customer cannot be sync up with Tongye System bu be saved in Summit. Please retry it later", sLOG_WARNING, 0);
+        sLogMessage("Please be noted that current customer cannot be sync up with Tongye System bu be saved in Summit. Please retry it later", sLOG_WARNING, 0);
         // return sERROR;
     }
     if(sERROR == HandleResponse(response, Entity, Data))
     {
-        
+        sLogMessage("Please be noted that current customer cannot be verified by Tongye System bu be saved in Summit. Please retry & save it again", sLOG_WARNING, 0);
+        return sERROR;   
+    }
+    return sSUCCESS;
+}
+
+//STD function
+mDLLEXPORT sINT cSyncToTy(sENTITY *Entity,
+    void * Data,
+    sSTD_TRANSITION * Transition,
+    void * Params,
+    sUINT Mode)
+{
+    sINT retVal = sSUCCESS;
+    if(0 == strcmp(Entity->Name, "CUSTOMER"))
+    {
+        sCUSTOMER *pCustomer = (sCUSTOMER *)Data;
+        if(Transition->Action == sACT_SAVE || Transition->Action == sACT_SAVEAS)
+        {
+            string xmlStr;
+            xmlStr.clear();
+            // Just export the entityt to xml
+            xmlStr = string(sEntityToXML(Entity, Data, sNO, sYES, 00));
+        }
     }
 }
