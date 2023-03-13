@@ -229,12 +229,49 @@ int cUpdateCust(SU_ValueList *pSrcVL, string &outXml, string &errorXml, const st
         for (int i = 0; i < pCustomer->ClassifList.List.ItemsUsed;i++)
         {
             sCUSTCLAS *pClas = (sCUSTCLAS *)sGetLIstItem((void *)&pCustomer->ClassifList, i);
-            sDeleteListItem(&pCustomer->ClassifList, pCustomer->ClassifList.List.ItemsUsed, pClas);
+            sDeleteListItem(&pCustomer->ClassifList, i);
+            i--;
         }
         for (int i = 0; i < pCustomer->ClassifList.List.ItemsUsed;i++)
         {
+            sCUSTCLAS *pClas = (sCUSTCLAS *)sGetLIstItem((void *)&pxmlCust->ClassifList, i);
+            sInsertListItem(&pCustomer->ClassifList, pCustomer->ClassifList.List.ItemsUsed, pClas);
+        }
+
+        for (int i = 0; i < pCustomer->ClassifList.List.ItemsUsed;i++)
+        {
             sCUSTCLAS *pClas = (sCUSTCLAS *)sGetLIstItem((void *)&pCustomer->ClassifList, i);
-            sDeleteListItem(&pCustomer->ClassifList, pCustomer->ClassifList.List.ItemsUsed, pClas);
+            sDeleteListItem(&pCustomer->ClassifList, i);
+            i--;
+        }
+        for (int i = 0; i < pCustomer->ClassifList.List.ItemsUsed;i++)
+        {
+            sCUSTCLAS *pClas = (sCUSTCLAS *)sGetLIstItem((void *)&pxmlCust->ClassifList, i);
+            sInsertListItem(&pCustomer->ClassifList, pCustomer->ClassifList.List.ItemsUsed, pClas);
+        }
+
+        for (int i = 0; i < pCustomer->ClassifList.List.ItemsUsed;i++)
+        {
+            sCUSTCLAS *pClas = (sCUSTCLAS *)sGetLIstItem((void *)&pCustomer->ClassifList, i);
+            sDeleteListItem(&pCustomer->ClassifList, i);
+            i--;
+        }
+        for (int i = 0; i < pCustomer->ClassifList.List.ItemsUsed;i++)
+        {
+            sCUSTCLAS *pClas = (sCUSTCLAS *)sGetLIstItem((void *)&pxmlCust->ClassifList, i);
+            sInsertListItem(&pCustomer->ClassifList, pCustomer->ClassifList.List.ItemsUsed, pClas);
+        }
+
+        for (int i = 0; i < pCustomer->ClassifList.List.ItemsUsed;i++)
+        {
+            sCUSTCLAS *pClas = (sCUSTCLAS *)sGetLIstItem((void *)&pCustomer->ClassifList, i);
+            sDeleteListItem(&pCustomer->ClassifList, i);
+            i--;
+        }
+        for (int i = 0; i < pCustomer->ClassifList.List.ItemsUsed;i++)
+        {
+            sCUSTCLAS *pClas = (sCUSTCLAS *)sGetLIstItem((void *)&pxmlCust->ClassifList, i);
+            sInsertListItem(&pCustomer->ClassifList, pCustomer->ClassifList.List.ItemsUsed, pClas);
         }
 
 
