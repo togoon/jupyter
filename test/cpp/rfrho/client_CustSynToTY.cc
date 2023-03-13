@@ -371,5 +371,32 @@ int HandleConnection(const string& message, string& reponse, sENTITY* Entity, vo
     close(socketfd);
 
     response.clear();
-    
+    response.append(revBuffer);
+    return sSUCCESS;
+}
+
+int DelNameLabel(const string& strName, string& strNode)
+{
+    string strStartName, strEndName, strSingleName;
+
+    strStartName.append("<")
+        .append(strName);
+    //.append(">");
+
+    strEndName.append("</")
+        .append(strName)
+        .append(">");
+
+    strSingleName.append("<")
+        .append(strName)
+        .append("/>");
+
+    string::size_type iStartNum, irBracketNum, iEndNum;
+    iStartNum = strNode.find(strStartName);
+    irBracketNum = strNode.find('>', iStartNum);
+
+    if(iStartNum != stirng::npos && irBracketNum != string::npos)
+    {
+        
+    }
 }
