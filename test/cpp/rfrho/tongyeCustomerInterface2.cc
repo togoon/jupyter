@@ -289,12 +289,44 @@ int cUpdateCust(SU_ValueList *pSrcVL, string &outXml, string &errorXml, const st
         return sERROR;
     }
 
-    if(bExist && strActVal == "cCREAT")
+    if(bExist && strActVal == "cCREATE")
+    {
+        errorXml = "error cCREATE, cancel, CUSTID: ";
+        errorXml += strCustIDVal;
+        sLogMessage("%s", sLOG_ERROR, 0, errorXml.c_str());
+        sEntityFree(custEnt, (void **)&pCustomer, sYES);
+        sEntityFree(cxmlEnt, (void **)&pxmlCust, sYES);
+        return sERROR;
+    }
+    
+    if(bExist && strActVal == "cUPDATE")
+    {
+        errorXml = "error cUPDATE, cancel, CUSTID: ";
+        errorXml += strCustIDVal;
+        sLogMessage("%s", sLOG_ERROR, 0, errorXml.c_str());
+        sEntityFree(custEnt, (void **)&pCustomer, sYES);
+        sEntityFree(cxmlEnt, (void **)&pxmlCust, sYES);
+        return sERROR;
+    }
+    
+    if(bExist && strActVal == "cCREATE")
+    {
+        //if(sEntityDBWrite(xmlEnt, (void*)pxmlCust,00))
+        if(sEntityDoSTDAction(xmlEnt, (void*)pxmlCust, NULL, sACT_IMPLIVE, sWRITE_MODE))
+
+        errorXml = "error  DBRead, cancel, CUSTID: ";
+        errorXml += strCustIDVal;
+        sLogMessage("%s", sLOG_ERROR, 0, errorXml.c_str());
+        sEntityFree(custEnt, (void **)&pCustomer, sYES);
+        sEntityFree(cxmlEnt, (void **)&pxmlCust, sYES);
+        return sERROR;
+    }
+    
+    if(bExist && strActVal == "cCREATE")
     {
         errorXml = "error  DBRead, cancel, CUSTID: ";
         errorXml += strCustIDVal;
         sLogMessage("%s", sLOG_ERROR, 0, errorXml.c_str());
-        sEntityDBRead(custEnt, (void *)pCustomer, "CANCEL", 00);
         sEntityFree(custEnt, (void **)&pCustomer, sYES);
         sEntityFree(cxmlEnt, (void **)&pxmlCust, sYES);
         return sERROR;
