@@ -250,32 +250,36 @@ int cUpdateCust(SU_ValueList *pSrcVL, string &outXml, string &errorXml, const st
             sInsertListItem(&pCustomer->CustRoleList, pCustomer->CustRoleList.List.ItemsUsed, pRole);
         }
 
-        for (int i = 0; i < pCustomer->ClassifList.List.ItemsUsed;i++)
+        for (int i = 0; i < pCustomer->BKCodeList.List.ItemsUsed;i++)
         {
-            sCUSTCLAS *pClas = (sCUSTCLAS *)sGetLIstItem((void *)&pCustomer->ClassifList, i);
-            sDeleteListItem(&pCustomer->ClassifList, i);
+            sCUSTBKCD *pBkcode = (sCUSTBKCD *)sGetLIstItem((void *)&pCustomer->BKCodeList, i);
+            sDeleteListItem(&pCustomer->BKCodeList, i);
             i--;
         }
-        for (int i = 0; i < pCustomer->ClassifList.List.ItemsUsed;i++)
+        for (int i = 0; i < pCustomer->BKCodeList.List.ItemsUsed;i++)
         {
-            sCUSTCLAS *pClas = (sCUSTCLAS *)sGetLIstItem((void *)&pxmlCust->ClassifList, i);
-            sInsertListItem(&pCustomer->ClassifList, pCustomer->ClassifList.List.ItemsUsed, pClas);
+            sCUSTBKCD *pBkcode = (sCUSTBKCD *)sGetLIstItem((void *)&pxmlCust->BKCodeList, i);
+            sInsertListItem(&pCustomer->BKCodeList, pCustomer->BKCodeList.List.ItemsUsed, pBkcode);
         }
 
-        for (int i = 0; i < pCustomer->ClassifList.List.ItemsUsed;i++)
+        for (int i = 0; i < pCustomer->ExtAppList.List.ItemsUsed;i++)
         {
-            sCUSTCLAS *pClas = (sCUSTCLAS *)sGetLIstItem((void *)&pCustomer->ClassifList, i);
-            sDeleteListItem(&pCustomer->ClassifList, i);
+            sCUST_EXT_APP *pExtApp = (sCUST_EXT_APP *)sGetLIstItem((void *)&pCustomer->ExtAppList, i);
+            sDeleteListItem(&pCustomer->ExtAppList, i);
             i--;
         }
-        for (int i = 0; i < pCustomer->ClassifList.List.ItemsUsed;i++)
+        for (int i = 0; i < pCustomer->ExtAppList.List.ItemsUsed;i++)
         {
-            sCUSTCLAS *pClas = (sCUSTCLAS *)sGetLIstItem((void *)&pxmlCust->ClassifList, i);
-            sInsertListItem(&pCustomer->ClassifList, pCustomer->ClassifList.List.ItemsUsed, pClas);
+            sCUST_EXT_APP *pExtApp = (sCUST_EXT_APP *)sGetLIstItem((void *)&pxmlCust->ExtAppList, i);
+            sInsertListItem(&pCustomer->ExtAppList, pCustomer->ExtAppList.List.ItemsUsed, pExtApp);
         }
 
 
 
+    }
 
+    if(err && err != sDB_FAIL)
+    {
+        errorXml = "Abnormal DBRead, cancel, CUSTID: ";
     }
 }
