@@ -228,26 +228,26 @@ int cUpdateCust(SU_ValueList *pSrcVL, string &outXml, string &errorXml, const st
 
         for (int i = 0; i < pCustomer->ClassifList.List.ItemsUsed;i++)
         {
-            sCUSTCLAS *pClas = (sCUSTCLAS *)sGetLIstItem((void *)&pCustomer->ClassifList, i);
+            sCUSTCLAS *pClas = (sCUSTCLAS *)sGetListItem((void *)&pCustomer->ClassifList, i);
             sDeleteListItem(&pCustomer->ClassifList, i);
             i--;
         }
         for (int i = 0; i < pCustomer->ClassifList.List.ItemsUsed;i++)
         {
-            sCUSTCLAS *pClas = (sCUSTCLAS *)sGetLIstItem((void *)&pxmlCust->ClassifList, i);
+            sCUSTCLAS *pClas = (sCUSTCLAS *)sGetListItem((void *)&pxmlCust->ClassifList, i);
             sInsertListItem(&pCustomer->ClassifList, pCustomer->ClassifList.List.ItemsUsed, pClas);
         }
 
-        for (int i = 0; i < pCustomer->ClassifList.List.ItemsUsed;i++)
+        for (int i = 0; i < pCustomer->CustRoleList.List.ItemsUsed;i++)
         {
-            sCUSTCLAS *pClas = (sCUSTCLAS *)sGetLIstItem((void *)&pCustomer->ClassifList, i);
-            sDeleteListItem(&pCustomer->ClassifList, i);
+            sCUSTROLE *pRole = (sCUSTROLE *)sGetListItem((void *)&pCustomer->CustRoleList, i);
+            sDeleteListItem(&pCustomer->CustRoleList, i);
             i--;
         }
-        for (int i = 0; i < pCustomer->ClassifList.List.ItemsUsed;i++)
+        for (int i = 0; i < pCustomer->CustRoleList.List.ItemsUsed;i++)
         {
-            sCUSTCLAS *pClas = (sCUSTCLAS *)sGetLIstItem((void *)&pxmlCust->ClassifList, i);
-            sInsertListItem(&pCustomer->ClassifList, pCustomer->ClassifList.List.ItemsUsed, pClas);
+            sCUSTROLE *pRole = (sCUSTROLE *)sGetListItem((void *)&pxmlCust->CustRoleList, i);
+            sInsertListItem(&pCustomer->CustRoleList, pCustomer->CustRoleList.List.ItemsUsed, pRole);
         }
 
         for (int i = 0; i < pCustomer->ClassifList.List.ItemsUsed;i++)
