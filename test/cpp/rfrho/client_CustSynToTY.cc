@@ -116,11 +116,38 @@ int SetCominFlwNo(string* strFlwNo)
     memset(pnewComin->cMsgId.Text, 0x00, sizeof(pnewComin->cMsgId.Text));
     strcpy(pnewComin->cMsgId.Text, strcMsgId.c_str());
 
-    memset(pnewComin - cType.Text, 0x00, sizeof(pnewComin->cType.Text));
+    memset(pnewComin->cType.Text, 0x00, sizeof(pnewComin->cType.Text));
     strcpy(pnewComin->cType.Text, "CUSTOMER207");
 
     pnewComin->cVersion = 0;
     pnewComin->cIoInd = 0;
 
-    memset(pnewComin - cRecTime.Text, 0x00, sizeof(pnewComin->cRecTime.Text));
+    memset(pnewComin->cRecTime.Text, 0x00, sizeof(pnewComin->cRecTime.Text));
+    strcpy(pnewComin->cRecTime.Text, strDT.c_str());
+
+    memset(pnewComin->cLstUpdateTime.Text, 0x00, sizeof(pnewComin->cLstUpdateTime.Text));
+    strcpy(pnewComin->cLstUpdateTime.Text, strDT.c_str());
+
+    memset(pnewComin->cTargetSystem.Text, 0x00, sizeof(pnewComin->cTargetSystem.Text));
+    strcpy(pnewComin->cTargetSystem.Text, "SUMMIT");
+
+    // pnewComin->cStatus = cNOSTATUS;
+
+    memset(pnewComin->cSourceSysTem.Text, 0x00, sizeof(pnewComin->cSourceSysTem.Text));
+    strcpy(pnewComin->cSourceSysTem.Text, "207");
+
+    string strcText2;
+    strcText2.append("0040600").append(strDate).append("11").append(strFlwNo);
+    memset(pnewComin->cText2.Text, 0xx, sizeof(pnewComin->cText2.Text));
+    strcpy(pnewComin->cText2.Text, strcText2.c_str());
+
+    if(sEntityValidate(comEnt,(void*)pnewComin, &errMsg))
+    {
+        sLogMessage("Invalid cCOMIN recode", sLOG_ERROR, 0);
+        sEntityFree(comEnt, (void **)&pComin, sYES);
+        sEntityFree(comEnt, (void **)&pnewComin, sYES);
+        return sERROR;
+    }
+
+    
 }
