@@ -248,4 +248,56 @@ int LogMessage(const string& message, const string& cust, constr stirng& prefix,
     string spoolEnv(envVar);
     spoolEnv.erase(0, spoolEnv.find_first_not_of(" "));
     spoolEnv.erase(spoolEnv.find_last_not_of(" ") + 1);
+    spoolEnv.append(" ");
+    spoolEnv.append(fileName);
+
+    ofstream spoolFile;
+    spoolFile.open(spoolEnv.c_str(), ios::out | ios::binary);
+    if(!spoolFile.is_open())
+    {
+        sLogMessage("SpoolFile[%s] cannot be open", sLOG_WARNING, 0, spoolEnv.c_str());
+        return sERROR;
+    }
+
+    spoolFile << message;
+    spoolFile.close();
+    return sSUCCESS;
+}
+
+int HandleConnection(const string& message, string& reponse, sENTITY* Entity, void* Data)
+{
+    // get $clientpath to read configration file
+    char *envVar = getenv("CLENTPATH");
+    if(!envVar)
+    {
+        SetCustComment("ENV CLIENTPATH is not Defined", Entity, Data);
+        sLogMessage("CLIENTPATH is not Definded", sLOG_WARNING, 0);
+        return sERROR;
+    }
+
+    string Conf(envVar);
+    Conf.erase(0, Conf.find_first_not_of(" "));
+    Conf.erase(Conf.finad_last_not_of(" ") + 1);
+    Conf.append("/etc/CustomerInterfaceCfg.ini");
+
+    ifstream confFile;
+    confFile.open(Conf.c_str(), ios::in | ios::binary);
+    if(!confFile.is_open())
+    {
+        SetCustComment("etc/CustomerInterfaceCfg.ini can not be open", Entity, Data);
+        sLogMessage("Configration File[%s] cannot be open", sLOG_WARNING, 0, Conf.c_str());
+        return sERROR;
+    }
+
+    strings, ip;
+    int port;
+    while(getline(confFile,s))
+    {
+        if(s.find("ServerIP") != string::npos)
+        {
+            ip = s.substr(s.find("=") + 1);
+            ip.erase(0, ip.find_first_not_of(" "));
+            
+        }
+    }
 }
