@@ -493,4 +493,8 @@ int handleResponse(const string& Response, sENTITY * Entity, void *Data)
     }
 
     string strAct("ReplyCd");
+
+
+
+    
 }
