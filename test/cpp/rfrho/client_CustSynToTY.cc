@@ -149,5 +149,42 @@ int SetCominFlwNo(string* strFlwNo)
         return sERROR;
     }
 
-    
+    // if(sEntitytDoSTDAction(comEnt, (void*)pnewComin, NULL, sACT_SAVE, 00))
+    // {
+    //     sLogMessage("Error DoSTDAction Database", sLOG_ERROR, 0);
+    //     sEntityFree(comEnt, (void **)&pComin, sYES);
+    //     sEntityFree(comEnt, (void **)&pnewComin, sYES);
+    //     return sERROR;        
+    // }
+
+    if(sEntityDBWrite(comEnt, (void*)pnewComin, 00))
+    {
+        sLogMessage("Error Write Database", sLOG_ERROR, 0);
+        sEntityFree(comEnt, (void **)&pComin, sYES);
+        sEntityFree(comEnt, (void **)&pnewComin, sYES);
+        return sERROR;        
+    }
+
+    sEntityFree(comEnt, (void **)&pComin, sYES);
+    sEntityFree(comEnt, (void **)&pnewComin, sYES);
+    return sSUCCESS;         
+}
+
+int SetCustComment(const string& message, sENTITY * Entity, void* Data)
+{
+    sCUSTOMER *pCustomer = (sCUSTOMER *)Data;
+    memset(pnewComin->Comment1.Text, 0xx, sizeof(pnewComin->Comment1.Text));   
+    memset(pnewComin->Comment2.Text, 0xx, sizeof(pnewComin->Comment2.Text));
+
+    string strMsg1, strMsg2;
+
+    if(message.length()<=50)
+    {
+        strMsg1 = message;
+        strMsg2 = "";
+    }
+    else
+    {
+        strMsg1 = message.substr(50);
+    }
 }
