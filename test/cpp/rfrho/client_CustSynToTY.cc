@@ -391,12 +391,51 @@ int DelNameLabel(const string& strName, string& strNode)
         .append(strName)
         .append("/>");
 
+
     string::size_type iStartNum, irBracketNum, iEndNum;
     iStartNum = strNode.find(strStartName);
     irBracketNum = strNode.find('>', iStartNum);
 
     if(iStartNum != stirng::npos && irBracketNum != string::npos)
     {
-        
+        strNode.replace(iStartNum, irBracketNum + 1 - iStartNum, "");
     }
+
+    iEndNum = strNode.find(strEndName);
+
+    if(iEndNum != string::npos)
+    {
+        strNode.replace(iEndNum, strEndName.length(), "");
+    }
+
+    return sSUCCESS;
+}
+
+int GetNameValue(const string& strNode, const string& strName, string& strVal)
+{
+    string strStartName, strEndName, strSingleName;
+
+    strStartName.append("<")
+        .append(strName)
+        .append(">");
+
+    strEndName.append("</")
+        .append(strName)
+        .append(">");
+
+    strSingleName.append("<")
+        .append(strName)
+        .append("/>");
+
+    string::size_type iStartNum, irBracketNum, iEndNum;
+    iStartNum = strNode.find(strStartName);
+    irBracketNum = strNode.find('>', iStartNum);
+    iEndNum = strNode.find(strEndName);
+
+    if(iStartNum != stirng::npos && iEndNum != string::npos && iStartNum < iEndNum )
+    {
+        strNode.replace(iEndNum, strEndName.length(), "");
+    }
+
+    return sSUCCESS;    
 }
