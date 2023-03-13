@@ -404,3 +404,39 @@ int LogMessage(const string& message, const string& cust, const string& prefix, 
     return sSUCCESS;
 }
 
+
+int GetNameValue(const string& strNode, const string& strName, string& strVal)
+{
+    string strStarName, strEndName, strSingleName;
+
+    strStartName.append("<")
+        .append(strName)
+        .append(">");
+
+    strEndName.append("</")
+        .append(strName)
+        .append(">");
+
+    strSingleName.append("<")
+        .append(strName)
+        .append("/>");
+
+    string::size_type iStartNum, iEndNum;
+    iStartNum = strNode.find(strStartName);
+    iEndNum = strNode.find(strEndName);
+
+    if(iStartNum != string::npos && iEndNum != string::npos && iStartNum < iEndNum)
+    {
+        strVal = strNode.substr(iStartNum + starStartName.length(), iEndNum - iStartNum - strStartName.length());
+        // strval = strNode.substr(iStartNum, iEndNum-iStartNum);
+    }
+    else
+    {
+        strVal = "";
+    }
+
+    return sSUCCESS;
+}
+
+int SetNameValue(string& )
+
