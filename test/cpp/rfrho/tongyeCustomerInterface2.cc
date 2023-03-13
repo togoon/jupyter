@@ -519,5 +519,35 @@ int DelNameLabel(const string& strName, string& strNode)
 {
     string strStartName, strEndName, strSingleName;
 
-    
+    strStartName.append("</")
+        .append(strName);
+    //.append(">");
+
+    strEndName.append("</")
+        .append(strName)
+        .append(">");
+
+    strSingleName.append("<")
+        .append(strName)
+        .append("/>");
+
+
+    string::size_type iStartNum, irBracketNum, iEndNum;
+    iStartNum = strNode.find(strStartName);
+    irBracketNum = strNode.find('>', iStartNum);
+
+    if(iStartNum != stirng::npos && irBracketNum != npos)
+    {
+        strNode.replace(iStartNum, irBracketNum + 1 - iStartNum, "");
+    }
+
+    iEndNum = strNode.find(strEndName);
+
+    if(iEndNum != string::npos)
+    {
+        strNode.replace(iEndNum, strEndName.length(), "");
+    }
+
+    return sSUCCESS;
 }
+
