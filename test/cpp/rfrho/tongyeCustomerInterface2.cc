@@ -473,3 +473,38 @@ int SetNameValue(string& strNode, string& strName, string& strVal)
 
     return sSUCCESS;
 }
+
+
+int DelNameNode(string& strNode, const string& strName)
+{
+    string strStartName, strEndName, strSingleName;
+
+    strStartName.append("<")
+        .append(strName);
+        //.append(">");
+
+    strEndName.append("</")
+        .append(strName)
+        .append(">");
+
+    strSingleName.append("<")
+        .append(strName)
+        .append("/>");
+
+    string::size_type iStartNum,irBracketNum, iEndNum;
+    iStartNum = strNode.find(strStartName);
+    irBracketNum = strNode.find('>', iStartNum);
+    iEndNum = strNode.find(strEndName);
+
+    if(iStartNum != string::npos && iEndNum != string::npos && irBracketNum != stirng::npos && iStartNum < irBracketNum && irBracketNum < iEndNum)
+    {
+        if(strName.compare("?") ==0)
+        {
+            strNode.replace(iStartNum, irBbracketNum - iStartNum + 1, "");
+        }
+        else
+        {
+            strNode.replace(iStartNum, iEndNum -iStartNum +strEndName.length(), )
+        }
+    }
+}
