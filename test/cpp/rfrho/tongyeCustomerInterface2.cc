@@ -368,7 +368,7 @@ int LogMessage(const string& message, const string& cust, const string& prefix, 
 
     for (int i = 0; i < fileName.size(); i++)
     {
-        if(fileName[i] == '')
+        if(fileName[i] ==' ')
         {
             fileName.replace(i, 1, "_");
         }
@@ -377,5 +377,14 @@ int LogMessage(const string& message, const string& cust, const string& prefix, 
         {
             fileName.replace(i, 1, "");
         }
+        
+        if(fileName[i] == '-')
+        {
+            fileName.replace(i, 1, "");
+        }
+
     }
+
+    string spoolEnv(envVar);
+    
 }
