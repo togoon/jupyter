@@ -60,6 +60,30 @@ int SetCominFlwNo(string* strFlwNo)
 
     if(!(comEnt = sGetEntityByName("cCOMIN")))
     {
-        
+        sLogMessage("Error getting cCOMIN", sLOG_ERROR, 0);
+        reutrn sERROR;
     }
+
+    if(sEntityCreate(comEnt, (void**)& pComin) )
+    {
+        sLogMessage("Error Create cCOMIN Entity", sLOG_ERROR, 0);
+        reutrn sERROR;
+    }
+
+    char tmpDT[50] = {0};
+    memset(&tmpDT, 0x00, sizeof(tmpDT));
+    sSysDateTime(tmpDt); //2022-02-20 14:34:45.789
+    string strDateTime(tmpDT);
+    string strDate = strDateTime.substr(0, 10);
+    string strTime = strDateTime.substr(11);
+    string strDT = strDateTime.substr(0, 19);
+    StringTrimAll(strDate, '-');
+    StringTrimAll(strDT, '-');
+    strDT.replace(8, 1, "-"); //20200822-12:56:13
+
+    int err;
+    char sql[512] = {0};
+    sprintf(sql, " where ctype='CUSOMER207' and substr(clastupdatetime,0,6) >= %s order by clastupdatetime desc", strDate.c_str());
+
+    
 }
