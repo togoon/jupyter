@@ -188,8 +188,36 @@ int cUpdateCust(SU_ValueList *pSrcVL, string &outXml, string &errorXml, const st
         memset(pCustomer->City.Name, 0x00, sizeof(pCustomer->City.Name));
         strcpy(pCustomer->City.Name, pxmlCust->City.Name);
 
+        memset(pCustomer->Address.AddressLine1.Name, 0x00, sizeof(pCustomer->Address.AddressLine1.Name));
+        strcpy(pCustomer->Address.AddressLine1.Name, pxmlCust->Address.AddressLine1.Name);
+
+        memset(pCustomer->Address.AddressLine2.Name, 0x00, sizeof(pCustomer->Address.AddressLine2.Name));
+        strcpy(pCustomer->Address.AddressLine2.Name, pxmlCust->Address.AddressLine2.Name);
+
+        memset(pCustomer->Address.AddressLine3.Name, 0x00, sizeof(pCustomer->Address.AddressLine3.Name));
+        strcpy(pCustomer->Address.AddressLine3.Name, pxmlCust->Address.AddressLine3.Name);
+
+        memset(pCustomer->Address.AddressLine4.Name, 0x00, sizeof(pCustomer->Address.AddressLine4.Name));
+        strcpy(pCustomer->Address.AddressLine4.Name, pxmlCust->Address.AddressLine4.Name);
+
+        memset(pCustomer->Address.AddressLine5.Name, 0x00, sizeof(pCustomer->Address.AddressLine5.Name));
+        strcpy(pCustomer->Address.AddressLine5.Name, pxmlCust->Address.AddressLine5.Name);
+
+        memset(pCustomer->Address.ZipCode.Name, 0x00, sizeof(pCustomer->Address.ZipCode.Name));
+        strcpy(pCustomer->Address.ZipCode.Name, pxmlCust->Address.ZipCode.Name);
 
 
+        memset(pCustomer->City.Name, 0x00, sizeof(pCustomer->City.Name));
+        strcpy(pCustomer->City.Name, pxmlCust->City.Name);
+
+        memset(pCustomer->City.Name, 0x00, sizeof(pCustomer->City.Name));
+        strcpy(pCustomer->City.Name, pxmlCust->City.Name);
+
+        memset(pCustomer->City.Name, 0x00, sizeof(pCustomer->City.Name));
+        strcpy(pCustomer->City.Name, pxmlCust->City.Name);        
+
+        memset(pCustomer->City.Name, 0x00, sizeof(pCustomer->City.Name));
+        strcpy(pCustomer->City.Name, pxmlCust->City.Name);
 
 
 
