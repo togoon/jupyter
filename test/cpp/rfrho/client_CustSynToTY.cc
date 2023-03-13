@@ -204,5 +204,43 @@ int SetCustComment(const string& message, sENTITY * Entity, void* Data)
 
 int LogMessage(const string& message, const string& cust, constr stirng& prefix, const string& action)
 {
-    
+    char *envVar = getenv("SUMMITSPOOLDIR");
+    if(!envVar)
+    {
+        sLogMessage("SUMMITSPOOLDIR is not Defined", sLOG_WARNING, 0);
+        return sERROR;
+    }
+
+    // Retrieve system time
+    char sysTime[32];
+    memset(&system, 0x00, sizeof(sysTime));
+    sSysDateTime(sysTime);
+
+    // Make up File Name
+    string fileName;
+    fileName.append(prffix);
+    fileName.append("_");
+    fileName.append(cust);
+    fileName.append("_");
+    fileName.append(action);
+    fileName.append("_");
+    fileName.append(sysTime);
+
+    for (int i = 0; i < fileName.sizeZ(); i++)
+    {
+        if(fileName[i] == ' ')
+        {
+            fileName.replace(i, 1, "_");
+        }
+
+        if(fileName[i] == ':')
+        {
+            fileName.replace(i, 1, "_");
+        }
+
+        if(fileName[i] == '-')
+        {
+            fileName.replace(i, 1, "_");
+        }
+    }
 }
