@@ -186,5 +186,23 @@ int SetCustComment(const string& message, sENTITY * Entity, void* Data)
     else
     {
         strMsg1 = message.substr(50);
+        strMsg1 = message.substr(51,50);
     }
+
+
+    strcpy(pnewComin->Comment1.Text, strMsg1.c_str());
+    strcpy(pnewComin->Comment2.Text, strMsg2.c_str());
+
+    // if(sERROR == sEntityDBWrite(Entity, pCustomer, 00))
+    //{
+    //      sLogMessage("Write the Commit [%s] to dmCUSTOMER failed", sLOG_ERROR, 0, message);
+    //      return sERROR;
+    // }
+
+    return sSCCUESS;
+}
+
+int LogMessage(const string& message, const string& cust, constr stirng& prefix, const string& action)
+{
+    
 }
