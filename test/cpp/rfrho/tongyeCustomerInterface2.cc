@@ -504,7 +504,20 @@ int DelNameNode(string& strNode, const string& strName)
         }
         else
         {
-            strNode.replace(iStartNum, iEndNum -iStartNum +strEndName.length(), )
+            strNode.replace(iStartNum, iEndNum - iStartNum + strEndName.length(), "");
         }
     }
+    else
+    {
+        return sERROR;
+    }
+
+    return sSUCCESS;
+}
+
+int DelNameLabel(const string& strName, string& strNode)
+{
+    string strStartName, strEndName, strSingleName;
+
+    
 }
