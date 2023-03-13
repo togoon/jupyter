@@ -459,5 +459,17 @@ int SetNameValue(string& strNode, string& strName, string& strVal)
     irBracketNum = strNode.find('>', iStartNum);
     iEndNum = strNode.find(strEndName);
 
-    if(iStartNum != string::npos && iEndNum != string::npos && irBracketNum != string::npos && iStartNum < )
+    if(iStartNum != string::npos && iEndNum != string::npos && irBracketNum != string::npos && iStartNum < irBracketNum && irBracketNum < iEndNum)
+    {
+        strNode.replace(irBracketNum + 1, iEndNum - irBracketNum - 1, strVal);
+        // strval = strNode.substr(iStartNum + strStartName.length(), iEndNum-iStartNum-strStartName.length());
+        // strVal = strNode.substr(iStartNum, iEndNum -iStartNum);
+    }
+    else
+    {
+        strVal = "";
+        return sERROR;
+    }
+
+    return sSUCCESS;
 }
