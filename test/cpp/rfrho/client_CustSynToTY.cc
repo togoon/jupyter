@@ -340,3 +340,4 @@ int HandleConnection(const string& message, string& reponse, sENTITY* Entity, vo
         return sERROR;
     }
 }
+
