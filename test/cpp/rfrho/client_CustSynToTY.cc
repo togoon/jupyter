@@ -242,5 +242,10 @@ int LogMessage(const string& message, const string& cust, constr stirng& prefix,
         {
             fileName.replace(i, 1, "_");
         }
+
     }
+
+    string spoolEnv(envVar);
+    spoolEnv.erase(0, spoolEnv.find_first_not_of(" "));
+    spoolEnv.erase(spoolEnv.find_last_not_of(" ") + 1);
 }
