@@ -524,6 +524,11 @@ int ProcessMessage(const string& message, sENTITY* Entity, void*Data)
     string response;
     if(sERROR == HandleConnection(message, response, Entity, Data))
     {
-        sLogMessage("PleaSE be noted that current customer cannot be sync up with Tongye System bu ")
+        sLogMessage("PleaSE be noted that current customer cannot be sync up with Tongye System bu be saved in Summit. Please retry it later", sLOG_WARNING, 0);
+        // return sERROR;
+    }
+    if(sERROR == HandleResponse(response, Entity, Data))
+    {
+        
     }
 }
