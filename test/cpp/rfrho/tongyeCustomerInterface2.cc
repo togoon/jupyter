@@ -313,27 +313,69 @@ int cUpdateCust(SU_ValueList *pSrcVL, string &outXml, string &errorXml, const st
     {
         //if(sEntityDBWrite(xmlEnt, (void*)pxmlCust,00))
         if(sEntityDoSTDAction(xmlEnt, (void*)pxmlCust, NULL, sACT_IMPLIVE, sWRITE_MODE))
-
-        errorXml = "error  DBRead, cancel, CUSTID: ";
-        errorXml += strCustIDVal;
-        sLogMessage("%s", sLOG_ERROR, 0, errorXml.c_str());
-        sEntityFree(custEnt, (void **)&pCustomer, sYES);
-        sEntityFree(cxmlEnt, (void **)&pxmlCust, sYES);
-        return sERROR;
+        {
+            errorXml = "error sEntityDoSTDAction cCREATE, cancel, CUSTID: ";
+            errorXml += strCustIDVal;
+            sLogMessage("%s", sLOG_ERROR, 0, errorXml.c_str());
+            sEntityFree(custEnt, (void **)&pCustomer, sYES);
+            sEntityFree(cxmlEnt, (void **)&pxmlCust, sYES);
+            return sERROR;
+        }
     }
-    
-    if(bExist && strActVal == "cCREATE")
+    else if(bExist && strActVal == "cUPDATE")
     {
-        errorXml = "error  DBRead, cancel, CUSTID: ";
-        errorXml += strCustIDVal;
-        sLogMessage("%s", sLOG_ERROR, 0, errorXml.c_str());
-        sEntityFree(custEnt, (void **)&pCustomer, sYES);
-        sEntityFree(cxmlEnt, (void **)&pxmlCust, sYES);
+
+        //if(sEntityDBWrite(xmlEnt, (void*)pxmlCust,00))
+        if(sEntityDoSTDAction(xmlEnt, (void*)pxmlCust, NULL, sACT_IMPLIVE, sWRITE_MODE))
+        {
+            errorXml = "error sEntityDoSTDAction cUPDATE, cancel, CUSTID: ";
+            errorXml += strCustIDVal;
+            sLogMessage("%s", sLOG_ERROR, 0, errorXml.c_str());
+            sEntityFree(custEnt, (void **)&pCustomer, sYES);
+            sEntityFree(cxmlEnt, (void **)&pxmlCust, sYES);
+            return sERROR;
+        }
+    }
+
+
+    return sCUCCESS;
+}
+
+
+int LogMessage(const string& message, const string& cust, const string& prefix, const string& acction)
+{
+    char *envVar = getenv("SUMMITSPOOLDIR");
+    if(!envVar)
+    {
+        sLogMessage("SUMMITSPOOLDIR is not Defined", sLOG_WARNING, 0);
         return sERROR;
     }
-    
 
+    // Retrieve system time
+    char sysTime[32];
+    memset(&sysTime, 0x00, sizeof(sysTime));
+    sSysDateTime(sysTime);
 
+    //make up File Name
+    string fileName;
+    fileName.append(prefix);
+    fileName.append("-");
+    fileName.append(cust);
+    fileName.append("-");
+    fileName.append(action);
+    fileName.append("-");
+    fileName.append(sysTime);
 
-
+    for (int i = 0; i < fileName.size(); i++)
+    {
+        if(fileName[i] == '')
+        {
+            fileName.replace(i, 1, "_");
+        }
+        
+        if(fileName[i] == ':')
+        {
+            fileName.replace(i, 1, "");
+        }
+    }
 }
