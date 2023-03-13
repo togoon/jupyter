@@ -281,5 +281,27 @@ int cUpdateCust(SU_ValueList *pSrcVL, string &outXml, string &errorXml, const st
     if(err && err != sDB_FAIL)
     {
         errorXml = "Abnormal DBRead, cancel, CUSTID: ";
+        errorXml += strCustIDVal;
+        sLogMessage("%s", sLOG_ERROR, 0, errorXml.c_str());
+        sEntityDBRead(custEnt, (void *)pCustomer, "CANCEL", 00);
+        sEntityFree(custEnt, (void **)&pCustomer, sYES);
+        sEntityFree(cxmlEnt, (void **)&pxmlCust, sYES);
+        return sERROR;
     }
+
+    if(bExist && strActVal == "cCREAT")
+    {
+        errorXml = "error  DBRead, cancel, CUSTID: ";
+        errorXml += strCustIDVal;
+        sLogMessage("%s", sLOG_ERROR, 0, errorXml.c_str());
+        sEntityDBRead(custEnt, (void *)pCustomer, "CANCEL", 00);
+        sEntityFree(custEnt, (void **)&pCustomer, sYES);
+        sEntityFree(cxmlEnt, (void **)&pxmlCust, sYES);
+        return sERROR;
+    }
+    
+
+
+
+
 }
