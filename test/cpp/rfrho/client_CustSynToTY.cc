@@ -341,6 +341,10 @@ int HandleConnection(const string& message, string& reponse, sENTITY* Entity, vo
     }
 
     struct timeval timeOut = {60, 0}; //30
-    if(setsockopt(socketfd, SOL_SOCKET, SO_SNDTIMEO, &timeOut, sizeof(timeOut)) ==-1 || setsockopt() ==-1 )
+    if(setsockopt(socketfd, SOL_SOCKET, SO_SNDTIMEO, &timeOut, sizeof(timeOut)) ==-1 || setsockopt(socketfd, SOL_SOCKET, SO_RCVTIMEO, &timeOut, sizeof(timeOut)) ==-1 )
+    {
+        sLogMessage("set TimeOut [60s] error: %s(errno:%d)", sLOG_WARNING, 0, strerror(errno), errno);
+        
+    }
 }
 
