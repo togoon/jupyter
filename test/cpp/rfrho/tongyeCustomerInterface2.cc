@@ -386,5 +386,21 @@ int LogMessage(const string& message, const string& cust, const string& prefix, 
     }
 
     string spoolEnv(envVar);
-    
+    spoolEnv.erase(0, spoolEnv.find_first_not_of(" "));
+    spoolEnv.erase( spoolEnv.find_last_not_of(" ")+1);
+    spoolEnv.append("/");
+    spoolEnv.append(fileName);
+
+    ofstream spoolFile;
+    spoolFile.open(spoolEnv.c_str(), ios::out | ios::binary);
+    if(!spoolFile.is_open())
+    {
+        sLogMessage("SpoolFile[%s] cannot be open", sLOG_WARNING, 0, spoolEnv.c_str());
+        return sERROR;
+    }
+
+    spoolFile << message;
+    spoolFile.close();
+    return sSUCCESS;
 }
+
