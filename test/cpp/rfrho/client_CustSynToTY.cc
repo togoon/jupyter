@@ -40,9 +40,26 @@ int setCominflNo(string &strFlwNo);
 int DelNameLabel(const string &strName, string &strNode);
 
 extern "c"{
-        mDLLEXPORT sINT cSyncToTY(sENTITY * Entity, void * Data, sSTD_TRANSITION * Transition, void * par)
+    mDLLEXPORT sINT cSyncToTY(sENTITY *Entity, void *Data, sSTD_TRANSITION *Transition, void *params, sUINT MOde);
+};
+
+
+int SetCominFlwNo(string* strFlwNo)
+{
+    sENTITY *comEnt;
+    cCOMIN *pComin, *pnewComin;
+    sERRMSGLIST errMsg;
+
+    // strFlwNo = "10000001";
+
+    if(sInitList(&errMsg.List, "sERRMSG"))
+    {
+        sLogMessage("Error initializing error message list", sLOG_ERROR, 0);
+        return sERROR;
+    }
+
+    if(!(comEnt = sGetEntityByName("cCOMIN")))
+    {
+        
+    }
 }
-
-
-
-
