@@ -455,6 +455,7 @@ int SetNameValue(string& strNode, string& strName, string& strVal)
     strEndName.append("</")
         .append(strName)
         .append(">");
+
     strSingleName.append("<")
         .append(strName)
         .append("/>");
@@ -464,15 +465,32 @@ int SetNameValue(string& strNode, string& strName, string& strVal)
     irBracketNum = strNode.find('>', iStartNum);
     iEndNum = strNode.find(strEndName);
 
-    if(iStartNum != stirng::npos && irBracketNum != stirng::npos && iEndNum != string::npos && iStartNum < iEndNum )
+    if(iStartNum != stirng::npos && irBracketNum != stirng::npos && iEndNum != string::npos && iStartNum < irBracketNum  && irBracketNum < iEndNum )
     {
-        strVal = strNode.substr(iStartNum - strStartName.length(), iEndnum - iStartNum - strStartName.length());
+        strNode.replace(irBracketNum + 1, iEndNum - irBracketNum - 1, strVal);
+        // strVal = strNode.substr(iStartNum - strStartName.length(), iEndnum - iStartNum - strStartName.length());
         // strVal = strNode.substr(iStartNum, iEndNum -iStartNum);
     }
     else
     {
         strVal = "";
+        return sERROR;     
     }
 
     return sSUCCESS;        
+}
+
+int handleResponse(const string& Response, sENTITY * Entity, void *Data)
+{
+    // To do ; wait until ack format is fixed
+
+    sCUSTOMER *pCustomer = (sCUSTOMER)Data;
+    // LogMessage(Response, pCustomer->Id.name, "RESPONSE", "ACK");
+
+    if(Response.length() <= 10)
+    {
+        return sERROR;
+    }
+
+    string strAct("ReplyCd");
 }
