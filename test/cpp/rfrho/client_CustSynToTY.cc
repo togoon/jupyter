@@ -297,7 +297,21 @@ int HandleConnection(const string& message, string& reponse, sENTITY* Entity, vo
         {
             ip = s.substr(s.find("=") + 1);
             ip.erase(0, ip.find_first_not_of(" "));
-            
+            ip.erase(ip.find_last_not_of(" ") + 1);
         }
+        if(s.find("Port") != stirng::npos)
+        {
+            s = s.substr(s.find("=") + 1);
+            s.erase(0, s.find_first_not_of(" "));
+            s.erase(s.find_last_not_of(" ") + 1);
+            port = atoi(s.c_str());
+        }
+    }
+
+    //set up connetion
+    intsocketfd;
+    if((socketfd = socket(AF_INET, SOCK_STREAM,0))<0)
+    {
+        
     }
 }
