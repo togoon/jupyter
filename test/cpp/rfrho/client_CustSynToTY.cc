@@ -85,5 +85,42 @@ int SetCominFlwNo(string* strFlwNo)
     char sql[512] = {0};
     sprintf(sql, " where ctype='CUSOMER207' and substr(clastupdatetime,0,6) >= %s order by clastupdatetime desc", strDate.c_str());
 
-    
+    while(!(err = sEntityDBRead(comEnt, (void*)pComin, sql, 00)))
+    {
+        string strMid = pComin->cMsgId, Text;
+        strMid = strMid.substr(8, 7);
+        int iMid = atoi(strMid.c_str());
+        char scBuff[8] = {0};
+        sprintf(scBuff, "%07d", iMid + 1);
+        strFlwNo = scBuff;
+        break;
+    }
+
+    if(err && (err != sDB_FAIL))
+    {
+        sLogMessage("Abnormal read termination, cancel read", sLOG_ERROR, 0);
+        sEntityDBread(comEnt, (void *)pComin, "CANCEL", 00);
+        sEntityFree(comEnt, (void**))&pComin,sYES);
+        return sERROR;
+    }
+
+    if(sEntityClone(comEnt, (void**)&pnewComin,(void*)pComin))
+    {
+        sLogMessage("Error Clone cCOMIN Entity", sLOG_ERROR, 0);
+        sEntityFree(comEnt, (void**))&pComin,sYES);
+        return sERROR;
+    }
+
+    string strcMsgId;
+    strcMsgId.append(strDate).append(strFlwNo).append("99207");
+    memset(pnewComin->cMsgId.Text, 0x00, sizeof(pnewComin->cMsgId.Text));
+    strcpy(pnewComin->cMsgId.Text, strcMsgId.c_str());
+
+    memset(pnewComin - cType.Text, 0x00, sizeof(pnewComin->cType.Text));
+    strcpy(pnewComin->cType.Text, "CUSTOMER207");
+
+    pnewComin->cVersion = 0;
+    pnewComin->cIoInd = 0;
+
+    memset(pnewComin - cRecTime.Text, 0x00, sizeof(pnewComin->cRecTime.Text));
 }
