@@ -344,7 +344,32 @@ int HandleConnection(const string& message, string& reponse, sENTITY* Entity, vo
     if(setsockopt(socketfd, SOL_SOCKET, SO_SNDTIMEO, &timeOut, sizeof(timeOut)) ==-1 || setsockopt(socketfd, SOL_SOCKET, SO_RCVTIMEO, &timeOut, sizeof(timeOut)) ==-1 )
     {
         sLogMessage("set TimeOut [60s] error: %s(errno:%d)", sLOG_WARNING, 0, strerror(errno), errno);
-        
+        close(socketfd);
+        return sERROR;
     }
-}
 
+    sLogMessage("Sending customer info to TongYe System ...", sLOG_INFO, 0);
+    if(send(sockfd, message.c_str(), message.size(),0)<0)
+    {
+        SetCustComment("Send msg error", Entity, Data);
+        sLogMessage("send msg error: %s(errno:%d)", sLOG_WARNING, 0, strerror(errno), errno);
+        close(socketfd);
+        return sERROR;        
+    }
+
+    sLogMessage("Receiving respone from TongYe System ...", sLOG_INFO, 0);
+    char revBuffer[1023 * 10];
+    memset(revBuffer, 0x00, sizeof(revBuffer));
+    int revLen = recv(socketfd, revBuffer, sizeof(revBuffer), 0);
+    if (revLen < 0)
+    {
+        SetCustComment("recv respone error", Entity, Data);
+        sLogMessage("recv respone error: %s(errno:%d)", sLOG_WARNING, 0, strerror(errno), errno);
+        close(socketfd);
+        return sERROR;        
+    }
+    close(socketfd);
+
+    response.clear();
+    
+}
