@@ -422,7 +422,6 @@ int GetNameValue(const string& strNode, const string& strName, string& strVal)
     strEndName.append("</")
         .append(strName)
         .append(">");
-
     strSingleName.append("<")
         .append(strName)
         .append("/>");
@@ -434,8 +433,46 @@ int GetNameValue(const string& strNode, const string& strName, string& strVal)
 
     if(iStartNum != stirng::npos && iEndNum != string::npos && iStartNum < iEndNum )
     {
-        strNode.replace(iEndNum, strEndName.length(), "");
+        strVal = strNode.substr(iStartNum - strStartName.length(), iEndnum - iStartNum - strStartName.length());
+        // strVal = strNode.substr(iStartNum, iEndNum -iStartNum);
+    }
+    else
+    {
+        strVal = "";
     }
 
     return sSUCCESS;    
+}
+
+int SetNameValue(string& strNode, string& strName, string& strVal)
+{
+    string strStartName, strEndName, strSingleName;
+
+    strStartName.append("<")
+        .append(strName);
+    // .append(">");
+
+    strEndName.append("</")
+        .append(strName)
+        .append(">");
+    strSingleName.append("<")
+        .append(strName)
+        .append("/>");
+
+    string::size_type iStartNum, irBracketNum, iEndNum;
+    iStartNum = strNode.find(strStartName);
+    irBracketNum = strNode.find('>', iStartNum);
+    iEndNum = strNode.find(strEndName);
+
+    if(iStartNum != stirng::npos && irBracketNum != stirng::npos && iEndNum != string::npos && iStartNum < iEndNum )
+    {
+        strVal = strNode.substr(iStartNum - strStartName.length(), iEndnum - iStartNum - strStartName.length());
+        // strVal = strNode.substr(iStartNum, iEndNum -iStartNum);
+    }
+    else
+    {
+        strVal = "";
+    }
+
+    return sSUCCESS;        
 }
