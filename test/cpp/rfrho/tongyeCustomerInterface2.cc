@@ -224,6 +224,18 @@ int cUpdateCust(SU_ValueList *pSrcVL, string &outXml, string &errorXml, const st
         memset(pCustomer->Email.Name, 0x00, sizeof(pCustomer->Email.Name));
         strcpy(pCustomer->Email.Name, pxmlCust->Email.Name);
 
+        pCustomer->InputDate = pxmlCust->InputDate;
+
+        for (int i = 0; i < pCustomer->ClassifList.List.ItemsUsed;i++)
+        {
+            sCUSTCLAS *pClas = (sCUSTCLAS *)sGetLIstItem((void *)&pCustomer->ClassifList, i);
+            sDeleteListItem(&pCustomer->ClassifList, pCustomer->ClassifList.List.ItemsUsed, pClas);
+        }
+        for (int i = 0; i < pCustomer->ClassifList.List.ItemsUsed;i++)
+        {
+            sCUSTCLAS *pClas = (sCUSTCLAS *)sGetLIstItem((void *)&pCustomer->ClassifList, i);
+            sDeleteListItem(&pCustomer->ClassifList, pCustomer->ClassifList.List.ItemsUsed, pClas);
+        }
 
 
 
