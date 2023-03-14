@@ -955,4 +955,16 @@ curl -X POST -d '{ "method":"fixUTrade", "params":[ "mainname-binance", "subacco
     },
 
 
+fuserdata order update
+成交推送日志
+
+fuserdata account update
+订阅有错误
+
+onNewUOrderTrade called.
+查漏补推日志
+
+OrderAlgoriyhmManager::insertMarketUOrder
+下单日志
+
 
