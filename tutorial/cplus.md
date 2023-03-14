@@ -1790,23 +1790,24 @@ void set_thread_flag(int flag_value)
 # C、C++各个版本新特性 2020
 
 ## 1、C语言版本更迭
-年份        C标准        通用名     别名        标准编译选项        GNU扩展选项
-1972        Birth C      -          -        -        -
-1978        K&R C        -        -        -        -
-1989-1990        X3.159-1989, ISO/IEC 9899:1990        C89        C90, ANSI C, ISO C        -ansi, -std=c90, -std=iso9899:1990        -std=gnu90
-1995        ISO/IEC 9899/AMD1:1995        AMD1        C94, C95        -std=iso9899:199409        -
-1999        ISO/IEC 9899:1999        C99        -        -std=c99, -std=iso9899:1999        -std=gnu99
-2011        ISO/IEC 9899:2011        C11        -        -std=c11, -std=iso9899:2011        -std=gnu11
-2018        ISO/IEC 9899:2018        C18        -        -std=c18, -std=iso9899:2018        -std=gnu18
+年份        C标准                   通用名     别名     标准编译选项    GNU扩展选项
+1972        Birth C                 -         -        -             -
+1978        K&R C                   -         -        -             -
+1989-1990   X3.159-1989, ISO/IEC 9899:1990    C89      C90, ANSI C, ISO C   -ansi, -std=c90, -std=iso9899:1990        -std=gnu90
+1995        ISO/IEC 9899/AMD1:1995   AMD1     C94,C95  -std=iso9899:199409                -
+1999        ISO/IEC 9899:1999        C99      -        -std=c99, -std=iso9899:1999        -std=gnu99
+2011        ISO/IEC 9899:2011        C11      -        -std=c11, -std=iso9899:2011        -std=gnu11
+2018        ISO/IEC 9899:2018        C18      -        -std=c18, -std=iso9899:2018        -std=gnu18
+
 C++版本更迭
-年份        C++标准        通用名        别名        标准编译选项        GNU扩展选项
-1978        C with Classes        -        -        -        -
-1998        ISO/IEC 14882:1998        C++98        -        -std=c++98        -std=gnu++98
-2003        ISO/IEC 14882:2003        C++03        -        -std=c++03        -std=gnu++03
-2011        ISO/IEC 14882:2011        C++11        C++0x        std=c++11, std=c++0x        std=gnu++11, std=gnu++0x
-2014        ISO/IEC 14882:2014        C++14        C++1y        std=c++14, std=c++1y        std=gnu++14, std=gnu++1y
-2017        ISO/IEC 14882:2017        C++17        C++1z        std=c++17, std=c++1z        std=gnu++17, std=gnu++1z
-2020        to be determined        C++20        C++2a        -std=c++2a        std=gnu++2a
+年份        C++标准                 通用名      别名      标准编译选项            GNU扩展选项
+1978        C with Classes          -          -        -        -
+1998        ISO/IEC 14882:1998      C++98      -        -std=c++98              -std=gnu++98
+2003        ISO/IEC 14882:2003      C++03      -        -std=c++03              -std=gnu++03
+2011        ISO/IEC 14882:2011      C++11      C++0x    std=c++11, std=c++0x    std=gnu++11, std=gnu++0x
+2014        ISO/IEC 14882:2014      C++14      C++1y    std=c++14, std=c++1y    std=gnu++14, std=gnu++1y
+2017        ISO/IEC 14882:2017      C++17      C++1z    std=c++17, std=c++1z    std=gnu++17, std=gnu++1z
+2020        to be determined        C++20      C++2a    -std=c++2a              std=gnu++2a
 
 ## 2、C++各版本新特性
 
