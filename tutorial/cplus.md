@@ -2003,4 +2003,363 @@ gcc发展到今天已经不单单可以编译C语言了，还可以编译C++、J
 
 
 
+# C++ 11
+C++ 从2003年到2011年，也就是从C++03到C++11，期间C++引入了对象移动、右值引用、lamba表达式（函数式编程）、编译时类型识别（auto）、别名模板以及很多新型关键词（如nullptr、decltype、constexpr）等现代编程语言常具备的能力，让C++与时俱进，开发效率得到了很大的提升。这些新的特性随着C++11标准的发布而被正式确立下来。C++ 11版本也被称为现代C++，而C++ 98/03版本也被称为传统C++。
+
+## 1 nullptr
+由于 C++ 98 标准使用期间，NULL 已经得到了广泛的应用，出于兼容性的考虑，C++11 标准并没有对 NULL 的宏定义做任何修改。为了修正 C++ 存在的这一 BUG，C++ 标准委员会最终决定另其炉灶，在 C++11 标准中引入一个新关键字，即 nullptr。nullptr 是 nullptr_t 类型的右值常量，专用于初始化空类型指针。nullptr_t 是 C++11 新增加的数据类型，可称为“指针空值类型”。也就是说，nullpter 仅是该类型的一个实例对象（已经定义好，可以直接使用），如果需要我们完全定义出多个同 nullptr 完全一样的实例对象。nullptr 可以被隐式转换成任意的指针类型。举个例子：
+ int * a1 = nullptr;
+char * a2 = nullptr;
+double * a3 = nullptr;
+
+## 2 auto
+在之前的 C++ 版本中，auto 关键字用来指明变量的存储类型，它和 static 关键字是相对的。auto 表示变量是自动存储的，这也是编译器的默认规则，所以写不写都一样，一般我们也不写，这使得 auto 关键字的存在变得非常鸡肋。C++11 赋予 auto 关键字新的含义，使用它来做自动类型推导。也就是说，使用了 auto 关键字以后，编译器会在编译期间自动推导出变量的类型，这样我们就不用手动指明变量的数据类型了。auto 关键字基本的使用语法如下：
+auto name = value;
+int  x = 0;
+auto *p1 = &x;   //p1 为 int *，auto 推导为 int
+auto  p2 = &x;   //p2 为 int*，auto 推导为 int*
+auto &r1  = x;   //r1 为 int&，auto 推导为 int
+auto r2 = r1;    //r2 为  int，auto 推导为 int
+name 是变量的名字，value 是变量的初始值。注意：auto 仅仅是一个占位符，在编译器期间它会被真正的类型所替代。或者说，C++ 中的变量必须是有明确类型的，只是这个类型是由编译器自己推导出来的。
+auto 的限制：
+使用 auto 的时候必须对变量进行初始化
+auto 不能在函数的参数中使用
+auto 不能作用于类的非静态成员变量
+auto 关键字不能定义数组，如比如下面的例子就是错误的：
+char url[] = "http://c.biancheng.net/";
+auto  str[] = url;  //arr 为数组，所以不能使用 auto
+auto 不能作用于模板参数
+
+## 3 decltype
+decltype 是 C++ 11新增的一个关键字，它和 auto 的功能一样，都用来在编译时期进行自动类型推导。既然已经有了 auto 关键字，为什么还需要 decltype 关键字呢？因为 auto 并不适用于所有的自动类型推导场景，在某些特殊情况下 auto 用起来非常不方便，甚至压根无法使用，所以 decltype 关键字也被引入到 C++11 中。auto 和 decltype 关键字都可以自动推导出变量的类型，但它们的用法是有区别的：
+ auto varname = value;
+decltype(exp) varname = value;
+其中，varname 表示变量名，value 表示赋给变量的值，exp 表示一个表达式。auto 根据=右边的初始值 value 推导出变量的类型，而 decltype 根据 exp 表达式推导出变量的类型，跟=右边的 value 没有关系。另外，auto 要求变量必须初始化，而 decltype 不要求。这很容易理解，auto 是根据变量的初始值来推导出变量类型的，如果不初始化，变量的类型也就无法推导了。decltype 可以写成下面的形式：
+  decltype(exp) varname;
+原则上讲，exp 就是一个普通的表达式，它可以是任意复杂的形式，但是我们必须要保证 exp 的结果是有类型的，不能是 void；例如，当 exp 调用一个返回值类型为 void 的函数时，exp 的结果也是 void 类型，此时就会导致编译错误。C++ decltype 用法举例：
+int a = 0;
+decltype(a) b = 1;  //b 被推导成了 int
+decltype(10.8) x = 5.5;  //x 被推导成了 double
+decltype(x + 100) y;  //y 被推导成了 double
+
+## 4 初始化列表
+（1）一致性初始化
+在 C++ 98/03 中的对象初始化方法有很多种，包括小括号，大括号和赋值操作符，这些不同的初始化方法，都有各自的适用范围和作用。最关键的是，这些种类繁多的初始化方法，没有一种可以通用所有情况。为了统一初始化方式，并且让初始化行为具有确定的效果，C++11 引入了“一致性初始化”的概念，意思是对任何初始化动作，你可以使用相同的语法，也就是使用大括号。
+int values[]{1, 2, 3};
+std::vector<int> v {2, 3, 5, 7, 11, 13, 17};
+std::vector<std::string> cities {"bejing", "shanghai", "guangzhou", "shenzhen"};
+（2）初始列
+初值列会强迫造成所谓的value initialization，意思是即使某个局部变量属于某个基础类型，也会被初始化为0或者nullptr（如果它是个指针的话）：
+int i;     // i是随机值
+int j{};   // j初始化为int* p;    // p是未定义值
+int* q{};  // q初始化为nullptr
+## 5 范围for循环
+C++ 11 标准中，除了可以沿用前面介绍的用法外，还为 for 循环添加了一种全新的语法格式，如下所示：
+for (declaration : expression)
+{
+    //循环体
+}
+其中，两个参数各自的含义如下：
+declaration：表示此处要定义一个变量，该变量的类型为要遍历序列中存储元素的类型。需要注意的是，C++ 11标准中，declaration参数处定义的变量类型可以用 auto 关键字表示，该关键字可以使编译器自行推导该变量的数据类型。
+expression：表示要遍历的序列，常见的可以为事先定义好的普通数组或者容器，还可以是用 {} 大括号初始化的序列。
+
+## 6 右值引用
+（1）左值和右值
+在 C++ 或者 C 语言中，一个表达式（可以是字面量、变量、对象、函数的返回值等）根据其使用场景不同，分为左值表达式和右值表达式。确切的说 C++ 中左值和右值的概念是从 C 语言继承过来的。左值的英文简写为“lvalue”，右值的英文简写为“rvalue”。很多人认为它们分别是"left value"、“right value” 的缩写，其实不然。lvalue 是“loactor value”的缩写，可意为存储在内存中、有明确存储地址（可寻址）的数据，而 rvalue 译为 “read value”，指的是那些可以提供数据值的数据（不一定可以寻址，例如存储于寄存器中的数据）。
+通常情况下，判断某个表达式是左值还是右值，最常用的有以下 2 种方法：
+可位于赋值号（=）左侧的表达式就是左值；反之，只能位于赋值号右侧的表达式就是右值。
+有名称的、可以获取到存储地址的表达式即为左值；反之则是右值。
+（2）右值引用
+C++98/03 标准中就有引用，使用 “&” 表示。但此种引用方式有一个缺陷，即正常情况下只能操作 C++ 中的左值，无法对右值添加引用。举个例子：
+int num = 10;
+int &b = num; //正确
+int &c = 10; //错误
+如上所示，编译器允许我们为 num 左值建立一个引用，但不可以为 10 这个右值建立引用。因此，C++98/03 标准中的引用又称为左值引用。为此，C++11 标准新引入了另一种引用方式，称为右值引用，用 “&&” 表示。和声明左值引用一样，右值引用也必须立即进行初始化操作，且只能使用右值进行初始化，比如：
+int num = 10;
+int && a = num;  // error，右值引用不能初始化为左值
+int && a = 10;
+（3）移动构造函数
+在 C++ 11 标准之前（C++ 98/03 标准中），如果想用其它对象初始化一个同类的新对象，只能借助类中的复制（拷贝）构造函数。拷贝构造函数的实现原理很简单，就是为新对象复制一份和其它对象一模一样的数据。
+#include <iostream>
+using namespace std;
+class demo{
+public:
+   demo():num(new int(0))
+   {
+      cout<<"construct!"<<endl;
+   }
+   //拷贝构造函数
+   demo(const demo &d):num(new int(*d.num))
+   {
+      cout<<"copy construct!"<<endl;
+   }
+   ~demo()
+   {
+      cout<<"class destruct!"<<endl;
+   }
+private:
+   int *num;
+};
+demo get_demo()
+{
+    return demo();
+}
+int main(){
+    demo a = get_demo();
+    return 0;
+}
+1111111111222222222
+可以看到，程序中定义了一个可返回 demo 对象的 get_demo() 函数，用于在 main() 主函数中初始化 a 对象，其整个初始化的流程包含以下几个阶段：
+1）执行 get_demo() 函数内部的 demo() 语句，即调用 demo 类的默认构造函数生成一个匿名对象；
+2）执行 return demo() 语句，会调用拷贝构造函数复制一份之前生成的匿名对象，并将其作为 get_demo() 函数的返回值（函数体执行完毕之前，匿名对象会被析构销毁）；
+3）执行 a = get_demo() 语句，再调用一次拷贝构造函数，将之前拷贝得到的临时对象复制给 a（此行代码执行完毕，get_demo() 函数返回的对象会被析构）；
+4）程序执行结束前，会自行调用 demo 类的析构函数销毁 a。
+完整的输出结果如下：
+construct!                <-- 执行 demo()
+copy construct!       <-- 执行 return demo()
+class destruct!         <-- 销毁 demo() 产生的匿名对象
+copy construct!       <-- 执行 a = get_demo()
+class destruct!         <-- 销毁 get_demo() 返回的临时对象
+class destruct!         <-- 销毁 a
+如上所示，利用拷贝构造函数实现对 a 对象的初始化，底层实际上进行了 2 次拷贝（而且是深拷贝）操作。当然，对于仅申请少量堆空间的临时对象来说，深拷贝的执行效率依旧可以接受，但如果临时对象中的指针成员申请了大量的堆空间，那么 2 次深拷贝操作势必会影响 a 对象初始化的执行效率。
+所谓移动语义，指的就是以移动而非深拷贝的方式初始化含有指针成员的类对象。简单的理解，移动语义指的就是将其他对象（通常是临时对象）拥有的内存资源“移为已用”。以前面程序中的 demo 类为例，该类的成员都包含一个整形的指针成员，其默认指向的是容纳一个整形变量的堆空间。当使用 get_demo() 函数返回的临时对象初始化 a 时，我们只需要将临时对象的 num 指针直接浅拷贝给 a.num，然后修改该临时对象中 num 指针的指向（通常另其指向 NULL），这样就完成了 a.num 的初始化。
+#include <iostream>
+using namespace std;
+class demo{
+public:
+    demo():num(new int(0))
+    {
+        cout<<"construct!"<<endl;
+    }
+    demo(const demo &d):num(new int(*d.num))
+    {
+        cout<<"copy construct!"<<endl;
+    }
+    //添加移动构造函数
+    demo(demo &&d):num(d.num)
+    {
+        d.num = NULL;
+        cout<<"move construct!"<<endl;
+    }
+    ~demo(){
+        cout<<"class destruct!"<<endl;
+    }
+private:
+    int *num;
+};
+demo get_demo()
+{
+    return demo();
+}
+int main()
+{
+    demo a = get_demo();
+    return 0;
+}
+111111111122222222223333
+可以看到，在之前 demo 类的基础上，我们又手动为其添加了一个构造函数。和其它构造函数不同，此构造函数使用右值引用形式的参数，又称为移动构造函数。并且在此构造函数中，num 指针变量采用的是浅拷贝的复制方式，同时在函数内部重置了 d.num，有效避免了“同一块对空间被释放多次”情况的发生。 命令执行此程序，输出结果为：
+construct!
+move construct!
+class destruct!
+move construct!
+class destruct!
+class destruct!
+通过执行结果我们不难得知，当为 demo 类添加移动构造函数之后，使用临时对象初始化 a 对象过程中产生的 2 次拷贝操作，都转由移动构造函数完成。我们知道，非 const 右值引用只能操作右值，程序执行结果中产生的临时对象（例如函数返回值、lambda 表达式等）既无名称也无法获取其存储地址，所以属于右值。当类中同时包含拷贝构造函数和移动构造函数时，如果使用临时对象初始化当前类的对象，编译器会优先调用移动构造函数来完成此操作。只有当类中没有合适的移动构造函数时，编译器才会退而求其次，调用拷贝构造函数。
+（4）move语义
+ C++11 标准中借助右值引用可以为指定类添加移动构造函数，这样当使用该类的右值对象（可以理解为临时对象）初始化同类对象时，编译器会优先选择移动构造函数。注意，移动构造函数的调用时机是：用同类的右值对象初始化新对象。那么，用当前类的左值对象（有名称，能获取其存储地址的实例对象）初始化同类对象时，是否就无法调用移动构造函数了呢？当然不是，C++11 标准中已经给出了解决方案，即调用 move() 函数。move 本意为 “移动”，但该函数并不能移动任何数据，它的功能很简单，就是将某个左值强制转化为右值。move() 函数的用法也很简单，其语法格式如下：
+move( arg )
+（5）完美转发
+完美转发指的是函数模板可以将自己的参数“完美”地转发给内部调用的其它函数。所谓完美，即不仅能准确地转发参数的值，还能保证被转发参数的左、右值属性不变。举个例子：
+template<typename T>
+void function(T t) 
+{
+    otherdef(t);
+}
+ 如上所示，function() 函数模板中调用了 otherdef() 函数。在此基础上，完美转发指的是：如果 function() 函数接收到的参数 t 为左值，那么该函数传递给 otherdef() 的参数 t 也是左值；反之如果 function() 函数接收到的参数 t 为右值，那么传递给 otherdef() 函数的参数 t 也必须为右值。显然，function() 函数模板并没有实现完美转发。一方面，参数 t 为非引用类型，这意味着在调用 function() 函数时，实参将值传递给形参的过程就需要额外进行一次拷贝操作；另一方面，无论调用 function() 函数模板时传递给参数 t 的是左值还是右值，对于函数内部的参数 t 来说，它有自己的名称，也可以获取它的存储地址，因此它永远都是左值，也就是说，传递给 otherdef() 函数的参数 t 永远都是左值。总之，无论从那个角度看，function() 函数的定义都不“完美”。
+C++11 标准中规定，通常情况下右值引用形式的参数只能接收右值，不能接收左值。但对于函数模板中使用右值引用语法定义的参数来说，它不再遵守这一规定，既可以接收右值，也可以接收左值（此时的右值引用又被称为“万能引用”）。
+#include <iostream>
+using namespace std;
+//重载被调用函数，查看完美转发的效果
+void otherdef(int & t) 
+{
+    cout << "lvalue\n";
+}
+void otherdef(const int & t) 
+{
+    cout << "rvalue\n";
+}
+//实现完美转发的函数模板
+template <typename T>
+void function(T&& t) 
+{
+    otherdef(forward<T>(t));
+}
+int main()
+{
+    function(5);
+    int  x = 1;
+    function(x);
+    return 0;
+}
+111111111122222
+程序执行结果为：
+rvalue
+lvalue
+
+## 7 字符串字面量
+我们要打印如下内容：
+this is "test"
+我们不得不用如下的代码，对" 进行转义：
+std::string normal_str = "this is \"test\"";
+C++11引入了字符串字面量的概念，C++11支持用户自定义字面量。对于前面的例子，我们就可以通过如下的方式实现我们的目的：
+std::string normal_str = R"(this is "test")";
+
+## 8 noexcept
+C++11新标准引入的noexcept运算符，可以用于指定某个函数不抛出异常。预先知道函数不会抛出异常有助于简化调用该函数的代码，而且编译器确认函数不会抛出异常，它就能执行某些特殊的优化操作。C++ 98/03版本中常用throw()表示，在C++ 11中已经被noexcept代替。
+3.9 constexpr
+常量表达式，指的就是由多个（≥1）常量组成的表达式。换句话说，如果表达式中的成员都是常量，那么该表达式就是一个常量表达式。这也意味着，常量表达式一旦确定，其值将无法修改。我们知道，C++ 程序的执行过程大致要经历编译、链接、运行这 3 个阶段。值得一提的是，常量表达式和非常量表达式的计算时机不同，非常量表达式只能在程序运行阶段计算出结果；而常量表达式的计算往往发生在程序的编译阶段，这可以极大提高程序的执行效率，因为表达式只需要在编译阶段计算一次，节省了每次程序运行时都需要计算一次的时间。对于用 C++ 编写的程序，性能往往是永恒的追求。那么在实际开发中，如何才能判定一个表达式是否为常量表达式，进而获得在编译阶段即可执行的“特权”呢？除了人为判定外，C++11 标准还提供有 constexpr 关键字。
+constexpr 关键字的功能是使指定的常量表达式获得在程序编译阶段计算出结果的能力，而不必等到程序运行阶段。C++ 11 标准中，constexpr 可用于修饰普通变量、函数（包括模板函数）以及类的构造函数。 C++11 标准中，定义变量时可以用 constexpr 修饰，从而使该变量获得在编译阶段即可计算出结果的能力。
+#include <iostream>
+using namespace std;
+int main()
+{
+    constexpr int num = 1 + 2 + 3;
+    int url[num] = {1,2,3,4,5,6};
+    couts<< url[1] << endl;
+    return 0;
+}
+
+## 10 template特性
+类模板：通用的类描述（使用泛型来定义类），进行实例化时，其中的泛型再用具体的类型替换。
+函数模板：通用的函数描述（使用泛型来定义函数），进行实例化时，其中的泛型再用具体的类型替换。
+
+## 11 Lambda表达式
+lambda 源自希腊字母表中第 11 位的 λ，在计算机科学领域，它则是被用来表示一种匿名函数。所谓匿名函数，简单地理解就是没有名称的函数，又常被称为 lambda 函数或者 lambda 表达式。
+（1）匿名函数定义
+定义一个 lambda 匿名函数很简单，可以套用如下的语法格式：
+[外部变量访问方式说明符] (参数) mutable noexcept/throw() -> 返回值类型
+{
+   函数体;
+};
+[外部变量方位方式说明符]：[ ] 方括号用于向编译器表明当前是一个 lambda 表达式，其不能被省略。在方括号内部，可以注明当前lambda 函数的函数体中可以使用哪些“外部变量”。所谓外部变量，指的是和当前 lambda 表达式位于同一作用域内的所有局部变量。
+(参数)：和普通函数的定义一样，lambda 匿名函数也可以接收外部传递的多个参数。和普通函数不同的是，如果不需要传递参数，可以连同 ()
+小括号一起省略；
+mutable：此关键字可以省略，如果使用则之前的 () 小括号将不能省略（参数个数可以为
+0）。默认情况下，对于以值传递方式引入的外部变量，不允许在 lambda 表达式内部修改它们的值（可以理解为这部分变量都是 const
+常量）。而如果想修改它们，就必须使用 mutable 关键字。
+noexcept/throw()：可以省略，如果使用，在之前的 () 小括号将不能省略（参数个数可以为 0）。默认情况下，lambda
+函数的函数体中可以抛出任何类型的异常。而标注 noexcept 关键字，则表示函数体内不会抛出任何异常；使用 throw() 可以指定
+lambda 函数内部可以抛出的异常类型。值得一提的是，如果 lambda 函数标有 noexcept 而函数体内抛出了异常，又或者使用
+throw() 限定了异常类型而函数体内抛出了非指定类型的异常，这些异常无法使用 try-catch 捕获，会导致程序执行失败。
+-> 返回值类型：指明 lambda 匿名函数的返回值类型。值得一提的是，如果 lambda 函数体内只有一个 return 语句，或者该函数返回 void，则编译器可以自行推断出返回值类型，此情况下可以直接省略-> 返回值类型。
+函数体：和普通函数一样，lambda
+匿名函数包含的内部代码都放置在函数体中。该函数体内除了可以使用指定传递进来的参数之外，还可以使用指定的外部变量以及全局范围内的所有全局变量。需要注意的是，外部变量会受到以值传递还是以引用传递方式引入的影响，而全局变量则不会。换句话说，在
+lambda 表达式内可以使用任意一个全局变量，必要时还可以直接修改它们的值。
+（2）匿名函数中的外部变量
+对于 lambda 匿名函数的使用，比较让人感到困惑的就是 [外部变量] 的使用。其实很简单，无非下表所示的这几种编写格式。
+在这里插入图片描述
+**注意：**单个外部变量不允许以相同的传递方式导入多次。例如 [=，val1] 中，val1 先后被以值传递的方式导入了 2 次，这是非法的。
+（3）使用实例
+#include <iostream>
+#include <algorithm>
+using namespace std;
+int main()
+{
+    int num[4] = {4, 2, 3, 1};
+    //对 a 数组中的元素进行排序
+    sort(num, num + 4, [=](int x, int y) -> bool{ return x < y; } );
+    for(int n : num)
+    {
+        cout << n << " ";
+    }
+    return 0;
+}
+111111
+程序执行结果为：1 2 3 4。调用 sort() 函数实现了对 num 数组中元素的升序排序，其中就用到了 lambda 匿名函数。
+此程序中 sort_up() 函数的功能和上一个程序中的 lambda 匿名函数完全相同。显然在类似的场景中，使用 lambda 匿名函数更有优势。除此之外，虽然 lambda 匿名函数没有函数名称，但我们仍可以为其手动设置一个名称，比如：
+#include <iostream>
+using namespace std;
+int main()
+{
+    //display 即为 lambda 匿名函数的函数名
+    auto display = [](int a,int b) -> void{cout << a << " " << b;};
+    //调用 lambda 函数
+    display(10,20);
+    return 0;
+}
+1程序执行结果为：10 20。可以看到，程序中使用 auto 关键字为 lambda 匿名函数设定了一个函数名，由此我们即可在作用域内调用该函数。
+
+## 12 函数声明语法
+在C++11中，callable object 包括传统C函数，C++成员函数，函数对象（实现了（）运算符的类的实例），lambda表达式（特殊函数对象）共4种。程序设计，特别是程序库设计时，经常需要涉及到回调，如果针对每种不同的callable object单独进行声明类型，代码将会非常散乱，也不灵活。
+
+## 13 强类型枚举
+非强作用域类型，允许隐式转换为整型，枚举常量占用存储空间以及符号性的不确定，都是枚举类缺点。针对这些缺点，C++11引入了一种新的枚举类型——强类型枚举（strong-typed enum）。强类型枚举使用enum class语法来声明：
+enum class Enumeration{VAL1, VAL2, VAL3 = 100, VAL4};
+强类型枚举具有如下几个优点：
+强作用域，强类型枚举成员的名称不会被输出到其父作用域，所以不同枚举类型定义同名枚举成员编译不会报重定义错误。进而使用枚举类型的枚举成员时，必须指明所属范围，比如Enum::VAL1，而单独的VAL1则不再具有意义；
+转换限制，强类型枚举成员的值不可以与整型发生隐式相互转换。比如比如Enumeration::VAL4==10;会触发编译错误；
+可以指定底层类型。强类型枚举默认的底层类型是int，但也可以显示地指定底层类型。具体方法是在枚举名称后面加上":type"，其中type可以是除wchar_t以外的任何整型。比如：
+enum class Type:char{Low,Middle,High};
+注意：
+声明强类型枚举的时候，既可以使用关键字enum class，也可以使用enum struct。事实上，enum struct与enum
+class在语法上没有任何区别。
+由于强类型枚举是强类型作用域的，故匿名的enum class可能什么都做不了，如下代码会报编译错误：
+enum class {General, Light, Medium, Heavy} weapon;
+int main()
+{
+    weapon = Medium; //编译出错
+    bool b = weapon == weapon::Medium; //编译出错
+    return 0;
+}
+
+## 14 新增基础类型
+C++11标准中的char16_t和char32_t用来处理Unicode字符，char16_t可以作为UTF-16的一个处理单元，char32_t可以作为UTF-32编码的一个处理单元。
+在这里插入图片描述
+
+## 15 多线程Thread
+C++11新标准中引入五个头文件支持多线程编程，他们分别是： <condition_variable>
+（1）thread头文件：该头文件主要声明了 std::thread类，另外std::this_thread命名空间也在改头文件中。
+（2）atomic头文件：该头文件主要声明了std::atomic和std::atomic_flag两个类，另外还申明了一套C风格的原子类型与C兼容的原子操作的函数。
+（3）mutex头文件：该头文件主要声明了与互斥量(mutex)相关的类，包括std::mutex系列类、std::lock_guard类std::unique_lock类等。
+（4）condition_variable头文件：该头文件主要声明了与条件变量相关的类，包括 std::condition_variable和std::condition_variable_any两个类。
+（5）future头文件：该头文件主要声明了：
+Futures类：std::future, shared_future
+Providers类：std::promise, std::package_task
+Providers函数：std::async()
+
+## 16 智能指针
+所谓智能指针，可以从字面上理解为“智能”的指针。具体来讲，智能指针和普通指针的用法是相似的，不同之处在于，智能指针可以在适当时机自动释放分配的内存。也就是说，使用智能指针可以很好地避免“忘记释放内存而导致内存泄漏”问题出现。由此可见，C++ 也逐渐开始支持垃圾回收机制了，尽管目前支持程度还有限。C++98/03 标准中，支持使用 auto_ptr 智能指针来实现堆内存的自动回收；C++11 新标准在废弃 auto_ptr 的同时，增添了 unique_ptr、shared_ptr 以及 weak_ptr 这 3 个智能指针来实现堆内存的自动回收。
+（1）shared_ptr
+和 unique_ptr、weak_ptr 不同之处在于，多个 shared_ptr 智能指针可以共同使用同一块堆内存。并且，由于该类型智能指针在实现上采用的是引用计数机制，即便有一个 shared_ptr 指针放弃了堆内存的“使用权”（引用计数减 1），也不会影响其他指向同一堆内存的 shared_ptr 指针（只有引用计数为 0 时，堆内存才会被自动释放）。shared_ptr 类模板中，提供了多种实用的构造函数：
+ std::shared_ptr<int> p1;             //不传入任何实参
+std::shared_ptr<int> p2(nullptr);    //传入空指针 nullptr
+std::shared_ptr<int> p3(new int(10)); // 在构建 shared_ptr 智能指针，也可以明确其指向。
+std::shared_ptr<int> p3 = std::make_shared<int>(10); // C++11 标准中还提供了 std::make_shared<T> 模板函数
+// 调用拷贝构造函数
+std::shared_ptr<int> p4(p3); 
+std::shared_ptr<int> p4 = p3;
+// 调用移动构造函数
+std::shared_ptr<int> p5(std::move(p4)); 
+std::shared_ptr<int> p5 = std::move(p4);
+111同一普通指针不能同时为多个 shared_ptr 对象赋值，否则会导致程序发生异常。例如：
+int* ptr = new int;
+std::shared_ptr<int> p1(ptr);
+std::shared_ptr<int> p2(ptr); // 错误
+（2）unique_ptr
+作为智能指针的一种，unique_ptr 指针自然也具备“在适当时机自动释放堆内存空间”的能力。和 shared_ptr 指针最大的不同之处在于，unique_ptr 指针指向的堆内存无法同其它 unique_ptr 共享，也就是说，每个 unique_ptr 指针都独自拥有对其所指堆内存空间的所有权。这也就意味着，每个 unique_ptr 指针指向的堆内存空间的引用计数，都只能为 1，一旦该 unique_ptr 指针放弃对所指堆内存空间的所有权，则该空间会被立即释放回收。
+std::unique_ptr<int> p1();         // 创建出空的 unique_ptr 指针：
+std::unique_ptr<int> p2(nullptr);  // 创建出空的 unique_ptr 指针：
+std::unique_ptr<int> p3(new int);  // 创建出了一个 p3 智能指针，其指向的是可容纳 1 个整数的堆存储空间。
+// 基于 unique_ptr 类型指针不共享各自拥有的堆内存，因此 C++11 标准中的 unique_ptr 模板类没有提供拷贝构造函数，只提供了移动构造函数
+std::unique_ptr<int> p4(new int);
+std::unique_ptr<int> p5(p4);// 错误，堆内存不共享
+std::unique_ptr<int> p5(std::move(p4)); // 正确，调用移动构造函数
+（3）weak_ptr
+需要注意的是，C++11标准虽然将 weak_ptr 定位为智能指针的一种，但该类型指针通常不单独使用（没有实际用处），只能和 shared_ptr 类型指针搭配使用。甚至于，我们可以将 weak_ptr 类型指针视为 shared_ptr 指针的一种辅助工具，借助 weak_ptr 类型指针， 我们可以获取 shared_ptr 指针的一些状态信息，比如有多少指向相同的 shared_ptr 指针、shared_ptr 指针指向的堆内存是否已经被释放等等。
+需要注意的是，当 weak_ptr 类型指针的指向和某一 shared_ptr 指针相同时，weak_ptr 指针并不会使所指堆内存的引用计数加 1；同样，当 weak_ptr 指针被释放时，之前所指堆内存的引用计数也不会因此而减 1。也就是说，weak_ptr 类型指针并不会影响所指堆内存空间的引用计数。除此之外，weak_ptr 模板类中没有重载 * 和 -> 运算符，这也就意味着，weak_ptr 类型指针只能访问所指的堆内存，而无法修改它。
+std::weak_ptr<int> wp1; // 可以创建一个空 weak_ptr 指针
+std::weak_ptr<int> wp2 (wp1); // 凭借已有的 weak_ptr 指针，可以创建一个新的 weak_ptr 指针
+// 利用已有的 shared_ptr 指针为其初始化
+std::shared_ptr<int> sp (new int);
+std::weak_ptr<int> wp3 (sp);
 
