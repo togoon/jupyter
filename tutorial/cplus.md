@@ -1829,6 +1829,19 @@ STL容器std::array，std::forward_list，std::unordered_map，std::unordered_se
 拓展了类型推导至任意函数：C11只支持lambda返回类型的auto
 弃用关键字 [[deprecated]]
 
+2014 年 8 月 18 日，ISO（国际标准化组织）批准了 C++ 的新版本，称为 C++14。 与添加大量新功能的 C++11 不同，C++14 是一个相对较小的更新，主要包括错误修复和小改进。
+
+聚合成员初始化（结构、成员和成员选择简介）
+二进制文字（文字常量）
+[[deprecated]] 属性
+数字分隔符（文字常量）
+函数返回类型推导（使用 auto 关键字对对象进行类型推导）
+Generic lambdas (Introduction to lambdas (anonymous functions))
+宽松的 constexpr 函数（Consexpr 和 consteval 函数）
+变量模板
+std::make_unique
+
+
 ### C++ 17
 拓展了constexpr至switch if等：C++11的constexpr函数只能包含一个表达式
 typename 嵌套
@@ -1855,6 +1868,30 @@ using B1::B1;//表示继承B1的构造函数
 [[nodiscard]]表示函数的返回值没有被接收，在编译时会出现警告。
 [[maybe_unused]]即便没使用也不警告
 
+2017 年 9 月，ISO（国际标准化组织）批准了 C++ 的新版本，称为 C++17。 C++17 包含大量新内容。
+
+__has_include 预处理器标识符，用于检查可选头文件是否可用
+在编译时解析的 if 语句
+if 语句和 switch 语句中的初始化器
+内联变量（跨多个文件共享全局常量（使用内联变量））
+折叠表达式
+嵌套命名空间现在可以定义为命名空间 X::Y (用户定义的命名空间和范围解析运算符)
+删除 std::auto_ptr 和其他一些不推荐使用的类型
+static_assert 不再需要诊断文本消息参数（Assert 和 static_assert）
+std::any
+std::byte
+std::filesystem
+std::optional
+std::shared_ptr 现在可以管理 C 样式数组（但 std::make_shared 还不能创建它们）
+std::size (数组 (第二部分))
+std::string_view
+结构化绑定声明
+构造函数的模板推导
+三元组已被删除
+typename 现在可以在模板模板参数中使用（而不是类）
+UTF-8 (u8) 字符文字
+
+
 ### C++ 20
 concept用于声明具有特定约束条件的模板类型
 // 声明一个数值类型的concept
@@ -1863,5 +1900,25 @@ template
 协程（Coroutines）
 模块（modules）
 
+2020 年 2 月，ISO（国际标准化组织）批准了新版本的 C++，称为 C++20。 C++20 包含自 C++11 以来对该语言的最大更改。
 
+通过自动参数的缩写函数模板（具有多种模板类型的函数模板）
+日历和时区支持的 Chrono 扩展
+概念，允许您对模板参数施加约束
+Constexpr 虚函数、联合、try、catch、dynamic_cast 和 typeid
+Constinit 关键字，断言变量具有静态初始化
+协程
+指定初始化器（结构聚合初始化）
+使用 consteval 关键字的立即函数（Constexpr 和 consteval 函数）
+模块，#include 的替代品
+范围
+std::erase
+std::make_shared 用于数组
+std::map::contains()
+std::span
+字符串格式化库（还没有教程，请参阅 https://en.cppreference.com/w/cpp/utility/format）
+字符串文字作为模板参数
+使用 spaceship 运算符 <=> 进行三向比较
+使用范围枚举
+视图
 
