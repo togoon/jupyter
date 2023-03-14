@@ -1787,11 +1787,11 @@ void set_thread_flag(int flag_value)
 
 
 
-# C、C++各个版本、C++各版本新特性 2020
+# C、C++各个版本新特性 2020
 
 ## 1、C语言版本更迭
-年份        C标准        通用名        别名        标准编译选项        GNU扩展选项
-1972        Birth C        -        -        -        -
+年份        C标准        通用名     别名        标准编译选项        GNU扩展选项
+1972        Birth C      -          -        -        -
 1978        K&R C        -        -        -        -
 1989-1990        X3.159-1989, ISO/IEC 9899:1990        C89        C90, ANSI C, ISO C        -ansi, -std=c90, -std=iso9899:1990        -std=gnu90
 1995        ISO/IEC 9899/AMD1:1995        AMD1        C94, C95        -std=iso9899:199409        -
