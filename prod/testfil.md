@@ -967,4 +967,7 @@ onNewUOrderTrade called.
 OrderAlgoriyhmManager::insertMarketUOrder
 下单日志
 
+find . -type f -iname "*.log" | xargs grep -inr "onNewUOrderTrade called" | grep -v grep 
+
+
 
