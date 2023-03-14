@@ -1787,7 +1787,80 @@ void set_thread_flag(int flag_value)
 
 
 
+# C、C++各个版本、C++各版本新特性 2020
 
+## 1、C语言版本更迭
+年份        C标准        通用名        别名        标准编译选项        GNU扩展选项
+1972        Birth C        -        -        -        -
+1978        K&R C        -        -        -        -
+1989-1990        X3.159-1989, ISO/IEC 9899:1990        C89        C90, ANSI C, ISO C        -ansi, -std=c90, -std=iso9899:1990        -std=gnu90
+1995        ISO/IEC 9899/AMD1:1995        AMD1        C94, C95        -std=iso9899:199409        -
+1999        ISO/IEC 9899:1999        C99        -        -std=c99, -std=iso9899:1999        -std=gnu99
+2011        ISO/IEC 9899:2011        C11        -        -std=c11, -std=iso9899:2011        -std=gnu11
+2018        ISO/IEC 9899:2018        C18        -        -std=c18, -std=iso9899:2018        -std=gnu18
+C++版本更迭
+年份        C++标准        通用名        别名        标准编译选项        GNU扩展选项
+1978        C with Classes        -        -        -        -
+1998        ISO/IEC 14882:1998        C++98        -        -std=c++98        -std=gnu++98
+2003        ISO/IEC 14882:2003        C++03        -        -std=c++03        -std=gnu++03
+2011        ISO/IEC 14882:2011        C++11        C++0x        std=c++11, std=c++0x        std=gnu++11, std=gnu++0x
+2014        ISO/IEC 14882:2014        C++14        C++1y        std=c++14, std=c++1y        std=gnu++14, std=gnu++1y
+2017        ISO/IEC 14882:2017        C++17        C++1z        std=c++17, std=c++1z        std=gnu++17, std=gnu++1z
+2020        to be determined        C++20        C++2a        -std=c++2a        std=gnu++2a
+
+## 2、C++各版本新特性
+
+### C++ 11
+auto关键字
+decltype关键字
+nullptr字面值
+constexpr关键字
+for（declaration ： expression）
+Lambda表达式
+initializer_list
+标准库bind函数
+智能指针shared_ptr,unique_ptr
+右值引用&&
+STL容器std::array，std::forward_list，std::unordered_map，std::unordered_set
+
+### C++ 14
+拓展了lambda表达式，更加泛型：支持auto
+拓展了类型推导至任意函数：C11只支持lambda返回类型的auto
+弃用关键字 [[deprecated]]
+
+### C++ 17
+拓展了constexpr至switch if等：C++11的constexpr函数只能包含一个表达式
+typename 嵌套
+inline 内联变量
+模板参数推导
+元组类 std::tuple：std::pair实现两个元素的组合，它实现多个
+类模板
+std::variant
+表示一个类型安全的联合体。
+引用包装器 std::reference_wrapper
+变长参数模板
+结构化绑定（函数多值返回时用{}合成struct）
+非类型模板参数可传入类的静态成员
+在if和switch中可进行初始化
+初始化（如struct）对象时，可用花括号进行对其成员进行赋值
+简化多层命名空间的写法
+lambda表达式可捕获*this的值，但this及其成员为只读
+十六进制的单精度浮点数
+继承与改写构造函数
+using B1::B1;//表示继承B1的构造函数
+当模板参数为非类型时，可用auto自动推导类型
+判断有没有包含某文件__has_include
+[[fallthrough]]用于switch语句块内，表示会执行下一个case或default
+[[nodiscard]]表示函数的返回值没有被接收，在编译时会出现警告。
+[[maybe_unused]]即便没使用也不警告
+
+### C++ 20
+concept用于声明具有特定约束条件的模板类型
+// 声明一个数值类型的concept
+template
+范围库（Ranges Library）
+协程（Coroutines）
+模块（modules）
 
 
 
