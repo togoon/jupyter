@@ -290,8 +290,9 @@ def getWorth3(nameList):
         # plt.xticks(rotation=60)
         ax1 = plt.subplot2grid((1, 50), (0, 0), colspan=19, rowspan=1)
         ax2 = plt.subplot2grid((1, 50), (0, 25), colspan=24, rowspan=1)
-        worthdf['totalworth'].plot( title=f'{name}-worth-5min', ax=ax2) #20,8 , figsize=(7,3)
+        #worthdf['totalworth'].plot( title=f'{name}-worth-5min', ax=ax2) #20,8 , figsize=(7,3)
         # ax1.set_xticklabels(rotation=60)
+        worthdf[datetime.now()- pd.to_datetime(worthdf['date']) <= pd.Timedelta(days=30)]['totalworth'].plot( title=f'{name}-worth-5min-(last-30-days)', ax=ax2) #20,8 , figsize=(7,3)
 
         worthdf.groupby('date').last().plot( y='totalworth', title=f'{name}-worth-day', label=None, rot=60, ax=ax1)  #, figsize=(5,3)
         plt.savefig('%s/%s/%s.jpg' % (worthDir,'static', name), transparent=True, bbox_inches='tight') #png jpg
@@ -404,7 +405,7 @@ def getWorth5():
         ax1 = plt.subplot2grid((1, 50), (0, 0), colspan=19, rowspan=1)
         ax2 = plt.subplot2grid((1, 50), (0, 25), colspan=24, rowspan=1)
 
-        worthdf['totalworth'].plot( title=f'{name}-worth-5min', ax=ax2) #20,8 , figsize=(7,3)
+        worthdf[datetime.now()- pd.to_datetime(worthdf['date']) <= pd.Timedelta(days=30)]['totalworth'].plot( title=f'{name}-worth-5min-(last-30-days)', ax=ax2) #20,8 , figsize=(7,3)
         # plt.savefig('%s/%s/%s_5min.jpg' % (worthDir,'static', name), transparent=True, bbox_inches='tight') #png jpg
 
         worthdf.groupby('date').last().plot( y='totalworth', title=f'{name}-worth-day', label=None, rot=60, ax=ax1)  #, figsize=(5,3)
