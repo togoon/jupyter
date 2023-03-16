@@ -16,7 +16,7 @@ all:
 	@echo $(filePath)
 	@echo $(fileName)	
 	@echo $(shell pwd)	
-	@echo $(patsubst %/, , $(shell pwd) )	
+	@echo 6 $(filter  /, $(shell pwd) )	
 
 .PHONY:clean
 clean:
