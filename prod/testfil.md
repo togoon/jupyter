@@ -956,11 +956,31 @@ curl -X POST -d '{ "method":"fixUTrade", "params":[ "mainname-binance", "subacco
 
 日志：
 成交推送日志 fuserdata order update  
-订阅有错误 fuserdata account update 
+订阅错误 fuserdata account update 
 查漏补推日志 onNewUOrderTrade called.
 下单日志 OrderAlgoriyhmManager::insertMarketUOrder
 
 find . -type f -iname "*.log" | xargs grep -inr "onNewUOrderTrade called" | grep -v grep 
 
+
+功能新增：20230316A v5.9
+
+1.pyclient的独立行情改造，用上面的代码库，用法见示例
+2.子账户的资金费率计算功能已添加，后台主程已更新在服务器目录，下次重启启用
+
+资金变动日志为数据库的 profitlog表
+type类型
+    ProfitType_inout = 0,         出入金
+    ProfitType_trade,             交易
+    ProfitType_commission,        手续费
+    ProfitType_fundingrate,       资金费
+    ProfitType_fixtrade,          人工校准
+
+python示例：
+cli = FILClient(MyFILHandler("test-strategy"),"http://127.0.0.1:8889/strategy",60,"127.0.0.1",9091,"http://127.0.0.1:8886/strategy") #8889为主程 8886为独立行情(最后的字符串可以不填)
+cli.start()
+cli.hello("mainname-binance", "subaccount-binance","127.0.0.1",9091) #通知主程
+cli.hello2("mainname-binance", "subaccount-binance","127.0.0.1",9091) #通知独立行情
+cli.subKline("binance", "usdt", "ETHUSDT", "1m")
 
 
