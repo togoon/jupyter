@@ -2096,9 +2096,54 @@ clean:
 	rm -rf $(TARGET) $(OBJS)
 
 
+
+######################################
+
+#source file
+#源文件，自动找所有.c和.cpp文件，并将目标定义为同名.o文件
+SOURCE  := $(wildcard *.c) $(wildcard *.cpp)
+OBJS    := $(patsubst %.c,%.o,$(patsubst %.cpp,%.o,$(SOURCE)))
+
+#target you can change test to what you want
+#目标文件名，输入任意你想要的执行文件名
+TARGET  := gpu-basics-similarity
+
+#compile and lib parameter
+#编译参数 := equals =
+CC      := g++
+LIBS    := -L/usr/local/lib
+#LDFLAGS := -lopencv_imgcodecs -lopencv_highgui -lopencv_xfeatures2d -lopencv_features2d -lopencv_core -lopencv_flann -lopencv_calib3d -lopencv_imgproc
+LDFLAGS :=`pkg-config --libs opencv`
+DEFINES :=
+INCLUDE := -I. -I/usr/local/include
+CFLAGS  := -g -Wall -O3 $(DEFINES) $(INCLUDE) # CFLAGS 表示用于 C 编译器的选项
+#CXXFLAGS:= $(CFLAGS) -DHAVE_CONFIG_H # C++ 编译器的选项
+CXXFLAGS := -g -std=c++11 -Wall $(INCLUDE)
+$(TARGET):$(OBJS)
+    $(CC) -o $@ $(OBJS) $(LIBS) $(LDFLAGS) $(CXXFLAGS)
+
+#下面的基本上不需要做任何改动了
+.PHONY : everything objs clean veryclean rebuild
+
+everything : $(TARGET)
+
+all : $(TARGET)
+
+objs : $(OBJS)
+
+rebuild: veryclean everything
+#换行的开始必须是1个tab
+clean :
+    rm -fr *.so
+    rm -fr *.o
+
+veryclean : clean
+    rm -fr $(TARGET)
+
 ########################################
 
 
 
+######################################
 
 
