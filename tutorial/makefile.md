@@ -2095,8 +2095,9 @@ $(TARGET):$(OBJS)
 clean:
 	rm -rf $(TARGET) $(OBJS)
 
+######################################
 
-####opencv项目##################################
+## 小项目
 
 CC=gcc                  //编译方法gcc
 OBJS= main.o __.o __.o  //__填写目标文件文件名
@@ -2109,7 +2110,103 @@ $(OBJS):%.o:%.c         //目标文件（所有的OBJS）：依赖（.o 的.c �
 clean:
 	rm *.o                    //删除所有.o文件
 
-####opencv项目##################################
+
+######################################
+
+## 编译可执行文件Makefile
+
+VERSION  =1.00
+CC   =gcc
+DEBUG   =-DUSE_DEBUG
+CFLAGS  =-Wall
+SOURCES   =$(wildcard ./source/*.c)
+INCLUDES   =-I./include
+LIB_NAMES  =-lfun_a -lfun_so
+LIB_PATH  =-L./lib
+OBJ   =$(patsubst %.c, %.o, $(SOURCES))
+TARGET  =app
+
+#links
+$(TARGET):$(OBJ)
+ @mkdir -p output
+ $(CC) $(OBJ) $(LIB_PATH) $(LIB_NAMES) -o output/$(TARGET)$(VERSION)
+ @rm -rf $(OBJ)
+ 
+#compile
+%.o: %.c
+ $(CC) $(INCLUDES) $(DEBUG) -c $(CFLAGS) $< -o $@
+
+.PHONY:clean
+clean:
+ @echo "Remove linked and compiled files......"
+ rm -rf $(OBJ) $(TARGET) output 
+
+
+######################################
+
+## 编译静态库Makefile
+VERSION     =
+CC          =gcc
+DEBUG   =
+CFLAGS  =-Wall
+AR   =ar
+ARFLAGS     =rv
+SOURCES   =$(wildcard *.c)
+INCLUDES    =-I.
+LIB_NAMES   =
+LIB_PATH  =
+OBJ         =$(patsubst %.c, %.o, $(SOURCES))
+TARGET      =libfun_a
+
+#link
+$(TARGET):$(OBJ)
+ @mkdir -p output
+ $(AR) $(ARFLAGS) output/$(TARGET)$(VERSION).a $(OBJ)
+ @rm -rf $(OBJ)
+
+#compile
+%.o: %.c
+ $(CC) $(INCLUDES) $(DEBUG) -c $(CFLAGS) $< -o $@
+  
+.PHONY:clean
+clean:
+ @echo "Remove linked and compiled files......"
+ rm -rf $(OBJ) $(TARGET) output 
+
+
+######################################
+
+## 编译动态库Makefile
+VERSION   =
+CC        =gcc
+DEBUG     =
+CFLAGS    =-fPIC -shared 
+LFLAGS   =-fPIC -shared 
+SOURCES   =$(wildcard *.c)
+INCLUDES  =-I.
+LIB_NAMES =
+LIB_PATH  =
+OBJ       =$(patsubst %.c, %.o, $(SOURCES))
+TARGET    =libfun_so
+
+#link
+$(TARGET):$(OBJ)
+ @mkdir -p output
+ $(CC) $(OBJ) $(LIB_PATH) $(LIB_NAMES) $(LFLAGS) -o output/$(TARGET)$(VERSION).so
+ @rm -rf $(OBJ)
+ 
+#compile
+%.o: %.c
+ $(CC) $(INCLUDES) $(DEBUG) -c $(CFLAGS) $< -o $@
+
+.PHONY:clean
+clean:
+ @echo "Remove linked and compiled files......"
+ rm -rf $(OBJ) $(TARGET) output 
+
+######################################
+
+## opencv项目
 
 #source file
 #源文件，自动找所有.c和.cpp文件，并将目标定义为同名.o文件
@@ -2152,7 +2249,7 @@ clean :
 veryclean : clean
     rm -fr $(TARGET)
 
-########################################
+######################################
 
 
 
