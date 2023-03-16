@@ -961,6 +961,7 @@ curl -X POST -d '{ "method":"fixUTrade", "params":[ "mainname-binance", "subacco
 下单日志 OrderAlgoriyhmManager::insertMarketUOrder
 
 find . -type f -iname "*.log" | xargs grep -inr "onNewUOrderTrade called" | grep -v grep 
+find . -type f -iname "*.log" | xargs grep -inr "fuserdata" | grep -v grep 
 
 
 功能新增：20230316A v5.9
