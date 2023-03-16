@@ -729,7 +729,10 @@ curl -X POST -d '{"method":"deleteAllOrder","params":["testrisk1" ]}' http://127
 # 全部平仓 closeAllPosition 
 curl -X POST -d '{"method":"closeAllPosition","params":["testrisk1" ]}' http://127.0.0.1:8889/strategy
 
+# 市价委托 insertMarketUOrder
+curl -X POST -d '{"method":"insertMarketUOrder","params":["testrisk1",0, {"symbol":"BTCUSDT","quantity":"0.001","side":"SELL"}, 2]}' http://127.0.0.1:8889/strategy
 
+curl -X POST -d '{"method":"insertMarketUOrder","params":["test-strategy",0,{"symbol":"OPUSDT","quantity":"100","side":"SELL"},1]}' http://127.0.0.1:8889/strategy
 
 
 #########################################
