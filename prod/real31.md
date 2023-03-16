@@ -120,7 +120,7 @@ curl -X POST -d '{"method":"queryCurrentRiskResult","params":["similarity"]}' ht
 
 
 # 8 取消订阅定时器 cancelSubTimer 
-curl -X POST -d '{"method":"cancelSubTimer","params":["similarity",60000]}' http://127.0.0.1:18889/strategy
+curl -X POST -d '{"method":"cancelSubTimer","params":["similarity", 60000]}' http://127.0.0.1:18889/strategy
 
 # 全部撤单 deleteAllOrder 
 curl -X POST -d '{"method":"deleteAllOrder","params":["similarity" ]}' http://127.0.0.1:18889/strategy
