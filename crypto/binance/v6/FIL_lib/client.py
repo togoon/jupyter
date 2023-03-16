@@ -64,11 +64,12 @@ HandleType = {
 }
 
 class FILClient(object):
-    def __init__(self, handler:Handler, server_url:str="http://127.0.0.1:8888/strategy", timeout:int=(3,30), listen_host="127.0.0.1", listen_port:int=9090):
+    def __init__(self, handler:Handler, server_url:str="http://127.0.0.1:8888/strategy", timeout:int=(3,30), listen_host="127.0.0.1", listen_port:int=9090, server_url2:str=""):
         self.handler = handler
         self.handler.client = self
         self.name = self.handler.name
         self.server_url = server_url
+        self.server_url2 = server_url2
         self.timeout = timeout
         self.listen_host = listen_host
         self.listen_port = listen_port
@@ -130,6 +131,17 @@ class FILClient(object):
         except requests.exceptions.ConnectionError as e:
             logger.error("connect error")
             return obj_type()
+
+    def __post2(self, data:dict, obj_type=CommonReturn):
+        try:
+            res = requests.post(self.server_url2, json=data, timeout=self.timeout)
+            if res.status_code != 200:
+                logger.error(f"http status errod: res.status_code:{res.status_code}, res.headers:{res.headers}, res.text:{res.text}")
+                return obj_type()
+            return obj_type().loads(json.loads(res.text))
+        except requests.exceptions.ConnectionError as e:
+            logger.error("connect error")
+            return obj_type()
     
     def subTick(self, gateway_type:str, tade_type:str, symbol:str):
         gateway_enum = GatewayTypeEnum.index(gateway_type)
@@ -174,6 +186,8 @@ class FILClient(object):
             "method": "subKline",
             "params": [self.name, gateway_enum, tade_enum, symbol, kline_enum]
         }
+        if self.server_url2 != "":
+            return self.__post2(data, CommonReturn)
         return self.__post(data, CommonReturn)
 
     def subTimer(self, microsecond:int):
@@ -765,6 +779,13 @@ class FILClient(object):
             "params": [self.name, mainname, subname, push_host, push_port]
         }
         return self.__post(data, CommonReturn)
+
+    def hello2(self, mainname:str, subname:str, push_host:str="127.0.0.1", push_port:int=9090):
+        data = {
+            "method": "hello",
+            "params": [self.name, mainname, subname, push_host, push_port]
+        }
+        return self.__post2(data, CommonReturn)
 
     def close(self):
         data = {

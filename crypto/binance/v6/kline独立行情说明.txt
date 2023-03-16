@@ -1,0 +1,28 @@
+接口说明：
+
+1.策略告知后台推送端口 hello （参考pyclient库相关函数）
+
+2.kline订阅  subKline （参考pyclient库相关函数）
+
+3.kline取消订阅 cancelSubKline （）
+
+4.修改推送端口 changepush 
+
+curl -X POST -d '{"method":"changepush","params":["test-strategy","127.0.0.1",9091]}' http://127.0.0.1:8886/strategy
+
+5.查询策略所有kline订阅 queryStrategySubKlines
+
+curl -X POST -d '{"method":"queryStrategySubKlines","params":["test-strategy"]}' http://127.0.0.1:8886/strategy
+
+6.检查单个symbol的kline
+
+curl -X POST -d '{"method":"checkAllKlines","params":["BTCUSDT"]}' http://127.0.0.1:8886/strategy
+
+7.检查所有的kline
+
+curl -X POST -d '{"method":"checkAllKlines","params":[]}' http://127.0.0.1:8886/strategy
+
+
+
+
+

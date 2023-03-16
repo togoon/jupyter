@@ -1,0 +1,44 @@
+{
+    "binance": {
+        "host": "testnet.binance.vision",
+        "port": "443",
+        "timeout": 10000,
+        "wshost": "testnet.binance.vision",
+        "wsport": "443",
+        "uhost": "testnet.binancefuture.com",
+        "uport": "443",
+        "utimeout": 10000,
+        "uwshost": "stream.binancefuture.com",
+        "uwsport": "443",
+        "thost": "testnet.binancefuture.com",
+        "tport": "443",
+        "ttimeout": 10000,
+        "twshost": "dstream.binancefuture.com",
+        "twsport": "443"
+    },
+    "mysql": {
+        "host": "127.0.0.1",
+        "jdbcport": 3300,
+        "xdevport": 33000,
+        "db": "risk2",
+        "usr": "root",
+        "password": "fil2022"
+    },
+    "mysqlkline": {
+        "host": "127.0.0.1",
+        "jdbcport": 3300,
+        "xdevport": 33000,
+        "db": "risk2",
+        "usr": "root",
+        "password": "fil2022"
+    },
+    "binanceSymbols": {
+        "usdt": ["BTCUSDT","ETHUSDT"]
+    },
+    "isAllSymbols":0,
+    "kline_host": "0.0.0.0",
+    "kline_port": 8886,
+    "waitinterval": 10,
+    "checkinterval":300,
+    "checkperiod":86400
+}
