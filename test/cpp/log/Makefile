@@ -10,11 +10,6 @@ filePath:=$(shell pwd)/$(lastword $(MAKEFILE_LIST))
 fileName:=$(lastword $(MAKEFILE_LIST))
 foldDir=$(shell dirname $(filePath))
 
-man:
-	@echo man 1111
-	@echo $(filePath)
-	@echo $(fileName)	
-
 all:
 	@echo all 2222
 	@echo $(foldDir)
