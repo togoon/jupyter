@@ -955,17 +955,10 @@ curl -X POST -d '{ "method":"fixUTrade", "params":[ "mainname-binance", "subacco
     },
 
 日志：
-fuserdata order update
-成交推送日志
-
-fuserdata account update
-订阅有错误
-
-onNewUOrderTrade called.
-查漏补推日志
-
-OrderAlgoriyhmManager::insertMarketUOrder
-下单日志
+成交推送日志 fuserdata order update  
+订阅有错误 fuserdata account update 
+查漏补推日志 onNewUOrderTrade called.
+下单日志 OrderAlgoriyhmManager::insertMarketUOrder
 
 find . -type f -iname "*.log" | xargs grep -inr "onNewUOrderTrade called" | grep -v grep 
 
