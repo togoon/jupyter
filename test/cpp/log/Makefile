@@ -11,10 +11,11 @@ fileName:=$(lastword $(MAKEFILE_LIST))
 foldDir=$(shell dirname $(filePath))
 
 all:
-	@echo all 2222
+	@echo all 
 	@echo $(foldDir)
 	@echo $(filePath)
 	@echo $(fileName)	
+	@echo $(shell pwd)	
 
 
 .PHONY:clean
