@@ -8,7 +8,8 @@
 
 filePath:=$(shell pwd)/$(lastword $(MAKEFILE_LIST))
 fileName:=$(lastword $(MAKEFILE_LIST))
-foldDir=$(shell dirname $(filePath))
+foldDir:=$(shell dirname $(filePath))
+foldName:=$(lastword $(subst  /, , $(shell pwd) ) )	
 
 all:
 	@echo all 
@@ -16,7 +17,7 @@ all:
 	@echo $(filePath)
 	@echo $(fileName)	
 	@echo $(shell pwd)	
-	@echo 6 $(filter  /, $(shell pwd) )	
+	@echo $(foldName)	
 
 .PHONY:clean
 clean:
