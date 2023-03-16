@@ -6,15 +6,15 @@
 # clean :
 # 	-rm -f main *.o
 
-filepath:=$(shell pwd)/$(lastword $(MAKEFILE_LIST))
-name:=$(lastword $(MAKEFILE_LIST))
-dir=$(shell dirname $(filepath))
+filePath:=$(shell pwd)/$(lastword $(MAKEFILE_LIST))
+fileName:=$(lastword $(MAKEFILE_LIST))
+foldDir=$(shell dirname $(filePath))
 
 .PHONY:clean
 clean:
 
-	echo $(dir)
-	echo $(filepath)
-	@echo $(name)
+	echo $(foldDir)
+	echo $(filePath)
+	@echo $(fileName)
 
 
