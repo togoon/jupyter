@@ -307,3 +307,12 @@ sudo apt-get install libcrypto++-dev libcrypto++-doc libcrypto++-utils
 # order suborder1 testorder2 39196 7500 "mainID":3,"subID":7,"strategyID":7,
 
 
+
+cli = FILClient(MyFILHandler("test-strategy"),"http://127.0.0.1:8889/strategy",60,"127.0.0.1",9091,"http://127.0.0.1:8886/strategy") #8889为主程 8886为独立行情(最后的字符串可以不填)
+cli.start()
+cli.hello("mainname-binance", "subaccount-binance","127.0.0.1",9091) #通知主程
+cli.hello2("mainname-binance", "subaccount-binance","127.0.0.1",9091) #通知独立行情
+cli.subKline("binance", "usdt", "ETHUSDT", "1m")
+
+
+
