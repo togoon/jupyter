@@ -65,4 +65,33 @@ void LOG::setLogTarget(LOGTARGET iLogTarget)
 
     TCHAR logFileDirectory[256];
     _stprintf_s(logFileDirectory, _T("%s\\Log\\"), fileDirectory);
+
+    if(_taccess(logFileDirectory,0) == -1)
+    {
+        _tmkdir(logFileDirectory);
+    }
+
+    WCHAR moduleFileName[MAX_PATH];
+    GetModuleFileName(NULL, moduleFileName, MAX_PATH);
+    PWCHAR p = wcsrchr(moduleFileName, _T('\\'));
+    p++;
+
+    for (int i = _tcslen(p); i > 0; i--)
+    {
+        if(p[i]==_T('.'))
+        {
+            p[i] = _T('\0');
+            break;
+        }
+    }
+    WCHAR pszLogFileName[MAX_PATH];
+    _stprintf_s(pszLogFileName, _T("%s%s.log"), logFileDirectory, p);
+
+    mFileHandle = CreateFile(pszLogFileName, GENERIC_READ | GENERIC_WRITE, FILE_SHARE_READ, NULL, OPEN_ALWAYS, FILE_ATTRIBUTE_NORMAL, NULL);
+
+    if(INVALID_HANDLE_VALUE==mFileHandle)
+    {
+        return -1;
+    }
+    return 0;
 }
