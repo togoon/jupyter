@@ -26,7 +26,7 @@ enum LOGTARGET
 };
 
 #define FILENAME(x) strrchr(x,'\\') ? strrchr(x, '\\')+1:x
-
+#define LOG_DEBUG(...)  LOG::writeLog(LOG_LEVEL_DEBUG, (unsigned char*)(FILENAME(__FILE__)), )
 
 
 
