@@ -15,4 +15,16 @@ LOG::LOG()
 void LOG::init(LOGLEVEL loglevel, LOGTARGET logtarget)
 {
     setLogLevel(loglevel);
+    setLogTarget(logtarget);
+    InitializeCriticalSection(&criticalSection);
+    createFile();
+}
+
+void LOG::uninit()
+{
+    if(INVALID_HANDLE_VALUE != mFileHandle)
+    {
+        CloseHandle(mFileHandle);
+    }
+    DeleteCriticalSection(&criticalSection);
 }
