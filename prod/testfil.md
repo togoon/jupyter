@@ -410,14 +410,14 @@ cd /root/FIL/fil && nohup ./FIL run -c ./config.json -r ./kline.json >> /root/FI
 cd /root/FIL/fil && nohup ./FIL run -c ./config.json -r ./risk.json -k ./key.json >> /root/FIL/logs/screenlog_Fil_bash_0.log 2>&1 & 
 
 # 2. 创建主账户 其中1,0,1 表示 keyid, gatewaytype中的binance, tradetype中的usdt合约类型
-# 1,0,1 "testrisk1",   testnet23_risk1 , 15000 "risk1", "subrisk1", "127.0.0.1",39291 
-# 2,0,1 "similarity1", testnet22_kline1, 15000 "kline1","subkline1","127.0.0.1",39293
-# 3,0,1 "similarity2", testnet24_kline2, 15000 "kline2","subkline2","127.0.0.1",39294
-# 4,0,1 "similarity3", testnet25_kline3, 15000 "kline3","subkline3","127.0.0.1",39295
-# 5,0,1 "similarity4", testnet26_kline4, 15000 "kline4","subkline4","127.0.0.1",39296
-# 6,0,1 "testorder1", "testnet27_order1",10000 "order1","suborder1","127.0.0.1",39297 
-# 6,0,1 "testorder2", "testnet27_order1",5000  "order1","suborder2","127.0.0.1",39298 
-# 7,0,1 "testtrade1", 15000 "trade1","subtrade1","127.0.0.1",39197 
+#1,0,1 "testrisk1",   testnet23_risk1 , 15000 "risk1", "subrisk1", "127.0.0.1",39291 
+#2,0,1 "similarity1", testnet22_kline1, 15000 "kline1","subkline1","127.0.0.1",39293
+#3,0,1 "similarity2", testnet24_kline2, 15000 "kline2","subkline2","127.0.0.1",39294
+#4,0,1 "similarity3", testnet25_kline3, 15000 "kline3","subkline3","127.0.0.1",39295
+#5,0,1 "similarity4", testnet26_kline4, 15000 "kline4","subkline4","127.0.0.1",39296
+#6,0,1 "testorder1", "testnet27_order1",10000 "order1","suborder1","127.0.0.1",39297 
+#6,0,1 "testorder2", "testnet27_order1",5000  "order1","suborder2","127.0.0.1",39298 
+#7,0,1 "testtrade1", 15000 "trade1","subtrade1","127.0.0.1",39197 
 
 curl -X POST -d '{"method":"insertAppkey","params":[1,0,1,"598e0636f68883477483b545ba086231e1be63458248e196c7b837820a6e498b","a633ce2b580dd5b1c578247340dbae619e566a0217d79b5ab6008b40de0365fd","testnet23_risk1"]}' http://127.0.0.1:8889/strategy
 {"method":"insertAppkey","success":true,"message":""}
@@ -435,11 +435,11 @@ curl -X POST -d '{"method":"insertAppkey","params":[6,0,1,"deeec9c07260e1a0f61f7
 
 
 
-# risk1 1,0,1 testnet23_risk1 15000  创建/绑定母账户 createMainAccount 名称 交易所类型 Keyid 
+#risk1 1,0,1 testnet23_risk1 15000  创建/绑定母账户 createMainAccount 名称 交易所类型 Keyid 
 curl -X POST -d '{"method":"createMainAccount","params":["risk1",0,1]}' http://127.0.0.1:8889/strategy
 {"method":"createMainAccount","success":true,"message":""}
 
-# kline1 2,0,1 testnet22_kline1 15000  创建/绑定母账户 createMainAccount 名称 交易所类型 Keyid 
+#kline1 2,0,1 testnet22_kline1 15000  创建/绑定母账户 createMainAccount 名称 交易所类型 Keyid 
 curl -X POST -d '{"method":"createMainAccount","params":["kline1",0,2]}' http://127.0.0.1:8889/strategy
 
 curl -X POST -d '{"method":"createMainAccount","params":["kline2",0,3]}' http://127.0.0.1:8889/strategy
@@ -497,7 +497,7 @@ curl -X POST -d '{"method":"queryMainAccount","params":["order1"]}' http://127.0
 
 
 # 3. 创建子账户 createSubAccount 
-# risk1,0,1 risk1-testnet21 15000  subrisk1 7500
+#risk1,0,1 risk1-testnet21 15000  subrisk1 7500
 curl -X POST -d '{"method":"createSubAccount","params":["subrisk1",1,"15000.0"]}' http://127.0.0.1:8889/strategy
 {"method":"createSubAccount","success":true,"message":""}
 
@@ -523,11 +523,11 @@ curl -X POST -d '{"method":"querySubAccount","params":["suborder2"]}' http://127
 
 
 # 4. 创建策略 hello  关闭 close
-# risk1 subrisk1 testrisk1 39291 15000 "mainID":1,"subID":2,"strategyID":1,
+#risk1 subrisk1 testrisk1 39291 15000 "mainID":1,"subID":2,"strategyID":1,
 curl -X POST -d '{"method":"hello","params":["testrisk1","risk1","subrisk1","127.0.0.1",39291]}' http://127.0.0.1:8889/strategy
 {"method":"hello","success":true,"message":"{\"name\":\"testrisk1\" , \"time\":1676011242784, \"id\":1}"}
 
-# 2,0,1 "testkline1", testnet22_kline1, 15000 "kline1","subkline1","127.0.0.1",39293 similarity
+#2,0,1 "testkline1", testnet22_kline1, 15000 "kline1","subkline1","127.0.0.1",39293 similarity
 curl -X POST -d '{"method":"hello","params":["similarity","kline1","subkline1","127.0.0.1",39293]}' http://127.0.0.1:8889/strategy
 {"method":"hello","success":true,"message":"{\"name\":\"similarity\" , \"time\":1676135925634, \"id\":4}"}
 
@@ -574,7 +574,7 @@ curl -X POST -d '{"method":"queryStrategyInfo","params":["testorder2"]}' http://
 #交易所U本位合约资产到子账户u本位/8为该划转类型的值 , 子账户u本位到策略16
 #策略到子账户17 , 子账户到母账户9
 
-# risk1  subrisk1  testrisk1  39291 15000 "mainID":1,"subID":2,"strategyID":1,
+#risk1  subrisk1  testrisk1  39291 15000 "mainID":1,"subID":2,"strategyID":1,
 curl -X POST -d '{"method":"accountTransfer","params":["risk1","subrisk1","testrisk1","USDT","15000",8]}' http://127.0.0.1:8889/strategy
 curl -X POST -d '{"method":"accountTransfer","params":["risk1","subrisk1","testrisk1","USDT","15000",16]}' http://127.0.0.1:8889/strategy
 
