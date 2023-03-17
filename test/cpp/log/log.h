@@ -50,5 +50,21 @@ public:
     void setLogLevel(LOGLEVEL loglevel);
     LOGTARGET getLogTarget();
     void setLogTarget(LOGTARGET logtarget);
-    
-}
+
+    static int writeLog(LOGLEVEL loglevel, unsigned char *fileName, unsigned char *funtion, int lineNumber, char *format, ...);
+    static void outputToTarget();
+
+private:
+    LOG();
+    ~LOG();
+    static LOG *log;
+    static mutex log_mutex;
+    static CRITICAL_SECTION criticalSection;
+    static string logBuffer;
+    static int writtenSize;
+    LOGLEVEL logLevel;
+    LOGTARGET logTarget;
+    static HANDLE mFileHandle;
+};
+
+#endif 
