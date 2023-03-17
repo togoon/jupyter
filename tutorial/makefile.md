@@ -2387,6 +2387,8 @@ veryclean : clean
 
 ######################################
 
+## 目录 文件夹名 文件名 字符串
+
 filePath:=$(shell pwd)/$(lastword $(MAKEFILE_LIST))
 fileName:=$(lastword $(MAKEFILE_LIST))
 foldDir:=$(shell dirname $(filePath))
