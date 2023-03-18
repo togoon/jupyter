@@ -100,3 +100,12 @@ int LOG::createFile()
     }
     return 0;
 }
+
+static int printfToBuffer(char* buffer, int size, char* format, ...)
+{
+    va_list ap;
+    va_start(ap, format);
+    int ret = vsnprintf(buffer, 100, format, ap);
+    va_end(ap);
+    return ret;
+}
