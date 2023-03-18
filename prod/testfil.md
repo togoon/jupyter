@@ -364,6 +364,22 @@ DR = 小单计数 / 订单计数
 
 
 
+# 测试 资金费率 fundingRate
+## 测试场景一 
+母账户 fee1: 15000usdt, x2, 可用：30000 ；
+子账户 subfee1 ：testfee1 : 10000usdt, x2, 可用：20000 , -3e-3/-0.003
+子账户 subfee2 ：testfee2 : 5000usdt, x2, 可用：10000 , -3e-3/-0.003
+
+下单前行情：最新价 22886.226192 , 标记价格 22886.22619208 , 2023-01-31 17:51:44 , 
+子账户subrisk1: 市价委托数量1.306, 	 buy 成功 22891.50（实际发生手续费 11.95851960 USDT）
+母账户仓位：1.306 
+
+
+
+
+
+
+
 #########################################
 
 # 测试指令 
@@ -417,8 +433,9 @@ cd /root/FIL/fil && nohup ./FIL run -c ./config.json -r ./risk.json -k ./key.jso
 #5,0,1 "similarity4", testnet26_kline4, 15000 "kline4","subkline4","127.0.0.1",39296
 #6,0,1 "testorder1", "testnet27_order1",10000 "order1","suborder1","127.0.0.1",39297 
 #6,0,1 "testorder2", "testnet27_order1",5000  "order1","suborder2","127.0.0.1",39298 
-#7,0,1 "testorder1", "testnet27_order1",10000 "order1","suborder1","127.0.0.1",39297 
-#7,0,1 "testorder2", "testnet27_order1",5000  "order1","suborder2","127.0.0.1",39298 
+#7,0,1 "testfee1", 	"testnet28_fee1",	10000 "fee1",	"subfee1",	"127.0.0.1",39290 
+#7,0,1 "testfee2", 	"testnet28_fee1",	5000  "fee1",	"subfee2",	"127.0.0.1",39289
+
 #8,0,1 "testtrade1", 15000 "trade1","subtrade1","127.0.0.1",39197 
 
 curl -X POST -d '{"method":"insertAppkey","params":[1,0,1,"598e0636f68883477483b545ba086231e1be63458248e196c7b837820a6e498b","a633ce2b580dd5b1c578247340dbae619e566a0217d79b5ab6008b40de0365fd","testnet23_risk1"]}' http://127.0.0.1:8889/strategy
