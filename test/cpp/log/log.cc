@@ -169,3 +169,21 @@ int LOG::writeLog(LOGLEVEL loglevel, unsigned char *fileName, unsigned char* fun
 
     return 0;
 }
+
+void LOG::outputToTarget()
+{
+    if(LOG::getInstance()->getLogTarget() & LOG_TARGET_FILE)
+    {
+        SetFilePointer(mFileHandle, 0, NULL, FILE_END);
+        DWORD dwBytesWritten = 0;
+        WriteFile(mFileHandle, logBuffer.c_str(), logBuffer.length(), &dwBytesWritten, NULL);
+        FLushFileBuffers(mFileHandle);
+    }
+
+    if(LOG::getInstance()->getLogTarget() & LOG_TARGET_CONSOLE)
+    {
+        printf("%s", logBuffer.c_str());
+    }
+
+    logBuffer.clear();
+}
