@@ -417,7 +417,9 @@ cd /root/FIL/fil && nohup ./FIL run -c ./config.json -r ./risk.json -k ./key.jso
 #5,0,1 "similarity4", testnet26_kline4, 15000 "kline4","subkline4","127.0.0.1",39296
 #6,0,1 "testorder1", "testnet27_order1",10000 "order1","suborder1","127.0.0.1",39297 
 #6,0,1 "testorder2", "testnet27_order1",5000  "order1","suborder2","127.0.0.1",39298 
-#7,0,1 "testtrade1", 15000 "trade1","subtrade1","127.0.0.1",39197 
+#7,0,1 "testorder1", "testnet27_order1",10000 "order1","suborder1","127.0.0.1",39297 
+#7,0,1 "testorder2", "testnet27_order1",5000  "order1","suborder2","127.0.0.1",39298 
+#8,0,1 "testtrade1", 15000 "trade1","subtrade1","127.0.0.1",39197 
 
 curl -X POST -d '{"method":"insertAppkey","params":[1,0,1,"598e0636f68883477483b545ba086231e1be63458248e196c7b837820a6e498b","a633ce2b580dd5b1c578247340dbae619e566a0217d79b5ab6008b40de0365fd","testnet23_risk1"]}' http://127.0.0.1:8889/strategy
 {"method":"insertAppkey","success":true,"message":""}
