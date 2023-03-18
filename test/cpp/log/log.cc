@@ -109,3 +109,24 @@ static int printfToBuffer(char* buffer, int size, char* format, ...)
     va_end(ap);
     return ret;
 }
+
+static int getSystemTime(char* timeBuffer)
+{
+    if(!timeBuffer)
+    {
+        return -1;
+    }
+
+    SYSTEMTIME localTime;
+    GetLocalTime(&localTime);
+    char *format = "[%04d-%02d-%02d %02d:%02d:%02d.%03d]";
+    int ret = printfToBuffer(timeBuffer, 100, format, localTime.wYear, localTime.wMonth, localTime.wDay, localTime.wHour, localTime.wMinute, localTime.wSecond, localTime.wMilliseconds);
+    return ret;
+}
+
+int LOG::writeLog(LOGLEVEL loglevel, unsigned char *fileName, unsigned char* function, int lineNumber, char* format, ...)
+{
+    
+    
+    
+}
