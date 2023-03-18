@@ -60,6 +60,11 @@ LOGTARGET LOG::getLogTarget()
 
 void LOG::setLogTarget(LOGTARGET iLogTarget)
 {
+    this->logTarget = iLogTarget;
+}
+
+int LOG::createFile()
+{
     TCHAR fileDirectory[MAX_PATH];
     GetCurrentDirectory(MAX_PATH, fileDirectory);
 
