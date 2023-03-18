@@ -451,7 +451,7 @@ curl -X POST -d '{"method":"insertAppkey","params":[5,0,1,"968532305fa5c74686a3c
 
 curl -X POST -d '{"method":"insertAppkey","params":[6,0,1,"deeec9c07260e1a0f61f76e69ee43c431a95716ff60178b24472ab707409030a","a36f9f4c78ff5a5d4f2599ed9e3e31f4297271021ba908857cf3269be8711188","testnet27_order1"]}' http://127.0.0.1:8889/strategy
 
-curl -X POST -d '{"method":"insertAppkey","params":[6,0,1,"7dc31abfddc161ee6437cee02c0e955295c3fe16bc0505a0c808feab500e394f","a36f9f4c78ff5a5d4f2599ed9e3e31f4297271021ba908857cf3269be8711188","testnet27_order1"]}' http://127.0.0.1:8889/strategy
+curl -X POST -d '{"method":"insertAppkey","params":[7,0,1,"7dc31abfddc161ee6437cee02c0e955295c3fe16bc0505a0c808feab500e394f","7e763fef7d6eeee9a8d683fb5d9711464b9a996ebae0fef10b26c66c8be2c3b2","testnet28_1"]}' http://127.0.0.1:8889/strategy
 
 
 #risk1 1,0,1 testnet23_risk1 15000  创建/绑定母账户 createMainAccount 名称 交易所类型 Keyid 
@@ -469,6 +469,8 @@ curl -X POST -d '{"method":"createMainAccount","params":["kline4",0,5]}' http://
 
 curl -X POST -d '{"method":"createMainAccount","params":["order1",0,6]}' http://127.0.0.1:8889/strategy
 
+curl -X POST -d '{"method":"createMainAccount","params":["fee1",0,7]}' http://127.0.0.1:8889/strategy
+
 # 查询币安U本位账户 queryBinanceUsdtAccount
 curl -X POST -d '{"method":"queryBinanceUsdtAccount","params":["risk1"]}' http://127.0.0.1:8889/strategy
 {"method":"queryBinanceUsdtAccount","result":[{"feeTier":0,"canTrade":true,"canDeposit":true,"canWithdraw":true,"updateTime":0,"totalInitialMargin":"0","totalMaintMargin":"0","totalWalletBalance":"15000","totalUnrealizedProfit":"0","totalMarginBalance":"15000","totalPositionInitialMargin":"0","totalOpenOrderInitialMargin":"0","totalCrossWalletBalance":"15000","totalCrossUnPnl":"0","availableBalance":"15000","maxWithdrawAmount":"15000","assets":[{"asset":"USDT","walletBalance":"15000","unrealizedProfit":"0","marginBalance":"15000","maintMargin":"0","initialMargin":"0","positionInitialMargin":"0","openOrderInitialMargin":"0","crossWalletBalance":"15000","crossUnPnl":"0","availableBalance":"15000","maxWithdrawAmount":"15000","marginAvailable":true,"updateTime":1675925437979}],"positions":[]}]}
@@ -480,6 +482,7 @@ curl -X POST -d '{"method":"queryBinanceUsdtAccount","params":["kline2"]}' http:
 curl -X POST -d '{"method":"queryBinanceUsdtAccount","params":["kline3"]}' http://127.0.0.1:8889/strategy
 curl -X POST -d '{"method":"queryBinanceUsdtAccount","params":["kline4"]}' http://127.0.0.1:8889/strategy
 curl -X POST -d '{"method":"queryBinanceUsdtAccount","params":["order1"]}' http://127.0.0.1:8889/strategy
+curl -X POST -d '{"method":"queryBinanceUsdtAccount","params":["fee1"]}' http://127.0.0.1:8889/strategy
 
 # 查询币安U本位账户风险 queryBinanceUsdtRisk 
 curl -X POST -d '{"method":"queryBinanceUsdtRisk","params":["risk1","BTCUSDT"]}' http://127.0.0.1:8889/strategy
