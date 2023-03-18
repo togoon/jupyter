@@ -126,7 +126,46 @@ static int getSystemTime(char* timeBuffer)
 
 int LOG::writeLog(LOGLEVEL loglevel, unsigned char *fileName, unsigned char* function, int lineNumber, char* format, ...)
 {
-    
-    
-    
+    int ret = 0;
+    EnterCriticalSection(&criticalSection);
+    char timeBuffer[100];
+    ret = getSystemTime(timeBuffer);
+    logBuffer += string(timeBuffer);
+
+    char *logLevel;
+    if(loglevel == LOG_LEVEL_DEBUG)
+    {
+        logLevel = "DEBUG";
+    }
+    else if(loglevel == LOG_LEVEL_INFO)
+    {
+        logLevel = "INFO";
+    }
+    else if(loglevel == LOG_LEVEL_WARNING)
+    {
+        logLevel = "WARNING";
+    }
+    else if(loglevel == LOG_LEVEL_ERROR)
+    {
+        logLevel = "ERROR";
+    }
+
+    char locInfo[100];
+    char *format2 = "[PID:%4d][TID:%4d][%s][%-s][%s:%4d]";
+    ret = printfToBuffer(locInfo, 100, format2, GetCurrentProccessId(), GetCurrentThreadId(), logLevel, fileName, function, lineNumber);
+    logBuffer += string(locInfo);
+
+    char logInfo2[256];
+    va_list ap;
+    va_start(ap, format);
+    ret = vsnprintf(logInfo2, 256, format, ap);
+    va_end(ap);
+
+    logBuffer += string(logInfo2);
+    logBuffer += string("\n");
+    writtenSize += logBuffer.length();
+    outputToTarget();
+    LeaveCriticalSection(&criticalSection);
+
+    return 0;
 }
