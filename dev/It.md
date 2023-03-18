@@ -1276,6 +1276,28 @@ curl -X POST -d '{"method":"closeAllPosition","params":["sr_min"]}' http://127.0
 . sr_minStart.sh
 
 
+----percentile_regression_step2-------------------------
+
+testMain 2  , submain  16  30M,  percentile_regression_step2  67 , 2  ~ 59 , 1M,  29100
+
+
+curl -X POST -d '{"method":"hello","params":["percentile_regression_step2","testMain","submain","127.0.0.1",29100]}' http://127.0.0.1:8808/strategy
+
+curl -X POST -d '{"method":"accountTransfer","params":["testMain","submain","percentile_regression_step2","USDT","1000000.0",0]}' http://127.0.0.1:8808/strategy
+
+curl -X POST -d '{"method":"queryPositions","params":["percentile_regression_step2","BTCUSDT",0]}' http://127.0.0.1:8808/strategy 
+curl -X POST -d '{"method":"queryPositions","params":["percentile_regression_step2","BTCUSDT",1]}' http://127.0.0.1:8808/strategy 
+
+curl -X POST -d '{"method":"queryContractAssets","params":["percentile_regression_step2","USDT"]}' http://127.0.0.1:8808/strategy
+
+curl -X POST -d '{"method":"closeAllPosition","params":["percentile_regression_step2"]}' http://127.0.0.1:8808/strategy 
+
+
+# nohup python3 -u main.py -n percentile_regression_step2 -s 8808 -c 29100 -X BTCUSDT -p 30m -w 140 -I 20 -T 10 -t 1000000  >> log.txt 2>&1  &
+
+. pRegressionStepStart.sh
+
+
 
 ------
 
@@ -2542,6 +2564,7 @@ http://testnet.binancefuture.com/fapi/v1/continuousKlines?pair=BTCUSDT&contractT
 post listenKey
 https://fapi.binance.com/fapi/v1/listenKey
 
+# #ation126@hotmail.com
 api_key    = "fcc2838327a124367acd634323b93b1fb53d6fc66e84d679169a78adcaf1bf3e"  # 密钥
 secret_key = "4f58b518cecdfe9c574cd2aa9cbbea429796673d6226424bdda1f0155cd78876"  # 私钥
 
@@ -2614,9 +2637,42 @@ secret_key = "4f58b518cecdfe9c574cd2aa9cbbea429796673d6226424bdda1f0155cd78876" 
 # secret_key = "cff76bf806526224454411d7a31e773b6517ae6bcdcd76fdefcd4e37817a9991"  # 私钥 prikey
 
 
-# testnet23@snapmail.cc  Test2022 15,000  *99.13-risk3-risk31-
+# testnet23@snapmail.cc  Test2022 15,000  *99.13-risk3-kline1-
 # api_key    = "598e0636f68883477483b545ba086231e1be63458248e196c7b837820a6e498b"  # 密钥 pubkey
 # secret_key = "a633ce2b580dd5b1c578247340dbae619e566a0217d79b5ab6008b40de0365fd"  # 私钥 prikey
+
+
+# testnet24@snapmail.cc  Test2022 15,000  *99.13-risk3-kline2-
+# api_key    = "c8e4db02d4339972299ff5423b0b580d87d558d40d8262e12a2a45efd6a8a271"  # 密钥 pubkey
+# secret_key = "ee0a42f9459676021f50ce301b7cc93b7101a92e40224b40555bff1aa45625e2"  # 私钥 prikey
+
+
+# testnet25@snapmail.cc  Test2022 15,000  *99.13-risk3-kline3-
+# api_key    = "76632e802c8da3c40aec0f15b29af406e7584a2d273e46cf72603a5e6a265d75"  # 密钥 pubkey
+# secret_key = "16662ef22fddede042bcf7be2f4297d1b451da7443dded5e11732f84a4487337"  # 私钥 prikey
+
+
+# testnet26@snapmail.cc  Test2022 15,000  *99.13-risk3-kline4-
+# api_key    = "968532305fa5c74686a3c8980ed560783afd13cc07f6a27763df1fbb6e997428"  # 密钥 pubkey
+# secret_key = "9579a4afaa29514fc37e76779f1506879e535ae3d4e5a410aec0bdfa4103dfdd"  # 私钥 prikey
+
+
+# testnet27@snapmail.cc  Test2022 15,000  *99.13-risk3-order1-
+# api_key    = "deeec9c07260e1a0f61f76e69ee43c431a95716ff60178b24472ab707409030a"  # 密钥 pubkey
+# secret_key = "a36f9f4c78ff5a5d4f2599ed9e3e31f4297271021ba908857cf3269be8711188"  # 私钥 prikey
+
+# testnet28@snapmail.cc  Test2022 15,000  *99.13-risk3-fee1-subfee1-testfee1-
+# api_key    = "7dc31abfddc161ee6437cee02c0e955295c3fe16bc0505a0c808feab500e394f"  # 密钥 pubkey
+# secret_key = "7e763fef7d6eeee9a8d683fb5d9711464b9a996ebae0fef10b26c66c8be2c3b2"  # 私钥 prikey
+
+
+# testnet31@snapmail.cc  Test2022 15,000  *68.31-testrisk1-testnet31_risk1-
+# api_key    = "f9529730010f598de9b0d4a9b0fe156b5541aba60f979f0e5c8902a6f830892f"  # 密钥 pubkey
+# secret_key = "dd53d75eaca841596ecb86429e1f1f2d62a433de1d7ab819d69636943803191e"  # 私钥 prikey
+
+# testnet32@snapmail.cc  Test2022 15,000  *68.31-testrisk1-testnet32_kline1-
+# api_key    = "0f9cba70f810787ad4d3cd6c49c8f97f14fca5f53bcd59a487e38c8eeed36a7b"  # 密钥 pubkey
+# secret_key = "49371d0e73eb89eef8d30c4a49b8d826d446b7d4aba75f652f2404cac165ee6d"  # 私钥 prikey
 
 
 
