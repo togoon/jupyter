@@ -499,7 +499,7 @@ curl -v -X POST "https://httpbin.org/post" -H "accept: application/json"
 curl -X PATCH "http://httpbin.org/patch" -H "accept: application/json"
 curl -X DELETE "http://httpbin.org/delete" -H "accept: application/json"
 curl -X PUT "http://httpbin.org/put" -H "accept: application/json"
-curl ifconfig.me # 查询IP
+curl ifconfig.me # 查询IP  wget -qO- http://ipecho.net/plain | xargs echo 
 wget -qO- https://bin.equinox.io/amd64.tgz | tar zxvf -  
 
 du -ach *  # 查看目录大小 du -sh ,  df -lh # 磁盘空间  
