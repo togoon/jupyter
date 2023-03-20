@@ -636,4 +636,15 @@ ipython --version # 脚本正常
 source clang/bin/deactivate # 停用环境以将其从环境变量 path 中删除
 
 
+21、安装log4cplus
+wget --no-check-certificate https://github.com/log4cplus/log4cplus/releases/download/REL_2_1_0/log4cplus-2.1.0.tar.gz 
+tar -zxvf log4cplus-2.1.0.tar.gz
+
+1、sudo ./configure
+2、sudo make
+3、sudo make install
+（安装完成后头文件路径默认在/usr/loca/include,库文件路径在/usr/local/lib）
+4、把库文件路径加入到/etc//etc/ld.so.conf文件中然后执行sudo ldconfig
+
+
 
