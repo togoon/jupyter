@@ -635,7 +635,7 @@ curl -X POST -d '{"method":"accountTransfer","params":["order1","suborder2","tes
 curl -X POST -d '{"method":"queryBinanceUsdtRisk","params":["kline1","BTCUSDT"]}' http://127.0.0.1:8889/strategy
 curl -X POST -d '{"method":"queryPositions","params":["similarity", "BTCUSDT", -1]}' http://127.0.0.1:8889/strategy
 curl -X POST -d '{"method":"queryPositions","params":["similarity", "BTCUSDT", 1]}' http://127.0.0.1:8889/strategy
-curl -X POST -d '{"method":"insertMarketUOrder","params":["similarity",0, {"symbol":"BTCUSDT","quantity":"0.001","side":"SELL"}, 2]}' http://127.0.0.1:8889/strategy
+curl -X POST -d '{"method":"insertMarketUOrder","params":["similarity",0, {"symbol":"BTCUSDT","quantity":"1.095","side":"SELL"}, 2]}' http://127.0.0.1:8889/strategy
 
 curl -X POST -d '{ "method":"fixUTrade", "params":[ "kline1", "subkline1", "similarity", {"symbol":"BTCUSDT", "quantity":"1.349", "commission":"0", "price":"23710", "commissionasset":"USDT", "positionside":"LONG", "orderside":"SELL" } ] }' http://127.0.0.1:8889/strategy
 
